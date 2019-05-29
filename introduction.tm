@@ -399,9 +399,9 @@
   By listing out the distributional assumptions we fully specify the model.
   This notation also lays bare any conditional independence assumptions.
   Recall variables are conditionally independent if the value of one variable
-  is independent from another given the value of a third. Conditionally
-  independence is useful as it allows to construct modular models, where we
-  need only focus on the distributional assumptions of a small number of
+  is independent from another given the value of a third. Conditional
+  independence is useful as it allows us to construct modular models, where
+  we need only focus on the distributional assumptions of a small number of
   variables. It can also have computational implications, for example
   allowing for the design of Gibbs samplers. Once we are given the
   conditional distributions, it is straightforward to write down the joint
@@ -435,14 +435,24 @@
 
   One other benefit of listing out the distributional assumptions is that it
   makes it possible to simulate data from the model. This can be particularly
-  useful for exploring the data generated from model and quickly evaluating
-  whether it looks to match the observed values. It can also provide a means
-  to explore the behaviour of the model in different parameter regimes, such
-  as high variance or varying numbers of data points. Finally, it can also be
-  a powerful debugging tool to test inference algorithms such as MCMC
+  useful for exploring performing a quick visual check that the data
+  simulated from the model looks similar to real data. It can also provide a
+  means to explore the behaviour of the model in different parameter regimes,
+  such as high variance or varying numbers of data points. Finally, it can
+  also be a powerful debugging tool to test inference algorithms such as MCMC
   methods. If the simulated data comes from a distribution that is not very
   noisy we should expect our inference algorithm to infer values that are
   close to the known truth.
+
+  <subsection|Model building workflow>
+
+  <\enumerate-numeric>
+    <item>Identify the question to be answered?
+
+    <item>Background research
+
+    <item>
+  </enumerate-numeric>
 
   \;
 
@@ -467,10 +477,11 @@
     <associate|auto-4|<tuple|1.2.1|2|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
     <associate|auto-5|<tuple|1.3|2|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
     <associate|auto-6|<tuple|1.3.1|3|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-7|<tuple|1.3.2|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-8|<tuple|1.3.3|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|eq:norm|<tuple|2|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|eq:posterior|<tuple|1|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
+    <associate|auto-7|<tuple|1.3.2|4|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
+    <associate|auto-8|<tuple|1.3.3|5|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
+    <associate|auto-9|<tuple|1.4|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
+    <associate|eq:norm|<tuple|2|3|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
+    <associate|eq:posterior|<tuple|1|3|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
   </collection>
 </references>
 
@@ -500,6 +511,14 @@
       <with|par-left|<quote|2tab>|1.3.1<space|2spc>The posterior distribution
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-6>>
+
+      <with|par-left|<quote|2tab>|1.3.2<space|2spc>Summarising posteriors
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-7>>
+
+      <with|par-left|<quote|2tab>|1.3.3<space|2spc>Hierarchical models
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-8>>
     </associate>
   </collection>
 </auxiliary>
