@@ -378,6 +378,75 @@
   Inference will get slightly more complicated as we need to infer <math|t>.
   But the same basic steps will work.
 
+  <subsubsection|Ploidy and identifiability>
+
+  One issue we have ignored thus far is whether our model is
+  <with|font-shape|italic|identifiable>. Roughly speaking a model is
+  identifiable if every combination of parameters maps to a unique likelihood
+  value in the frequentist setting, or joint probability value in the
+  Bayesian setting. If a model is unidentifiable then we can have multiple
+  MLE or MAP solutions. This raises the issue of how to select the best
+  solution. In a fully Bayesian analysis, unidenitifiability is not
+  theoretically an issue. We will simply observe a multi-modal posterior
+  distribution. In practice unidenitifiability can make it hard to implement
+  efficient MCMC algorithms as we need to be able
+  <with|font-shape|italic|hop> between modes to explore the posterior. As a
+  general rule of thumb it is best to avoid constructin models which are
+  unidentifiable.
+
+  In the case of the simple model we defined for CNV analysis this
+  unindentifiability crops up in the term <math|\<theta\><rsub|c>=r c> which
+  paramaterises the Poisson observation distribution. The issue we have is
+  that we can double the copy number of all segments and half the value of
+  <math|r> to obtain the same value of <math|\<theta\><rsub|c>>. The
+  likelihood of these solutions is thus identical. Because we have a prior on
+  <math|r> the joint probability of these two different solution may be
+  slightly different. However, the data is not informing the solution only
+  the prior. In this case we say the model is <with|font-shape|italic|weakly
+  identifiable>. This situation is worrying because we need to trust the
+  prior for <math|r> if we are to trust the MAP solution. If we adopted the
+  frequentist viewpoint, things would worse still as we would have no way to
+  choose a solution. It may seem that adding tumour content into the model
+  can help with this issue as our value of <math|\<theta\>> now depends on
+  <math|t> as well. Unfortunately this is not the case, as we can also adjust
+  the value of <math|t> to derive equally likely solutions.\ 
+
+  In the field of CNV analysis the term <with|font-shape|italic|ploidy> is
+  loosely used to refer to the average copy number of a sample. The exact
+  definition varies slightly depending on the model, but the basic idea is
+  the same. To the best of the author's knowledge all models for CNV analysis
+  have the problem of unidentifiability caused by ploidy i.e. scaling the
+  total copy number of all segments. The common approach employed is to
+  manually select a solution from the of MLE or MAP estimates that have been
+  found. This issue afflicts both bulk and single CNV analysis. Automating
+  the selection of ploidy solution remains an open problem, and in the
+  absence of any additional information or assumptions on the model appears
+  very difficult. This is one reason that many tools for CNV analysis will
+  give very different results when analysing the same sample.
+
+  There are a few avenues of research that could be pursued to address this
+  issue. If we have additionaly information about the ploidy of the samples,
+  for example from flow cytometry, we could leverage this information. This
+  is only applicable to bulk analysis however, and is not full proof. We may
+  also have domain specific knowledge about the cancer type we are analysing.
+  For example we may know a priori that the genomes are relatively stable, so
+  a near diploid solution is preferred. Alternatively we may have cancers
+  which are known to undergo genome doubling early, in which case a near
+  tetraploid solution would be preferred. Again this is not a general
+  solution, as most cancers fall on a spectrum of genomic instability. Some
+  single cell sequencing platforms image the cells before sequencing. It is
+  possible this could be used to identify cells which are larger and more
+  likely to have higher ploidy, though it is unclear whether this will work.
+  The final idea would be to model the variance of each copy number state and
+  try to extract information from this. Under certain modelling assumptions
+  cells with higher overall copy number will have more variability in the
+  observed reads counts.
+
+  In summary CNV analysis is challenging because of the ploidy problem.
+  Currently there is no full proof automated way to address this issue. In
+  practice this means that either manual curation or ad-hoc post-processing
+  needs to be performed to identify a solution.
+
   <subsection|Allele specific copy number model>
 
   We will briefly outline the steps needed to produce an allele specific copy
@@ -456,10 +525,11 @@
     <associate|auto-10|<tuple|1.4.3|5|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
     <associate|auto-11|<tuple|1.5|5|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
     <associate|auto-12|<tuple|1.5.1|5|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-13|<tuple|1.6|6|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-14|<tuple|1.7|6|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-15|<tuple|1.7.1|6|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-16|<tuple|1.7.2|6|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
+    <associate|auto-13|<tuple|1.5.2|6|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
+    <associate|auto-14|<tuple|1.6|6|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
+    <associate|auto-15|<tuple|1.7|6|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
+    <associate|auto-16|<tuple|1.7.1|6|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
+    <associate|auto-17|<tuple|1.7.2|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
     <associate|auto-2|<tuple|1.1|1|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
     <associate|auto-3|<tuple|1.2|1|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
     <associate|auto-4|<tuple|1.3|2|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
