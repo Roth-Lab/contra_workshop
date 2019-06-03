@@ -27,7 +27,7 @@
     originate at the same time and are lost in the same subsets of clones
   </enumerate-numeric>
 
-  <big-figure|<image|figures/module_2/bulk_sequencing_v2.pdf||400pt||>|<label|fig:bulk_sequencing>Schematic
+  <big-figure|<image|../figures/module_2/bulk_sequencing_v2.pdf||400pt||>|<label|fig:bulk_sequencing>Schematic
   of bulk sequencing for a tumour experiment. At the top we have the input
   cell population, where stars indicate mutations. In the middle we show the
   aligned reads obtained from performing bulk sequencing. Positions in reads
@@ -79,7 +79,7 @@
   substitutions are observed at a single locus. So this assumption represents
   our first approximation to truth.
 
-  <big-figure|<image|figures/module_2/allelic_vs_cellular_frequency.v2.pdf|400pt|||>|<label|fig:ccf_vs_vaf>Example
+  <big-figure|<image|../figures/module_2/allelic_vs_cellular_frequency.v2.pdf|400pt|||>|<label|fig:ccf_vs_vaf>Example
   of a heterozygous diploid mutation showing why the variant allele frequency
   (VAF) is not the same proportion of cells harbouring the mutation (cellular
   prevalence). On the left we have the input population of cells which all
@@ -98,7 +98,7 @@
   <reference|fig:mut_genotype> illustrates the challenges that copy number
   variation poses.
 
-  <big-figure|<image|figures/module_2/genotype.pdf|400pt|||>|<label|fig:mut_genotype>Effect
+  <big-figure|<image|../figures/module_2/genotype.pdf|400pt|||>|<label|fig:mut_genotype>Effect
   of mutational genotype on observed VAF.>
 
   <subsubsection|Population structure>
@@ -122,7 +122,7 @@
     all of the chromosomes have the reference or the variant allele.
   </enumerate-numeric>
 
-  <big-figure|<image|figures/module_2/population_structure.eps|400pt|||>|<label|fig:pop_structure>Illustration
+  <big-figure|<image|../figures/module_2/population_structure.eps|400pt|||>|<label|fig:pop_structure>Illustration
   of the assumed population structure. Here all populations are defined with
   respect to a single mutation. The circular cells are non-malignant and the
   irregularly shaped ones are malignant.>
@@ -145,7 +145,7 @@
   do have mutations, just not the particular mutation we are thinking about
   at the moment.
 
-  <big-figure|<image|figures/module_2/population_structure_simple.eps|400pt|||>|<label|fig:pop_structure_simple>Illustration
+  <big-figure|<image|../figures/module_2/population_structure_simple.eps|400pt|||>|<label|fig:pop_structure_simple>Illustration
   of the simplified population structure. In contrast to Figure
   <reference|fig:pop_structure_simple> the mutational genotypes of all cells
   within the reference and variant populations are the same. Note the
@@ -346,7 +346,7 @@
   regardless of the data. The second issue is that this is computationally
   infeasible as we would need to sum over an infinite set.
 
-  <big-figure|<image|figures/module_2/copy_number_with_mutation.png|400pt|||>|<label|fig:cn_snv>Illustration
+  <big-figure|<image|../figures/module_2/copy_number_with_mutation.png|400pt|||>|<label|fig:cn_snv>Illustration
   of allele specific copy number profile. The red line is the major copy
   number and the blue line is the minor copy number. The star indicates the
   location of an SNV. The major copy number of this SNV is 2 and the minor is
@@ -373,7 +373,7 @@
     profile of the most prevalent copy number clone.
   </remark>
 
-  <big-figure|<image|figures/module_2/mutation_genotype_prior.png|390pt|178pt||>|<label|fig:genotype_prior>Schematic
+  <big-figure|<image|../figures/module_2/mutation_genotype_prior.png|390pt|178pt||>|<label|fig:genotype_prior>Schematic
   of how to illicit mutational genotype priors. We assume we have the
   information from Figure <reference|fig:cn_snv> and know the major copy
   number is 2 and the minor copy number is 1. The first two examples
@@ -435,7 +435,7 @@
   where the last line is a mixture distribution over the mutational
   genotypes.
 
-  <big-figure|<image|figures/module_2/density.pdf|424pt|279pt||>|<label|fig:ccf_density>Example
+  <big-figure|<image|../figures/module_2/density.pdf|424pt|279pt||>|<label|fig:ccf_density>Example
   posterior densities for the cellular prevalence <math|\<phi\>> computed
   from the model. The top row shows the case for a homozygous diploid
   position (there is a s typo it should be CN=(2,0)). The second row shows
@@ -474,7 +474,7 @@
 
   <subsubsection|Motivation>
 
-  <big-figure|<image|figures/module_2/phylogeny.pdf|261pt|105pt||>|<label|fig:snv_phylogeny>Illustration
+  <big-figure|<image|../figures/module_2/phylogeny.pdf|261pt|105pt||>|<label|fig:snv_phylogeny>Illustration
   of the relationship between evolutionary history and cellular prevalence.
   On the left we have hypothetical evolutionary history, where stars indicate
   mutations and nodes clonal populations. On the write is a hypothetical set
@@ -992,50 +992,51 @@
 
 <\initial>
   <\collection>
+    <associate|preamble|false>
     <associate|project-flag|true>
   </collection>
 </initial>
 
 <\references>
   <\collection>
-    <associate|auto-1|<tuple|1|1>>
-    <associate|auto-10|<tuple|5|5>>
-    <associate|auto-11|<tuple|1.2.3|5>>
-    <associate|auto-12|<tuple|1.2.4|7>>
-    <associate|auto-13|<tuple|6|7>>
-    <associate|auto-14|<tuple|7|8>>
-    <associate|auto-15|<tuple|1.2.5|9>>
-    <associate|auto-16|<tuple|8|9>>
-    <associate|auto-17|<tuple|1.3|10>>
-    <associate|auto-18|<tuple|1.3.1|10>>
-    <associate|auto-19|<tuple|9|10>>
-    <associate|auto-2|<tuple|1.1|1>>
-    <associate|auto-20|<tuple|1.3.2|11>>
-    <associate|auto-21|<tuple|1.3.3|11>>
-    <associate|auto-22|<tuple|1.3.4|11>>
-    <associate|auto-23|<tuple|1.3.5|12>>
-    <associate|auto-24|<tuple|1.3.6|13>>
-    <associate|auto-25|<tuple|1.3.7|14>>
-    <associate|auto-26|<tuple|1.3.8|15>>
-    <associate|auto-27|<tuple|1.3.9|15>>
+    <associate|auto-1|<tuple|1|?>>
+    <associate|auto-10|<tuple|5|?>>
+    <associate|auto-11|<tuple|1.2.3|?>>
+    <associate|auto-12|<tuple|1.2.4|?>>
+    <associate|auto-13|<tuple|6|?>>
+    <associate|auto-14|<tuple|7|?>>
+    <associate|auto-15|<tuple|1.2.5|?>>
+    <associate|auto-16|<tuple|8|?>>
+    <associate|auto-17|<tuple|1.3|?>>
+    <associate|auto-18|<tuple|1.3.1|?>>
+    <associate|auto-19|<tuple|9|?>>
+    <associate|auto-2|<tuple|1.1|?>>
+    <associate|auto-20|<tuple|1.3.2|?>>
+    <associate|auto-21|<tuple|1.3.3|?>>
+    <associate|auto-22|<tuple|1.3.4|?>>
+    <associate|auto-23|<tuple|1.3.5|?>>
+    <associate|auto-24|<tuple|1.3.6|?>>
+    <associate|auto-25|<tuple|1.3.7|?>>
+    <associate|auto-26|<tuple|1.3.8|?>>
+    <associate|auto-27|<tuple|1.3.9|?>>
     <associate|auto-28|<tuple|1.3.10|?>>
     <associate|auto-29|<tuple|1.4|?>>
-    <associate|auto-3|<tuple|1|1>>
-    <associate|auto-4|<tuple|1.2|2>>
-    <associate|auto-5|<tuple|1.2.1|2>>
-    <associate|auto-6|<tuple|2|2>>
-    <associate|auto-7|<tuple|3|3>>
-    <associate|auto-8|<tuple|1.2.2|3>>
-    <associate|auto-9|<tuple|4|4>>
-    <associate|fig:bulk_sequencing|<tuple|1|1>>
-    <associate|fig:ccf_density|<tuple|8|9>>
-    <associate|fig:ccf_vs_vaf|<tuple|2|2>>
-    <associate|fig:cn_snv|<tuple|6|7>>
-    <associate|fig:genotype_prior|<tuple|7|8>>
-    <associate|fig:mut_genotype|<tuple|3|3>>
-    <associate|fig:pop_structure|<tuple|4|4>>
-    <associate|fig:pop_structure_simple|<tuple|5|5>>
-    <associate|fig:snv_phylogeny|<tuple|9|10>>
+    <associate|auto-3|<tuple|1|?>>
+    <associate|auto-4|<tuple|1.2|?>>
+    <associate|auto-5|<tuple|1.2.1|?>>
+    <associate|auto-6|<tuple|2|?>>
+    <associate|auto-7|<tuple|3|?>>
+    <associate|auto-8|<tuple|1.2.2|?>>
+    <associate|auto-9|<tuple|4|?>>
+    <associate|fig:bulk_sequencing|<tuple|1|?>>
+    <associate|fig:ccf_density|<tuple|8|?>>
+    <associate|fig:ccf_vs_vaf|<tuple|2|?>>
+    <associate|fig:cn_snv|<tuple|6|?>>
+    <associate|fig:genotype_prior|<tuple|7|?>>
+    <associate|fig:mut_genotype|<tuple|3|?>>
+    <associate|fig:pop_structure|<tuple|4|?>>
+    <associate|fig:pop_structure_simple|<tuple|5|?>>
+    <associate|fig:snv_phylogeny|<tuple|9|?>>
   </collection>
 </references>
 
@@ -1178,6 +1179,14 @@
       <with|par-left|<quote|2tab>|1.3.9.<space|2spc>Multiple samples
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-27>>
+
+      <with|par-left|<quote|2tab>|1.3.10.<space|2spc>Overdispersion
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-28>>
+
+      <with|par-left|<quote|1tab>|1.4.<space|2spc>Discussion
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-29>>
     </associate>
   </collection>
 </auxiliary>

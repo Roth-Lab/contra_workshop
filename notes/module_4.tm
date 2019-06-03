@@ -543,7 +543,7 @@
 
   <subsubsection|Results and limitations>
 
-  <big-figure|<image|figures/module_4/patient1_snv_loss_cnv.pdf|400pt|||>|<label|fig:loss_cnv>Results
+  <big-figure|<image|../figures/module_4/patient1_snv_loss_cnv.pdf|400pt|||>|<label|fig:loss_cnv>Results
   of the mutation loss model. The panels show copy number profiles from six
   samples from a patient with high grade serous ovarian cancer. Mutations
   predicted to be lost somewhere in the tree are plotted as sticks at the
@@ -558,17 +558,17 @@
   illustrates this point nicely. Here we see two samples, ROv2 and ROv3,
   where a focal deletion of one allele corresponds to the loss of mutations.
 
-  <big-figure|<image|figures/module_4/phylo1.pdf|285pt|234pt||>|<label|fig:phylo1>Simplified
+  <big-figure|<image|../figures/module_4/phylo1.pdf|285pt|234pt||>|<label|fig:phylo1>Simplified
   example of sample tree construction. On the top we show the phylogeny and
   evolutionary history of mutations. The observed presence/absence data is
   shown on the bottom.>
 
-  <big-figure|<image|figures/module_4/phylo2.pdf|285pt|234pt||>|<label|fig:phylo2>Simplified
+  <big-figure|<image|../figures/module_4/phylo2.pdf|285pt|234pt||>|<label|fig:phylo2>Simplified
   example of sample tree construction. On the top we show the phylogeny and
   evolutionary history of mutations. The observed presence/absence data is
   shown on the bottom.>
 
-  <big-figure|<image|figures/module_4/phylo3.pdf|285pt|234pt||>|<label|fig:phylo3>Simplified
+  <big-figure|<image|../figures/module_4/phylo3.pdf|285pt|234pt||>|<label|fig:phylo3>Simplified
   example of sample tree construction. On the top we show the phylogeny and
   evolutionary history of mutations. The observed presence/absence data is
   shown on the bottom.>
@@ -599,7 +599,7 @@
   mutations predicted to be lost. Morevover, they are uniformly spread across
   the genome with no corroborating copy number changes is most cases. The
   problem is that the second sample, LOv2, is actually a mixture of clones
-  from LOv1 and the other samples. <big-figure|<image|figures/module_4/patient_9_snv_loss_cnv.pdf|400pt|||>|<label|fig:loss_error>Example
+  from LOv1 and the other samples. <big-figure|<image|../figures/module_4/patient_9_snv_loss_cnv.pdf|400pt|||>|<label|fig:loss_error>Example
   of erroneous model predictions.>
 
   The main point of this discussion is to illustrate that no model is
@@ -627,6 +627,7 @@
     <associate|page-height|auto>
     <associate|page-type|letter>
     <associate|page-width|auto>
+    <associate|preamble|false>
   </collection>
 </initial>
 
