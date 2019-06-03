@@ -11,7 +11,7 @@
   spatial correlation. If we look at total read counts between adjacent
   positions in the genome they will be strongly correlated. This requires us
   to consider models which can account for the spatial correlation. In
-  contrast, it fairly reasonable to model SNV as independent observations.
+  contrast, it fairly reasonable to model SNVs as independent observations.
 
   In this module we will explore how to model CNVs. We start by discussing
   some data representations. Next we will construct a simple model for
@@ -24,10 +24,10 @@
   Again we will assume we have aligned data from a high throughput sequencing
   experiment. When dealing with CNVs there are a few different ways to
   summarise the aligned read data for modelling purposes. The obvious one is
-  to look allele counts in the same way as SNV data. The main downside of
-  this approach is that we will typically be interested in every position in
-  the genome, whereas we usually consider far fewer positions when dealing
-  with SNVs. This can be computationally expensive, and make model fitting
+  to use allele counts in the same way as SNV data. The main downside of this
+  approach is that we will typically be interested in every position in the
+  genome, whereas we usually consider far fewer positions when dealing with
+  SNVs. This can be computationally expensive, and make model fitting
   impractically slow. One solution is to restrict the set of positions we
   consider. A common choice is to look at heterozygous SNPs identified from
   matched normal tissue. This reduces the number of positions from billions
@@ -39,16 +39,16 @@
   typically of equal size though this is not essential. We can then count the
   total number of reads within the bin and use this as our data. This
   approach is attractive computationally as we typically use bins with
-  lengths the order of <math|10<rsup|3>-10<rsup|6>> which means we will have
-  between <math|10<rsup|3>-10<rsup|6>> data points. Beyond the computational
-  savings, binning the data can also be useful when the sequencing coverage
-  is low. This has become a more relevant consideration in recent years with
-  the development of single cell whole genome sequencing platforms. Single
-  cells are often sequenced at low coverage (typically 0.001x-0.1x) as
-  opposed to the higher coverage of bulk (typically 30x-100x). The main
-  reason to do this is cost, though technical issues such as library
-  diversity also factor in. The most delicate issue in this case is choosing
-  an appropriate bin size.
+  lengths on the order of <math|10<rsup|3>-10<rsup|6>> which means we will
+  have between <math|10<rsup|3>-10<rsup|6>> data points. Beyond the
+  computational savings, binning the data can also be useful when the
+  sequencing coverage is low. This has become a more relevant consideration
+  in recent years with the development of single cell whole genome sequencing
+  platforms. Single cells are often sequenced at low coverage (typically
+  0.001x-0.1x) as opposed to the higher coverage of bulk (typically
+  30x-100x). The main reason to do this is cost, though technical issues such
+  as library diversity also factor in. The most delicate issue in this case
+  is choosing an appropriate bin size.
 
   A variation on the binning strategy is to use bins defined by haplotype
   blocks. A haplotype block is segment of the genome where we are able to
@@ -56,27 +56,28 @@
   blocks is to combine the read counts from a larger set of heterozygous SNPs
   in order to improve allele specific copy number inference. For each block
   we then report three values: the total read count, the number of reads
-  supporting the <math|a> allele, and the number of reads supporting the
-  <math|b> allele.
+  supporting the <math|a> allele at heterozygous positions, and the number of
+  reads supporting the <math|b> allele at heterozygous positions.
 
   <subsection|Modelling spatial correlation>
 
   Regardless of the data representation, we need to consider spatial
   correlation when modelling CNV data. The rational is that copy number
   changes typically affect large regions of the genome that will span many
-  data points. There are a few commonly used strategies to deal with this
-  problem.
+  data points. Thus it more likely the copy number of adjacent points is the
+  same. There are a few commonly used strategies to deal with this problem.
 
   The simplest strategy is to <with|font-shape|italic|segment>, that is
   identify regions in the same state, before performing any other analysis.
   This can be readily done by standard tools such as circular binary
   segmentation (CBS). Once the data has been segmented we can ignore the
   spatial correlation and treat the data as independent. This is the approach
-  used by tools such as ASCAT. This makes the modelling task easier and
-  generally leads to faster methods. The downside is that we cannot leverage
-  additional information from the model during the segment step. This in turn
-  means that we cannot improve the segmentation as we learn other features of
-  the data such as the tumour content.
+  used by tools such as ASCAT and the battenberg algorithm. This makes the
+  modelling task easier and generally leads to faster methods. The downside
+  is that we cannot leverage additional information from the model during the
+  segmentation step. This in turn means that we cannot improve the
+  segmentation as we learn other features of the data such as the tumour
+  content.
 
   The other major approach is to use probabilistic models with spatial
   correlation. By far the most common approach in this category is to use
@@ -117,13 +118,22 @@
     takes on state <math|j> given the previous one was in state <math|i>.
 
     <item><math|F> - The emission distribution. This is the distribution for
-    the observed data which depends on the associated hidden state.
+    the observed data which depends on the associated hidden state. The
+    hidden state is thus like the cluster indicator in mixture models,
+    selecting which paramter is used for <math|F> to generate the data point.
   </enumerate-numeric>
 
   Here we assume that <math|K=<around*|\||\<cal-X\>|\|>> is known and fixed.
   This assumption can be relaxed in much the same way as mixture models using
   non-parametric Bayesian priors. However, the resulting models are usually
-  computationally demanding to fit.\ 
+  computationally demanding to fit.
+
+  <\remark>
+    \ Though non-parametric HMMs have not been widely used for studying
+    cancer, they could solve some issues. First, like we did in SNVs we could
+    use them to infer the number of clones. Second, we could relax the
+    maximum copy number constraint that HMM based methods require.
+  </remark>
 
   The basic model for a Bayesian HMM is as follows
 
@@ -159,8 +169,8 @@
     The forward and backward recursions are also useful when using MCMC
     methods. They can be used to develop a simple Gibbs sampler that
     sequentially updates the hidden states. Another approach is to use the
-    forward filtering backward sampling algorithm which updates the entire
-    chain.
+    <with|font-shape|italic|forward filtering backward sampling> algorithm
+    which updates the entire chain.
   </remark>
 
   In what follows we will suppress the dependencies on the model parameters
@@ -205,8 +215,9 @@
     \<ell\>>+<big|sum><rsub|k=1><rsup|K><big|sum><rsub|\<ell\>=1><rsup|K>\<bbb-E\><rsub|\<b-z\>><around*|[|\<bbb-I\><around*|(|z<rsub|n-1>=k,z<rsub|n>=\<ell\>|)>|]>>>>>
   </eqnarray>
 
-  for the parameters <math|\<theta\><rsub|k>> there generally will not be a
-  closed form so we can numerically optimise using the gradient given by
+  Computing the MAP value of the parameters <math|\<theta\><rsub|k>> will not
+  be a closed form in general so often numerically optimise using the
+  gradient given by
 
   <\eqnarray>
     <tformat|<table|<row|<cell|<frac|\<partial\>|\<partial\>
@@ -257,7 +268,7 @@
   <math|C> is some maximum possible copy number.
 
   <\remark>
-    We will ignore homozygous deletions for the moment.
+    We will ignore homozygous deletions for the simplicity.
   </remark>
 
   Now we need to think about the prior distribution for the parameters of the
@@ -265,8 +276,8 @@
   positive real value. A very common choice for this type of parameter is the
   Gamma distribution. If we sample the parameter for each state from an
   arbitrary Gamma there is no relationship between the copy number and data.
-  We will take a different approach here. We will sample a value <math|r>
-  from a Gamma and let the Poisson parameter for state <math|c> be
+  We will take a different approach here. We will sample a single value
+  <math|r> from a Gamma and let the Poisson parameter for state <math|c> be
   <math|\<theta\><rsub|c>=c r>. The parameter <math|r> can be interpreted as
   the haploid bin coverage i.e. the coverage of a bin with copy number 1.
   Thus we are assuming the total number of reads in a bin is a linear
@@ -284,9 +295,8 @@
   \<ell\>>=\<zeta\>> for <math|\<ell\>\<neq\>k> and <math|\<gamma\><rsub|k
   k>=\<zeta\>+\<xi\>> for some values <math|\<zeta\>> and <math|\<xi\>>. To
   be concrete we will let <math|\<zeta\>=1> and <math|\<xi\>=10>. This prior
-  will favour the hidden variables to stay in the same state.
-
-  So the full model is then
+  will favour the hidden variables to stay in the same state as their
+  neighbour. The full model is then
 
   <\eqnarray>
     <tformat|<table|<row|<cell|\<b-pi\>\|\<b-kappa\>>|<cell|\<sim\>>|<cell|<text|Dirichlet><around*|(|\<cdot\>\|\<b-kappa\>|)>>>|<row|<cell|A<rsub|k\<cdot\>>\|\<b-gamma\><rsub|k>>|<cell|\<sim\>>|<cell|<text|Dirichlet><around*|(|\<cdot\>\|\<b-gamma\><rsub|k>|)>>>|<row|<cell|z<rsub|1><rsup|m>\|\<b-pi\>>|<cell|\<sim\>>|<cell|<text|Categorical><around*|(|\<cdot\>\|\<b-pi\>|)>>>|<row|<cell|z<rsub|n><rsup|m>\|z<rsub|n-1><rsup|m>,A>|<cell|\<sim\>>|<cell|<text|Categorical><around*|(|\<cdot\>\|A<rsub|z<rsub|n-1><rsup|m>\<cdot\>>|)>>>|<row|<cell|r>|<cell|\<sim\>>|<cell|<text|Gamma><around*|(|\<cdot\>\|a,b|)>>>|<row|<cell|\<theta\><rsub|c>>|<cell|=>|<cell|r
@@ -296,7 +306,7 @@
   <subsubsection|Inference>
 
   We can use the EM algorithm as discussed above. Minor modification need to
-  be made to account for the fact we have multiple sequences.
+  be made to account for the fact we have multiple sequences (chromosomes).
 
   <subsubsection|Limitations>
 
@@ -307,7 +317,7 @@
   typically changes the values to be non-integer, so we would need to abandon
   the Poisson assumption. A standard way forward is then to work with log
   transformed counts. We can then normalise those and model the data as
-  following a Normal distribution.
+  following a Normal distribution instead of a Poisson.
 
   If we do not want to abandon the current model, then we could try
   incorporating the additional data about covariates such as GC content into
@@ -335,12 +345,13 @@
 
   Now the observed value <math|g<rsub|n><rsup|m>> only impacts the likelihood
   indirectly, and we could tune additional parameters for <math|H> to fit the
-  data better.
+  data better. A reasonable choice for <math|H> in this case would again be a
+  Gamma distribution with appropriate parameters.
 
   The other major deficiency of the model is the assumption of a Poisson
   likelihood. The Poisson only has a single parameter which controls its mean
   and variance. As a result it can often be a poor fit to real data that has
-  more variability than it can model. This is called overdispersion and
+  more variability than it can model. This is called overdispersion and we
   touched on in the first module. The standard solution is to switch to an
   overdispersed distribution such as the Negative-Binomial. We keep the mean
   of this distribution the same as for the Poisson, but introduce an
@@ -391,7 +402,7 @@
   distribution. In practice unidenitifiability can make it hard to implement
   efficient MCMC algorithms as we need to be able
   <with|font-shape|italic|hop> between modes to explore the posterior. As a
-  general rule of thumb it is best to avoid constructin models which are
+  general rule of thumb it is best to avoid constructing models which are
   unidentifiable.
 
   In the case of the simple model we defined for CNV analysis this
@@ -425,7 +436,7 @@
   give very different results when analysing the same sample.
 
   There are a few avenues of research that could be pursued to address this
-  issue. If we have additionaly information about the ploidy of the samples,
+  issue. If we have additional information about the ploidy of the samples,
   for example from flow cytometry, we could leverage this information. This
   is only applicable to bulk analysis however, and is not full proof. We may
   also have domain specific knowledge about the cancer type we are analysing.
@@ -521,23 +532,23 @@
 
 <\references>
   <\collection>
-    <associate|auto-1|<tuple|1|1|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-10|<tuple|1.4.3|5|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-11|<tuple|1.5|5|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-12|<tuple|1.5.1|5|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-13|<tuple|1.5.2|6|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-14|<tuple|1.6|6|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-15|<tuple|1.7|6|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-16|<tuple|1.7.1|6|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-17|<tuple|1.7.2|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-2|<tuple|1.1|1|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-3|<tuple|1.2|1|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-4|<tuple|1.3|2|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-5|<tuple|1.3.1|2|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-6|<tuple|1.3.2|2|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-7|<tuple|1.4|4|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-8|<tuple|1.4.1|4|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-9|<tuple|1.4.2|4|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
+    <associate|auto-1|<tuple|1|1>>
+    <associate|auto-10|<tuple|1.4.3|5>>
+    <associate|auto-11|<tuple|1.5|5>>
+    <associate|auto-12|<tuple|1.5.1|5>>
+    <associate|auto-13|<tuple|1.5.2|6>>
+    <associate|auto-14|<tuple|1.6|6>>
+    <associate|auto-15|<tuple|1.7|6>>
+    <associate|auto-16|<tuple|1.7.1|6>>
+    <associate|auto-17|<tuple|1.7.2|?>>
+    <associate|auto-2|<tuple|1.1|1>>
+    <associate|auto-3|<tuple|1.2|1>>
+    <associate|auto-4|<tuple|1.3|2>>
+    <associate|auto-5|<tuple|1.3.1|2>>
+    <associate|auto-6|<tuple|1.3.2|2>>
+    <associate|auto-7|<tuple|1.4|4>>
+    <associate|auto-8|<tuple|1.4.1|4>>
+    <associate|auto-9|<tuple|1.4.2|4>>
   </collection>
 </references>
 
@@ -584,29 +595,33 @@
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-10>>
 
-      <with|par-left|<quote|1tab>|1.5.<space|2spc>Non-homogenous sample model
-      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <with|par-left|<quote|1tab>|1.5.<space|2spc>Non-homogeneous sample
+      model <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-11>>
 
       <with|par-left|<quote|2tab>|1.5.1.<space|2spc>Normal contamination
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-12>>
 
+      <with|par-left|<quote|2tab>|1.5.2.<space|2spc>Ploidy and
+      identifiability <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-13>>
+
       <with|par-left|<quote|1tab>|1.6.<space|2spc>Allele specific copy number
       model <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-13>>
+      <no-break><pageref|auto-14>>
 
       <with|par-left|<quote|1tab>|1.7.<space|2spc>Discussion
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-14>>
+      <no-break><pageref|auto-15>>
 
       <with|par-left|<quote|2tab>|1.7.1.<space|2spc>Summary
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-15>>
+      <no-break><pageref|auto-16>>
 
       <with|par-left|<quote|2tab>|1.7.2.<space|2spc>Other approaches
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-16>>
+      <no-break><pageref|auto-17>>
     </associate>
   </collection>
 </auxiliary>

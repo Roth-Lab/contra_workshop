@@ -20,7 +20,7 @@
   The model we develop in this module will use bulk sequence data. Thus we
   focus the bulk of our discussion on this. However, single cell sequencing
   is becoming increasingly common and we offer some opinions on the potential
-  challenges here.
+  challenges.
 
   <subsubsection|Bulk sequencing>
 
@@ -96,9 +96,8 @@
   metrics. This is not without issue as the distance matrix may be noisy. An
   alternative is to use more advanced inference techniques. Sequential Monte
   Carlo (SMC) which we will discuss in the next module is one promising
-  approach for Bayesian phylogenetics. There is also some promising work
-  using variational inference to improve MCMC samples in a post-processing
-  step.
+  approach for Bayesian phylogenetics. There is also recent work using
+  variational inference to improve MCMC samples in a post-processing step.
 
   <subsubsection|Summary>
 
@@ -338,12 +337,12 @@
   the number of reads supporting the mutation.
 
   There are two reasons for using probabilities in the observation data.
-  First, we assume the data from whole genome sequencing so read depth is on
-  the order of 30x-100x. Depending on tumour content this means there is a
-  reasonable chance we will fail to detect the mutation when it is present.
-  We will see when we compute the likelihood a mutation is present we
-  explicitly correct for tumour content. The second reason is to address the
-  problem of samples representing mixtures of cells. As discussed earlier
+  First, we assume the data comes from whole genome sequencing so read depth
+  is on the order of 30x-100x. Depending on tumour content this means there
+  is a reasonable chance we will fail to detect the mutation when it is
+  present. We will see when we compute the likelihood a mutation is present
+  we explicitly correct for tumour content. The second reason is to address
+  the problem of samples representing mixtures of cells. As discussed earlier
   this raises issues when intepreting sample trees. A solution to this
   problem would be to only build trees with mutations that are clonal in the
   sample. This would guarantee that the mutations co-occur within the same
@@ -583,12 +582,12 @@
 
   To understand this issue first consider Figure <reference|fig:phylo1> which
   illustrates an ideal case of building sample trees. There is no mutation
-  loss in this example. In addition the no samples are mixtures of clones
-  from different parts of the tree. Thus we can look at the observed
+  loss in this example. In addition no samples are mixtures of clones from
+  different parts of the tree. Thus we can look at the observed
   presence/absence data and easily determine samples S1 and S2 are more
   similar to each other than S3. Now consider Figure <reference|fig:phylo2>
   where sample S2 is a mixture of clones from different parts of the tree.
-  The presence/absence data is know ambigous since S2 shares an equal number
+  The presence/absence data is now ambigous since S2 shares an equal number
   of mutations with S1 and S3. Finally consider Figure <reference|fig:phylo3>
   where we have mutation loss in sample S2. Now sample S1 shares the same
   number of mutations with S2 as S3. The model we constructed accounts for
@@ -633,37 +632,37 @@
 
 <\references>
   <\collection>
-    <associate|auto-1|<tuple|1|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-10|<tuple|1.3.3|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-11|<tuple|1.3.4|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-12|<tuple|1.4|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-13|<tuple|1.4.1|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-14|<tuple|1.4.2|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-15|<tuple|1.4.3|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-16|<tuple|1.4.4|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-17|<tuple|1.4.5|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-18|<tuple|1.4.6|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-19|<tuple|1.4.7|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-2|<tuple|1.1|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-20|<tuple|1.4.8|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-21|<tuple|1|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-22|<tuple|2|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-23|<tuple|3|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-24|<tuple|4|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-25|<tuple|5|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-26|<tuple|1.5|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-3|<tuple|1.2|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-4|<tuple|1.2.1|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-5|<tuple|1.2.2|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-6|<tuple|1.2.3|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-7|<tuple|1.3|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-8|<tuple|1.3.1|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-9|<tuple|1.3.2|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|fig:loss_cnv|<tuple|1|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|fig:loss_error|<tuple|5|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|fig:phylo1|<tuple|2|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|fig:phylo2|<tuple|3|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|fig:phylo3|<tuple|4|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
+    <associate|auto-1|<tuple|1|?>>
+    <associate|auto-10|<tuple|1.3.3|?>>
+    <associate|auto-11|<tuple|1.3.4|?>>
+    <associate|auto-12|<tuple|1.4|?>>
+    <associate|auto-13|<tuple|1.4.1|?>>
+    <associate|auto-14|<tuple|1.4.2|?>>
+    <associate|auto-15|<tuple|1.4.3|?>>
+    <associate|auto-16|<tuple|1.4.4|?>>
+    <associate|auto-17|<tuple|1.4.5|?>>
+    <associate|auto-18|<tuple|1.4.6|?>>
+    <associate|auto-19|<tuple|1.4.7|?>>
+    <associate|auto-2|<tuple|1.1|?>>
+    <associate|auto-20|<tuple|1.4.8|?>>
+    <associate|auto-21|<tuple|1|?>>
+    <associate|auto-22|<tuple|2|?>>
+    <associate|auto-23|<tuple|3|?>>
+    <associate|auto-24|<tuple|4|?>>
+    <associate|auto-25|<tuple|5|?>>
+    <associate|auto-26|<tuple|1.5|?>>
+    <associate|auto-3|<tuple|1.2|?>>
+    <associate|auto-4|<tuple|1.2.1|?>>
+    <associate|auto-5|<tuple|1.2.2|?>>
+    <associate|auto-6|<tuple|1.2.3|?>>
+    <associate|auto-7|<tuple|1.3|?>>
+    <associate|auto-8|<tuple|1.3.1|?>>
+    <associate|auto-9|<tuple|1.3.2|?>>
+    <associate|fig:loss_cnv|<tuple|1|?>>
+    <associate|fig:loss_error|<tuple|5|?>>
+    <associate|fig:phylo1|<tuple|2|?>>
+    <associate|fig:phylo2|<tuple|3|?>>
+    <associate|fig:phylo3|<tuple|4|?>>
   </collection>
 </references>
 
@@ -775,6 +774,10 @@
       <with|par-left|<quote|2tab>|1.4.8.<space|2spc>Results and limitations
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-20>>
+
+      <with|par-left|<quote|1tab>|1.5.<space|2spc>Discussion
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-26>>
     </associate>
   </collection>
 </auxiliary>

@@ -7,22 +7,21 @@
 
   In this module we consider the problem of inferring clonal population
   structure using bulk sequencing data. We specifically consider the case of
-  using SNVs a our clonal markers, differing the use of copy number and
-  rearrangement breakpoints to later modules.
+  using SNVs as our clonal markers.
 
   <subsection|Problem>
 
   We consider the problems of how to use high throughput sequencing to infer
   the clonal population structure of a tumour. This problem is somewhat old
-  now, but still remain relevant when looking at large cancer cohort datasets
-  that are continuing to be generated. The basic ideas of deconvolution are
-  also appearing in other areas so this module should provide some useful
-  insight.
+  now, but still remains relevant when looking at large cancer cohort
+  datasets that are continuing to be generated. The basic ideas of
+  deconvolution are also appearing in other areas so this module should
+  provide some useful insight.
 
   Precisely we will use read count data from SNVs to
 
   <\enumerate-numeric>
-    <item>Infer what proportion of cancer cells harbour a mutation
+    <item>Infer what proportion of cancer cells harbouring a mutation
 
     <item>Infer what mutations share the same evolutionary history i.e.
     originate at the same time and are lost in the same subsets of clones
@@ -54,13 +53,13 @@
   To achieve our goals will we need to develop two parts to the model. The
   first part will be a way to account for the effect of <em|mutational
   genotype> and <em|normal contamination>. Mutational genotype refers to the
-  fact that not all mutation will heterozygous diploid events due to
+  fact that not all mutation will be heterozygous diploid events due to
   coincident copy number variation. Normal contamination refers to the fact
-  we also sequence non-malignant cells in real tumours. The second part will
-  be a mechanism to cluster the mutations. Here we will use the formalism of
-  mixture models. There is one challenging issue, which is that we do not
-  know how many clones there are in the sample(s). We will address this
-  problem using the Dirichlet process.
+  that we also sequence non-malignant cells in real tumours. The second part
+  will be a mechanism to cluster the mutations. Here we will use the
+  formalism of mixture models. There is one challenging issue, which is that
+  we do not know how many clones there are in the sample(s). We will address
+  this problem using the Dirichlet process.
 
   <subsection|Modelling mutation genotype>
 
@@ -73,14 +72,14 @@
 
   We will make the assumption that a point mutation only occurs once at a
   locus during the evolutionary history of tumour. This is often referred to
-  as the <with|font-shape|italic|infinite sites assumption>. This is
-  assumption is motivated by the fact that the mutation rate is usually
-  relatively low compared to the total size of the genome. It can break down
-  at mutational hot spots, and this has been observed, for example when
-  multiple substitutions are observed at a single locus. So this assumption
-  represents our first approximation to truth.
+  as the <with|font-shape|italic|infinite sites assumption>. This assumption
+  is motivated by the fact that the mutation rate is usually relatively low
+  compared to the total size of the genome. It can break down at mutational
+  hot spots, and this has been observed, for example when multiple
+  substitutions are observed at a single locus. So this assumption represents
+  our first approximation to truth.
 
-  <big-figure|<image|figures/module_2/allelic_vs_cellular_frequency.v2.pdf|461pt|219pt||>|<label|fig:ccf_vs_vaf>Example
+  <big-figure|<image|figures/module_2/allelic_vs_cellular_frequency.v2.pdf|400pt|||>|<label|fig:ccf_vs_vaf>Example
   of a heterozygous diploid mutation showing why the variant allele frequency
   (VAF) is not the same proportion of cells harbouring the mutation (cellular
   prevalence). On the left we have the input population of cells which all
@@ -99,7 +98,7 @@
   <reference|fig:mut_genotype> illustrates the challenges that copy number
   variation poses.
 
-  <big-figure|<image|figures/module_2/genotype.pdf|434pt|239pt||>|<label|fig:mut_genotype>Effect
+  <big-figure|<image|figures/module_2/genotype.pdf|400pt|||>|<label|fig:mut_genotype>Effect
   of mutational genotype on observed VAF.>
 
   <subsubsection|Population structure>
@@ -118,7 +117,7 @@
 
     <item>Finally we introduce a small error probability
     <math|\<varepsilon\>>. We assume the probability is the same whether we
-    truly sampled the reference and observe an erroneous variant, or vice
+    truly sampled the reference and observed an erroneous variant, or vice
     versa. Because of this symmetry the error term only appears in cases when
     all of the chromosomes have the reference or the variant allele.
   </enumerate-numeric>
@@ -197,7 +196,7 @@
     <item><math|c<around*|(|g|)>> be the copy number of genotype <math|g>
 
     <item><math|\<mu\><around*|(|g|)>> be the proportion of chromosomes with
-    the mutation for genotype <math|g>. Me actually make a small modification
+    the mutation for genotype <math|g>. We actually make a small modification
     to accommodate sequence error and let
     <math|\<mu\><around*|(|g|)>=\<varepsilon\>> when there are no mutations
     and <math|\<mu\><around*|(|g|)>=1-\<varepsilon\>> when all the
@@ -225,7 +224,7 @@
   </itemize-dot>
 
   <\remark>
-    If maybe surprising that we consider how many copies of the locus a cell
+    It maybe surprising that we consider how many copies of the locus a cell
     has when determining the probability of sampling a read from that cell.
     To see why this necessary consider the following thought experiment. What
     would happen if one population had an infinite number of copies of the
@@ -238,12 +237,13 @@
     selected before the lysis step. In this case the number of copies of the
     locus a cell has does not impact the probability of selecting a read from
     the cell. The complication is that we then need to model how we select
-    which chromosomes from the cell get sequenced.
+    which chromosomes from the cell get sequenced. It is simple if we pick
+    one at random, but harder if multiple chromosomes can be sequenced.
   </remark>
 
   Note we need to normalise the probabilities to sum to one. Formally, let
   <math|E<rsub|i>\<in\><around*|{|N,R,V|}>> be a random variable indicating
-  that read <math|i> was sample from population <math|a>. Then
+  that read <math|i> was sample from population <math|e>. Then
 
   <\eqnarray>
     <tformat|<table|<row|<cell|p<around*|(|E<rsub|i>=e|)>>|<cell|=>|<cell|<choice|<tformat|<table|<row|<cell|<frac|<around*|(|1-t|)>c<around*|(|g<rsub|N>|)>|Z>>|<cell|<text|if>>|<cell|e=N>>|<row|<cell|<frac|t
@@ -254,10 +254,10 @@
   </eqnarray>
 
   Once we know which population a read comes from, then it is straightforward
-  to compute the probability the read has the mutation. This is simply given
-  by <math|\<mu\><around*|(|g<rsub|e>|)>> if <math|E=e>. To formalise this
-  let <math|F<rsub|i>> be a random variable indicating if read <math|i> is
-  has the mutation. With this notation we have that
+  to compute the probability that the read has the mutation. This is simply
+  given by <math|\<mu\><around*|(|g<rsub|e>|)>> if <math|E=e>. To formalise
+  this let <math|F<rsub|i>> be a random variable indicating if read <math|i>
+  is has the mutation. With this notation we have that
 
   <\eqnarray>
     <tformat|<table|<row|<cell|p<around*|(|F<rsub|i>=1\|E<rsub|i>=E|)>>|<cell|=>|<cell|\<mu\><around*|(|g<rsub|e>|)>>>>>
@@ -333,19 +333,18 @@
   <with|font-shape|italic|latent> variables. The solution to this problem is
   quite simple, we place a prior distribution over the variables. Once we
   have done this we can either infer them or
-  <with|font-shape|italic|marginalise> them. In general it is generally
-  preferable to marginalise the variables if possible as it reduces the
-  dimensionality of the problem. This typically leads to faster inference
-  algorithms as the space to be explored is smaller.
+  <with|font-shape|italic|marginalise> them. It is generally preferable to
+  marginalise the variables if possible as it reduces the dimensionality of
+  the problem. This typically leads to faster inference algorithms as the
+  space to be explored is smaller.
 
   The question we face is how to specify a prior for the genotypes
   <math|\<b-psi\>>? One solution is to place a uniform prior over all
-  possible genotypes. Since this is a discrete space, it is a valid approach.
-  However, we would face two difficulties. First, our posteriors would be
-  highly uninformative. Since we assume nothing about the genotypes,
-  essentially any cellular prevalence would be equally likely regardless of
-  the data. The second issue is that this is computationally infeasible as we
-  would need to sum over an infinite set.
+  possible genotypes. However, we would face two difficulties. First, our
+  posteriors would be highly uninformative. Since we assume nothing about the
+  genotypes, essentially any cellular prevalence would be equally likely
+  regardless of the data. The second issue is that this is computationally
+  infeasible as we would need to sum over an infinite set.
 
   <big-figure|<image|figures/module_2/copy_number_with_mutation.png|400pt|||>|<label|fig:cn_snv>Illustration
   of allele specific copy number profile. The red line is the major copy
@@ -460,7 +459,7 @@
   prior (<math|\<b-pi\>>). This model treats all mutations as completely
   independent. A weakness of this approach is that the posteriors tend to be
   multi-modal, so we are still quite uncertain about the value of
-  <math|\<phi\>>. In the next section we will discuss how to remedied this
+  <math|\<phi\>>. In the next section we will discuss how to fix this
   problem.
 
   <subsection|Clustering mutations>
@@ -482,7 +481,7 @@
   of cellular prevalence for the mutations.>
 
   Cancer is an evolutionary process and clonal populations are related by a
-  phylogenetic tree. One important implication of this, is that mutations
+  phylogenetic tree. One important implication of this is that mutations
   which share the same evolutionary history will be at the same cellular
   prevalence. We illustrate this in Figure <reference|fig:snv_phylogeny>
   where the phylogeny is shown on the left and the cellular prevalence of
@@ -507,10 +506,21 @@
   We also do not know how many clones are in the sample. We will see how to
   address this in the remainder of this module.
 
+  <\remark>
+    Lost mutations are not actually a problem. If mutations originate at the
+    same point and are lost at the same point they will form a cluster of
+    there own. This will lead to the inference of an additional clone, but
+    not impact the cellular prevalence estimates.\ 
+
+    If we want to reconstruct the phylogeny based on the assumption mutations
+    at higher prevalence are further up the tree, then we have a problem. We
+    discuss this in module 4.
+  </remark>
+
   <subsubsection|Mixture models>
 
   Before diving into the full model, we first review mixture models. Mixture
-  models are very useful type of probabilistic model which posit that
+  models are a very useful type of probabilistic model which posit that
   datapoints originate from groups or clusters. Datapoints from the same
   cluster share the same parameters, and thus are similar to each other in
   some sense. For now we assume the number of clusters, <math|K>, is known in
@@ -521,15 +531,17 @@
     <tformat|<table|<row|<cell|\<b-kappa\>>|<cell|\<in\>>|<cell|\<bbb-R\><rsub|+><rsup|K>>>|<row|<cell|\<b-rho\>\|\<b-kappa\>>|<cell|\<sim\>>|<cell|<text|Dirichlet><around*|(|\<cdot\>\|\<b-kappa\>|)>>>|<row|<cell|z<rsub|n>\|\<b-rho\>>|<cell|\<sim\>>|<cell|<text|Categorical><around*|(|\<cdot\>\|\<b-rho\>|)>>>|<row|<cell|\<theta\><rsub|k>>|<cell|\<sim\>>|<cell|H<around*|(|\<cdot\>|)>>>|<row|<cell|x<rsub|n>\|\<b-theta\>,z<rsub|n>>|<cell|\<sim\>>|<cell|F<around*|(|\<cdot\>\|\<theta\><rsub|z<rsub|n>>|)>>>>>
   </eqnarray>
 
-  This model associates a latent variable, <math|Z<rsub|n>>, with each data
-  point. The variable <math|Z<rsub|n>> takes values in the set
+  This model associates a latent variable, <math|z<rsub|n>>, with each data
+  point. The variable <math|z<rsub|n>> takes values in the set
   <math|<around*|{|1,\<ldots\>,K|}>>, and acts as an indicator for which
   cluster a data point originates from. Each cluster has an associated
   parameter <math|\<theta\><rsub|k>> sampled independently from a
   distribution <math|H>. The observed data <math|X<rsub|n>> is then generated
-  from a distribution <math|F> which parameter
-  <math|\<theta\><rsub|z<rsub|n>>>. Thus whenever <math|z<rsub|i>=z<rsub|j>>
-  for data points <math|i> and <math|j> they come from the same cluster.
+  from a distribution <math|F> with parameter
+  <math|\<theta\><rsub|z<rsub|n>>>. Thus whenever
+  <math|z<rsub|i>=z<rsub|j>=k> for data points <math|i> and <math|j> they are
+  in the same cluster and have been generated from the same distribution
+  <math|F<around*|(|\<theta\><rsub|k>|)>>.
 
   <subsubsection|Sharing statistical strength>
 
@@ -563,9 +575,10 @@
     We could quite easily use the expectation maximisation (EM) algorithm to
     compute the MAP estimate for this model rather than MCMC. For finite
     mixture models this will often be faster. The main disadvantage is that
-    we will not have a full posterior, but point estimates. Thus we cannot
-    quantify uncertainty. Once we move to using a Dirichlet process prior, EM
-    will no longer be applicable either.
+    we will not have a full posterior, but point estimates as discussed in
+    module 1. Thus we cannot quantify uncertainty. Once we move to using a
+    Dirichlet process prior, EM will no longer be applicable so we will have
+    to use MCMC.
   </remark>
 
   Before we work out the details we will write down the joint distribution.
@@ -577,7 +590,7 @@
 
   We will update the model parameters in blocks. This is typically done in
   MCMC methods, as designing good updates for all the parameters
-  simultaneously is usually hard. We will use a combination of
+  simultaneously is usually hard (see module 1). We will use a combination of
   Metropolis-Hastings (MH) and Gibbs sampling. The updates we will use are:
 
   <\itemize-dot>
@@ -643,8 +656,8 @@
   concentration parameter <math|\<alpha\>\<in\>\<bbb-R\><rsub|+>> \ and the
   base measure <math|G<rsub|0>> a distribution. Roughly speaking
   <math|\<alpha\>> controls how many clusters we expect. While the
-  <math|G<rsub|0>> is used to sample the new values that the distribution
-  exhibits.
+  distribution <math|G<rsub|0>> is used to sample the new values that the
+  distribution exhibits.
 
   To understand how a DP can be useful we need to take a slightly different
   view of mixture models. So far we have used the cluster indicator variables
@@ -690,65 +703,339 @@
 
   The previous discussion may seem like a very confusing way to define a
   mixture model. The reason that it is useful is that if sample a
-  distribution <math|G> from a DP it will be discrete. Thus we can use this
-  distribution <math|G> in our mixture model, just the same way as the finite
-  case. The updated version of our model now takes the following form.
+  distribution <math|G> from a DP it will be discrete. More explicitly, any
+  distribution <math|G> sample from a DP has the following form
+
+  <\eqnarray>
+    <tformat|<table|<row|<cell|G>|<cell|=>|<cell|<big|sum><rsub|k=1><rsup|\<infty\>>\<rho\><rsub|k>
+    \<delta\><rsub|\<theta\><rsub|k>><around*|(|\<cdot\>|)>>>>>
+  </eqnarray>
+
+  Thus we can use this distribution <math|G> in our mixture model, just the
+  \ same way as the finite case. The updated version of our model now takes
+  the following form.
 
   \;
 
   <\eqnarray>
-    <tformat|<table|<row|<cell|G<rsub|0>>|<cell|=>|<cell|<text|Uniform><around*|(|\<cdot\>\|<around*|[|0,1|]>|)>>>|<row|<cell|G\|\<alpha\>,G<rsub|0>>|<cell|\<sim\>>|<cell|<text|DP><around*|(|\<cdot\>\|\<alpha\>,G<rsub|0>|)>>>|<row|<cell|\<phi\><rsub|n>>|<cell|\<sim\>>|<cell|<text|Uniform><around*|(|\<cdot\>\|<around*|[|0,1|]>|)>>>|<row|<cell|b<rsub|n>\|\<b-pi\><rsub|n>,\<phi\><rsub|n>,t,d<rsub|n>,z<rsub|n>>|<cell|\<sim\>>|<cell|<big|sum><rsub|\<b-psi\>>\<pi\><rsub|n\<b-psi\>>
+    <tformat|<table|<row|<cell|G<rsub|0>>|<cell|=>|<cell|<text|Uniform><around*|(|\<cdot\>\|<around*|[|0,1|]>|)>>>|<row|<cell|G\|\<alpha\>,G<rsub|0>>|<cell|\<sim\>>|<cell|<text|DP><around*|(|\<cdot\>\|\<alpha\>,G<rsub|0>|)>>>|<row|<cell|\<phi\><rsub|n>>|<cell|\<sim\>>|<cell|G>>|<row|<cell|b<rsub|n>\|\<b-pi\><rsub|n>,\<phi\><rsub|n>,t,d<rsub|n>,z<rsub|n>>|<cell|\<sim\>>|<cell|<big|sum><rsub|\<b-psi\>>\<pi\><rsub|n\<b-psi\>>
     <text|Binomial><around*|(|\<cdot\>\|d<rsub|n>,\<xi\><around*|(|\<b-psi\>,\<phi\><rsub|n>,t|)>|)>>>>>
   </eqnarray>
 
-  \;
+  <subsubsection|Chinese restaurant process>
+
+  Before discussin how to fit the model we will take a brief digression to
+  discuss the Chinese restaurant process (CRP). The CRP is the marginal
+  distribution of the DP when we integrate out the distribution <math|G>.
+  Formally, the CRP is a probability distribution on partitions of the
+  integers. Let <math|<around*|[|n|]>=<around*|{|1,\<ldots\>,n|}>> be the set
+  of all positive integers up to <math|n>. Then a partition of <math|n> is a
+  set <math|c<rsub|n>=<around*|{|b:b\<subset\><around*|[|n|]>|}>> such that
+  <math|b\<cap\>b<rprime|'>=\<varnothing\>> and
+  <math|<big|cup><rsub|b\<in\>c<rsub|n>>b=<around*|[|n|]>>. That is a set of
+  disjoint sets whose union equals <math|<around*|[|n|]>>. With some thought
+  you can see this is equivalent to a clustering of the data points labelled
+  from <math|><math|1> to <math|n>. The probability mass function (pmf) of
+  the CRP is given by
+
+  <\eqnarray>
+    <tformat|<table|<row|<cell|p<around*|(|c<rsub|N>\|\<alpha\>|)>>|<cell|=>|<cell|<frac|\<Gamma\><around*|(|\<alpha\>|)>|\<Gamma\><around*|(|\<alpha\>+N|)>>\<alpha\><rsup|<around*|\||c|\|>>
+    <big|prod><rsub|b\<in\>c<rsub|N>><around*|(|<around*|\||b|\|>-1|)>!>>>>
+  </eqnarray>
+
+  where <math|\<alpha\>> is the concentration parameter.
+
+  The CRP is often described by an analogy to customers entering a chinese
+  restaurant, hence the name. The description goes as follows. The first
+  customer enters the restauran and sits down at a table. The second customer
+  then enters the restaurant makes a choice. The can either join the first
+  customer with probability <math|<frac|1|1+\<alpha\>>> or start a new table
+  with probability <math|<frac|\<alpha\>|1+\<alpha\>>>. As new customers
+  enter they can choose to set at an existing table with probability
+  proportional to the number of customers already there, or they can start a
+  new table with probability proportional to <math|\<alpha\>>. The
+  distribution over seatings of customers is then given by the CRP pmf.
+
+  There are a few interesting aspects of this process. First, it has a rich
+  get richer property where new customers are more likely to join existing
+  tables. Second, the process is <with|font-shape|italic|exchangeable> so the
+  order customers enter the restaurant does not affect the distribution. This
+  can be seen directly from the pmf of the CRP. This feature is particularly
+  useful, as it will allow to develop a Gibbs sampler for the DP in the next
+  section.
+
+  <subsubsection|Full model inference>\ 
+
+  We can still use MH updates for <math|\<phi\><rsub|n>>. The new problem is
+  to update <math|\<phi\><rsub|n>>. There are two approaches to performing
+  inferences. One is to make use of the <with|font-shape|italic|stick
+  breaking representation> of the DP. Using this approach we can sample the
+  distribution <math|G> directly. Once we have this distribution, then we can
+  perform Gibbs updates just like the finite mixture model case. The second
+  approach which we will follow is marginalise <math|G> and in which case we
+  have a CRP.\ 
+
+  The key insight is that we can use exchangeability to treat the data point
+  we want to update as the last data point added. We will re-introduce the
+  cluster labels for this step, let <math|z<rsub|n>\<in\><around*|{|1,\<ldots\>,K|}>>
+  be the cluster label for the <math|n<rsup|th>> data point. Here <math|K> is
+  the number of clusters with data points, after removing the
+  <math|n<rsup|th>> data point. The the probability of this data point
+  joining an existing cluster depends on the size of the cluster, excluding
+  the data point of interest. We will use
+  <math|m<rsub|k><rsup|<around*|(|-n|)>>=<big|sum><rsub|n>\<bbb-I\><around*|(|z<rsub|n>=k|)>>
+  to denote these cluster sizes. The conditional probability of
+  <math|z<rsub|n>> given the other indicator variables,
+  <math|<around*|{|z<rsub|i>|}><rsub|i\<neq\>n>> is given by the following
+  equation.
+
+  <\eqnarray>
+    <tformat|<table|<row|<cell|p<around*|(|z<rsub|n>=k\|<around*|{|z<rsub|i>|}><rsub|i\<neq\>n>|)>>|<cell|=>|<cell|<choice|<tformat|<table|<row|<cell|<frac|m<rsub|k><rsup|<around*|(|-n|)>>|n-1+\<alpha\>>>|<cell|<text|if>>|<cell|k\<in\><around*|{|1,\<ldots\>,K|}>>>|<row|<cell|<frac|\<alpha\>|n-1+\<alpha\>>>|<cell|<text|if>>|<cell|k=K+1>>>>>>>>>
+  </eqnarray>
+
+  <\remark>
+    This update is fairly easy to understand. The only subtlety when we are
+    updating a data point that is in a singleton cluster (only member of the
+    cluster). In this case <math|K> differs when remove the data point from
+    the clustering.
+  </remark>
+
+  This provides the conditional probability for the cluster label, but we
+  will actually need a conditional probability of the form
+  <math|p<around*|(|z<rsub|n>\|<around*|{|z<rsub|i>|}><rsub|i\<neq\>n>,<around*|{|\<theta\><rsub|k>|}><rsub|k=1><rsup|K>,X|)>>
+  since there is a cluster parameter associdated with each cluster and this
+  is used to generate the data point.
+
+  <\eqnarray>
+    <tformat|<table|<row|<cell|p<around*|(|z<rsub|n>=k\|<around*|{|z<rsub|i>|}><rsub|i\<neq\>n>,\<theta\>,X|)>>|<cell|=>|<cell|<frac|p<around*|(|X\|z<rsub|n>=k,<around*|{|z<rsub|i>|}><rsub|i\<neq\>n>,\<theta\>|)>p<around*|(|z<rsub|n>=k\|<around*|{|z<rsub|i>|}><rsub|i\<neq\>n>|)>|p<around*|(|X\|<around*|{|z<rsub|i>|}><rsub|i\<neq\>n>,\<theta\>|)>>>>|<row|<cell|>|<cell|\<propto\>>|<cell|p<around*|(|x<rsub|n>\|z<rsub|n>=k,\<theta\>|)>
+    p<around*|(|z<rsub|n>=k\|<around*|{|z<rsub|i>|}><rsub|i\<neq\>n>|)>>>>>
+  </eqnarray>
+
+  Here <math|p<around*|(|x<rsub|n>\|z<rsub|n>=k,\<theta\>|)>> would just be
+  the data likelihood for data point <math|n> when it has parameter
+  <math|\<theta\><rsub|k>>. One tricky issue is that we do not have
+  parameters for the new clusters, so we cannot easily evaluate this. One
+  common approach is to integrate out the model parameters. Unfortunately
+  this only works if the likelihood is conjugate to the prior, which is not
+  the case for us. There are few ways around this. The one we will employ is
+  to draw <math|l> values of <math|\<theta\>> from the prior to create
+  <math|l> possible empty clusters to join. There is one last subtle point.
+  When <math|n> was originally part of the singleton cluster we need to use
+  that value as one of the <math|l> values of <math|\<theta\>>, so we only
+  sample <math|l-1> new values from the prior. The probability of joining
+  these clusters is then modified and becomes
+  <math|<frac|<frac|\<alpha\>|l>|n-1+\<alpha\>>>. The number of empty table
+  paramters <math|l> is a tuning paramter for the algorithm. In practice we
+  typically take <math|l=2>. The Gibbs update is then given by the following
+  formula.\ 
+
+  <\eqnarray>
+    <tformat|<table|<row|<cell|p<around*|(|z<rsub|n>=k\|<around*|{|z<rsub|i>|}><rsub|i\<neq\>n>,\<theta\>,X|)>>|<cell|=>|<cell|<choice|<tformat|<table|<row|<cell|<frac|m<rsub|k><rsup|<around*|(|-n|)>>|n-1+\<alpha\>>
+    p<around*|(|b<rsub|n>\|\<b-pi\><rsub|n>,\<phi\><rsub|k>,t,d<rsub|n>|)>
+    >|<cell|<text|if>>|<cell|k\<in\><around*|{|1,\<ldots\>,K|}>>>|<row|<cell|<frac|<frac|\<alpha\>|l>|n-1+\<alpha\>>
+    p<around*|(|b<rsub|n>\|\<b-pi\><rsub|n>,\<phi\><rsub|k>,t,d<rsub|n>|)>>|<cell|<text|if>>|<cell|k=K+1>>>>>>>>>
+  </eqnarray>
+
+  <\remark>
+    The trick for sampling parameters for the new clusters may seem a bit
+    obscure. For more details see [cite Neal] for this (algorithm 8 from the
+    paper) and other possible ways to peform inference for DPs.\ 
+  </remark>
+
+  It is also useful to use an MH step to update the values
+  <math|\<phi\><rsub|k>> between the updates of <math|z<rsub|n>>. This will
+  allow us to move from values sampled from the prior, to those that are a
+  close fit to the data. Without this MH move we would only update the
+  cellular prevalences when we sample new tables. This is extremely slow we
+  do not use any information about the data to generate the new
+  <math|\<phi\>> values.
+
+  <subsubsection|Computing consensus clustering>
+
+  Thus far we have defined the model and come up with a strategy to fit the
+  model. This involves running an MCMC algorithm for many iterations and
+  collecting samples. At each iteration we will record the cluster paramters
+  (cellular prevalences) and the cluster indicators (which cluster a
+  datapoint was assigned to). Each iteration of the MCMC will have a
+  different clustering of the data. The question is then how pick a best
+  clustering?\ 
+
+  One simple approach would be to take the sample with the highest joint
+  probability i.e. the MAP estimator. This is sub-optimal as we ignore all
+  the other samples from the MCMC chain. A better approach is to use a loss
+  function. We are free to choose any loss function, but there are some
+  challenges we need to consider. The biggest issue is that we can permute
+  the labels of the cluster indicators and the cluster parameters and the
+  likelihood is the same. So though a data point may move from cluster
+  <math|k> to <math|\<ell\>>, nothing has changed because we also changing
+  the cluster paramters from <math|\<theta\><rsub|k>> to
+  <math|\<theta\><rsub|\<ell\>>>. Thus we ideally want a loss function that
+  is invariant to label permutations. The other issue is that the number of
+  clusters varies between iterations.
+
+  Here we will use the adjusted rand index (ARI) as the loss function. This
+  is a measure of clustering similarity. We will then seek the clustering
+  which minimises this lost under our approximate posterior. The details on
+  how to do this can be found in [cite mpear]. To implement this proceedure
+  we compute the pair-wise similarity matrix of two data points. This is the
+  proportion of MCMC samples in which that data points belong to the same
+  cluster. A nice feature of this summary of the MCMC trace is that it does
+  not depend on the number of clusters or the actual labels of the data
+  points. To optimise the ARI we then build a dendrogram from the similarity
+  matrix and find the cut level which maximises the MPEAR score defined in
+  [cite mpear]. This yields our estimated clustering of the data
+  <math|<wide|\<b-z\>|^>=<around*|(|<wide|z|^><rsub|1>,\<ldots\>,<wide|z|^><rsub|N>|)>>.
+
+  We would also like to obtain posterior distributions for the cellular
+  prevalence. Once approach is to look at the full MCMC trace of the cellular
+  prevalence associated with a mutation. We can plot these values as
+  histogram or using a density estimator. We can also report the mean and
+  variance of this distribution. One downside of this approach is we report a
+  separate posterior for each mutation, which ignores our estimate clustering
+  <math|<wide|\<b-z\>|^>>. If we want to get the posterior cellular
+  prevalence give the clustering we can use a slightly ad-hoc approach and
+  compute the conditional posterior given <math|<wide|\<b-z\>|^>>. Suppose we
+  want the conditional posterior for cluster <math|k>, that is the posterior
+  of <math|\<phi\><rsub|k>>. Then we need to computer the following quantity.
+
+  <\eqnarray>
+    <tformat|<table|<row|<cell|p<around*|(|\<phi\><rsub|k>\|<wide|\<b-z\>|^>,X|)>>|<cell|=>|<cell|<frac|p<around*|(|\<phi\><rsub|k>|)><big|prod><rsub|<around*|{|n:z<rsub|n>=k|}>>p<around*|(|x<rsub|n>\|\<phi\><rsub|k>|)>|<big|int>p<around*|(|\<phi\><rsub|k>|)><big|prod><rsub|<around*|{|n:z<rsub|n>=k|}>>p<around*|(|x<rsub|n>\|\<phi\><rsub|k>|)>
+    \<mathd\>\<phi\><rsub|k>>>>>>
+  </eqnarray>
+
+  The integral in the denomintor does not have a closed form. But it is a one
+  dimensional integral so we can use numerical methods to compute it.
+
+  <subsubsection|Multiple samples>
+
+  Thus far we have only considered data from a single sample. If multiple
+  samples are available it would be useful to model them jointly so that
+  clusters are coherently defined across samples. Multiple samples are very
+  useful for this problem, as they let us identify clusters which may be
+  missed from single sample analysis. One reason this could happen is that
+  some clones are only present in a subset of samples. Another reason is that
+  we may have two clones at similar prevalence in one sample that would be
+  impossible to identify. If we have another sample where there prevalence is
+  quite different, then we have a better chance of finding both clones.
+
+  The changes required to include multiple samples are actually fairly
+  simple. We will need some notation for this. Let <math|m> be the index over
+  samples, <math|M> be the number of samples, <math|b<rsub|n m>> indicate the
+  number of reads with variant <math|n> in sample <math|m>, <math|d<rsub|n
+  m>> be the corresponding read depth, <math|\<b-pi\><rsub|n m>> be the
+  genotype prior for mutation <math|n> in sample <math|m> and
+  <math|t<rsub|m>> be the tumour content of the <math|m<rsup|th>> sample.
+  Then the new model becomes
 
   \;
+
+  <\eqnarray>
+    <tformat|<table|<row|<cell|G<rsub|0>>|<cell|=>|<cell|<text|Uniform><around*|(|\<cdot\>\|<around*|[|0,1|]><rsup|M>|)>>>|<row|<cell|G\|\<alpha\>,G<rsub|0>>|<cell|\<sim\>>|<cell|<text|DP><around*|(|\<cdot\>\|\<alpha\>,G<rsub|0>|)>>>|<row|<cell|\<b-phi\><rsub|n>>|<cell|\<sim\>>|<cell|G>>|<row|<cell|b<rsub|n
+    m>\|\<b-pi\><rsub|n m>,\<phi\><rsub|n>,t<rsub|m>,d<rsub|n
+    m>,z<rsub|n>>|<cell|\<sim\>>|<cell|<big|sum><rsub|\<b-psi\>>\<pi\><rsub|n
+    m\<b-psi\>> <text|Binomial><around*|(|\<cdot\>\|d<rsub|n
+    m>,\<xi\><around*|(|\<b-psi\>,\<phi\><rsub|n m>,t<rsub|m>|)>|)>>>>>
+  </eqnarray>
+
+  The main change is that we use Uniform prior over the <math|M> dimensional
+  unit cube and we sample a vector of cellular prevalence
+  <math|\<b-phi\><rsub|n>=<around*|(|\<phi\><rsub|n
+  1>,\<ldots\>,\<phi\><rsub|n m>|)>> for each mutation. The inference
+  procedure is largely the same. The only major differences is that we will
+  now need to compute summaries of cellular prevalence for each sample.
+
+  We see again the modularity of the Bayesian modelling approach. It is a
+  fairly trivial exercise to extend our simpler model to the more complex
+  case. The most tedious part is updating to a decent notation.
+
+  <subsubsection|Overdispersion>
+
+  One issue with current model is that read counts often except more
+  variability than the Binomial can model. The issue is referred to as
+  overdispersion. At the depths commonly used for WGS (30x-100x) this problem
+  is usually not obvious. In higher coverage data such as targeted sequencing
+  (<math|10<rsup|3>>x-<math|10<rsup|5>>x) it becomes more pronounced.\ 
+
+  The solution is to use a distribution with more parameters and more
+  flexibility. In the case of the Binomial, a common choice is to use the
+  Beta-Binomial distribution which is overdispersed relative to the binomial.
+  The Beta-Binomial has to parameters <math|a> and <math|b> like a Beta
+  distribution. We can reparameterise the Beta-Binomial in terms of mean and
+  variance as well. Using this approach we can set the mean to <math|\<xi\>>
+  and fit the variance parameter. The procedure of substituting a more
+  flexible distribution with the same mean is a common approach.
+
+  <subsection|Discussion>
+
+  In this module we saw how we to construct a Bayesian probabilistic model
+  for inferring clonal population structure from bulk data. We started with a
+  simple model to correct for mutational genotype and normal contamination.
+  We then considered a more complex mixture model, ultimately using a
+  Dirichlet process to infer the number of clones. We discussed how to fit
+  the model using MCMC and summarise the resulting posterior approximation.
+
+  This module illustrates the basic technique and steps needed to construct a
+  probabilsitic model and fit it. The most important concepts are:
+
+  <\enumerate-numeric>
+    <item>Clearly define the problem
+
+    <item>Start by solving simpler sub-problems
+
+    <item>Iteratively extend the model
+
+    <item>Identify a suitable method for fitting the model
+
+    <item>If using MCMC, identify a way to report summaries of the posterior
+  </enumerate-numeric>
 </body>
 
 <\initial>
   <\collection>
-    <associate|page-height|auto>
-    <associate|page-type|letter>
-    <associate|page-width|auto>
+    <associate|project-flag|true>
   </collection>
 </initial>
 
 <\references>
   <\collection>
-    <associate|auto-1|<tuple|1|1|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-10|<tuple|5|5|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-11|<tuple|1.2.3|5|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-12|<tuple|1.2.4|7|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-13|<tuple|6|8|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-14|<tuple|7|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-15|<tuple|1.2.5|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-16|<tuple|8|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-17|<tuple|1.3|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-18|<tuple|1.3.1|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-19|<tuple|9|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-2|<tuple|1.1|1|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-20|<tuple|1.3.2|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-21|<tuple|1.3.3|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-22|<tuple|1.3.4|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-23|<tuple|1.3.5|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-24|<tuple|1.3.6|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-3|<tuple|1|1|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-4|<tuple|1.2|2|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-5|<tuple|1.2.1|2|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-6|<tuple|2|2|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-7|<tuple|3|3|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-8|<tuple|1.2.2|3|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|auto-9|<tuple|4|4|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|fig:bulk_sequencing|<tuple|1|1|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|fig:ccf_density|<tuple|8|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|fig:ccf_vs_vaf|<tuple|2|2|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|fig:cn_snv|<tuple|6|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|fig:genotype_prior|<tuple|7|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|fig:mut_genotype|<tuple|3|3|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|fig:pop_structure|<tuple|4|4|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|fig:pop_structure_simple|<tuple|5|5|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
-    <associate|fig:snv_phylogeny|<tuple|9|?|../../../.TeXmacs/texts/scratch/no_name_11.tm>>
+    <associate|auto-1|<tuple|1|1>>
+    <associate|auto-10|<tuple|5|5>>
+    <associate|auto-11|<tuple|1.2.3|5>>
+    <associate|auto-12|<tuple|1.2.4|7>>
+    <associate|auto-13|<tuple|6|7>>
+    <associate|auto-14|<tuple|7|8>>
+    <associate|auto-15|<tuple|1.2.5|9>>
+    <associate|auto-16|<tuple|8|9>>
+    <associate|auto-17|<tuple|1.3|10>>
+    <associate|auto-18|<tuple|1.3.1|10>>
+    <associate|auto-19|<tuple|9|10>>
+    <associate|auto-2|<tuple|1.1|1>>
+    <associate|auto-20|<tuple|1.3.2|11>>
+    <associate|auto-21|<tuple|1.3.3|11>>
+    <associate|auto-22|<tuple|1.3.4|11>>
+    <associate|auto-23|<tuple|1.3.5|12>>
+    <associate|auto-24|<tuple|1.3.6|13>>
+    <associate|auto-25|<tuple|1.3.7|14>>
+    <associate|auto-26|<tuple|1.3.8|15>>
+    <associate|auto-27|<tuple|1.3.9|15>>
+    <associate|auto-28|<tuple|1.3.10|?>>
+    <associate|auto-29|<tuple|1.4|?>>
+    <associate|auto-3|<tuple|1|1>>
+    <associate|auto-4|<tuple|1.2|2>>
+    <associate|auto-5|<tuple|1.2.1|2>>
+    <associate|auto-6|<tuple|2|2>>
+    <associate|auto-7|<tuple|3|3>>
+    <associate|auto-8|<tuple|1.2.2|3>>
+    <associate|auto-9|<tuple|4|4>>
+    <associate|fig:bulk_sequencing|<tuple|1|1>>
+    <associate|fig:ccf_density|<tuple|8|9>>
+    <associate|fig:ccf_vs_vaf|<tuple|2|2>>
+    <associate|fig:cn_snv|<tuple|6|7>>
+    <associate|fig:genotype_prior|<tuple|7|8>>
+    <associate|fig:mut_genotype|<tuple|3|3>>
+    <associate|fig:pop_structure|<tuple|4|4>>
+    <associate|fig:pop_structure_simple|<tuple|5|5>>
+    <associate|fig:snv_phylogeny|<tuple|9|10>>
   </collection>
 </references>
 
@@ -801,8 +1088,8 @@
       mutations which happen prior to the copy number change, hence the total
       copy number of the reference and variant population differ. The third
       example corresponds to the case where the mutation occurs after the
-      copy number event. Henve, the copy number of the reference and variant
-      population are the same. Furthmore, only a single copy can be mutatated
+      copy number event. Hence, the copy number of the reference and variant
+      population are the same. Furthermore, only a single copy can be mutated
       by the infinite sites assumption.>|<pageref|auto-14>>
 
       <tuple|normal|<surround|<hidden|<tuple>>||Example posterior densities
@@ -816,7 +1103,7 @@
       relationship between evolutionary history and cellular prevalence. On
       the left we have hypothetical evolutionary history, where stars
       indicate mutations and nodes clonal populations. On the write is a
-      hypothetical set of cellular prevalences for the
+      hypothetical set of cellular prevalence for the
       mutations.>|<pageref|auto-19>>
     </associate>
     <\associate|toc>
@@ -859,6 +1146,38 @@
       <with|par-left|<quote|2tab>|1.3.1.<space|2spc>Motivation
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-18>>
+
+      <with|par-left|<quote|2tab>|1.3.2.<space|2spc>Mixture models
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-20>>
+
+      <with|par-left|<quote|2tab>|1.3.3.<space|2spc>Sharing statistical
+      strength <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-21>>
+
+      <with|par-left|<quote|2tab>|1.3.4.<space|2spc>MCMC inference
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-22>>
+
+      <with|par-left|<quote|2tab>|1.3.5.<space|2spc>Dirichlet process
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-23>>
+
+      <with|par-left|<quote|2tab>|1.3.6.<space|2spc>Chinese restaurant
+      process <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-24>>
+
+      <with|par-left|<quote|2tab>|1.3.7.<space|2spc>Full model inference
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-25>>
+
+      <with|par-left|<quote|2tab>|1.3.8.<space|2spc>Computing consensus
+      clustering <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-26>>
+
+      <with|par-left|<quote|2tab>|1.3.9.<space|2spc>Multiple samples
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-27>>
     </associate>
   </collection>
 </auxiliary>

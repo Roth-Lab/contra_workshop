@@ -5,6 +5,10 @@
 <\body>
   <section|Advanced Inference Techniques>
 
+  In this module we briefly review some more advanced techniques for fitting
+  models. The main purpose is to highlight these approaches and their
+  benefitys, rather than provide a detailed description.
+
   <subsection|Variational inference>
 
   MCMC and MAP estimation represent two extremes of the possibilities for
@@ -13,7 +17,7 @@
   approximating the whole distribution) but relatively fast. In between these
   extremes there are many other strategies for approximating posteriors.
   Variational inference (VI) has a emerged as one promising approach and has
-  developed a fairly active research community.
+  developed a fairly active research community <cite|blei2017variational>.
 
   VI frames the problem of approximating the posterior distribution as an
   optimisation problem. The basic idea is to identify a family of
@@ -26,9 +30,9 @@
 
   VI is typically much faster than MCMC methods and gives a more accurate
   posterior approximation than MAP estimation. Historically mean field VI
-  (MFVI) has been the most popular approach. MFVI assumes
-  <math|q<around*|(|\<theta\>\|\<lambda\>|)>> decomposes as product of
-  distribution for each parameter in the model i.e.
+  (MFVI) has been the most popular approach <cite|beal2003variational>. MFVI
+  assumes <math|q<around*|(|\<theta\>\|\<lambda\>|)>> decomposes as product
+  of distribution for each parameter in the model i.e.
   <math|q<around*|(|\<theta\>\|\<lambda\>|)>=<big|prod><rsub|i=1><rsup|D>q<around*|(|\<theta\><rsub|i>\|\<lambda\><rsub|i>|)>>
   where <math|\<theta\>=<around*|(|\<theta\><rsub|1>,\<ldots\>,\<theta\><rsub|D>|)>>.
   The main issue with this approach is that it cannot capture correlation
@@ -40,17 +44,17 @@
   Recent work has significantly relaxed the constraints of MFVI. The key
   insight has been that difficult to compute expectations can be approximated
   using Monte Carlo (MC) methods during the optimisation process.
-  Specifically we MC to estimate the gradient of the distance between
+  Specifically we use MC to estimate the gradient of the distance between
   <math|q<around*|(|\<theta\>\|\<lambda\>|)>> and
   <math|p<around*|(|\<theta\>\|X|)>> to perform
   <with|font-shape|italic|stochastic gradient descent>. This greatly expands
   the scope of models that VI can be applied to, and allows for approximating
   distributions which can capture correlation between model parameters. The
-  key challenge is controlling the variance of the MC estimates. One
-  interesting area of research is using neural networks (deep learning) as
-  part of the approximating distribution. Neural networks are powerful tools
-  for function approximation and can in principle lead to quite accurate
-  posterior approximation.
+  key challenge is controlling the variance of the MC estimates. These
+  advances have motivated an interesting area of research is using neural
+  networks (deep learning) as part of the approximating distribution. Neural
+  networks are powerful tools for function approximation and can in principle
+  lead to quite accurate posterior approximation.
 
   Stochastic gradient descent has also been used to sub-sample data to
   estimate the gradient of the distance. This can lead to a significant
@@ -58,7 +62,7 @@
   procedure. One example of the utility of this approach is fitting topic
   models to large data sets like Wikipedia with millions of data points.
   Sub-sampling turns out to be a major advantage for VI and is something that
-  can be currently done with MCMC.\ 
+  cannot be currently done with MCMC.\ 
 
   <subsection|Advanced MCMC methods>
 
@@ -90,7 +94,7 @@
   inspired by a physical model of cooling metals. The basic idea of SA is to
   introduce a sequence of distributions. As we move through the sequence of
   distributions sampling from them becomes harder, until we reach the
-  distribution were interested in.\ 
+  distribution we are interested in.\ 
 
   One way to construct this sequence is to anneal the likelihood is as
   follows
@@ -113,17 +117,23 @@
   The intuition behind SA is that it will flatten the posterior out early on,
   making it easy to move between modes. As the the annealing parameter
   increases, the distribution <math|p<rsub|\<beta\>>> will be become more
-  rugged until we reach the posterior. Hopefully by that point were near the
-  mode and sampling well from it. In principle then we can escape local
-  optima from bad initialisation.
+  rugged until we reach the posterior. Hopefully by that point the sampler is
+  near the mode and sampling well from it. In principle SA can escape local
+  optima from bad initialisation.\ 
+
+  Tuning the values of <math|\<beta\><rsub|i>> and slecting the correct
+  number is the main challenge fo SA. If the distance between
+  <math|\<beta\><rsub|i>> and <math|\<beta\><rsub|i+1>> are large, then the
+  associated distributions will be quite different. This in turn can lead the
+  algorithm to get trapped in modes.
 
   <subsubsection|Hamiltonian Monte Carlo>
 
   Hamiltonian Monte Carlo (HMC) is an efficient method for sampling high
   dimensional continuous parameters. Because HMC jointly updates many
   parameters (potentially all of them) it can work well when there is
-  correlation. When the parameters are highly correlated MH can significantly
-  outperform MH.
+  correlation. When the parameters are highly correlated HMC can
+  significantly outperform MH.
 
   The basic idea is to propose a new value for the MCMC sampler by
   deterministically moving along a path defined by Hamiltonian dynamics. The
@@ -135,8 +145,8 @@
   differential equations (DEs). To correct for the numerical errors this
   introduces, we then need to perform an accept/reject step like MH.
 
-  There are two parameters that need to be tuned related: the step size in
-  our approximation of the DE and the number of steps we use. Recent work
+  There are two parameters that need to be tuned: the step size in our
+  approximation of the DE and the number of steps we use. Recent work
   developing automated approaches for these parameters has made HMC much
   easier to implement. One of the major applications has been in the
   probabilistic programming language STAN. Auto tuned HMC is the main
@@ -161,10 +171,9 @@
   weight, roughly speaking, is a measure of how good a fit the partial
   solution represented by the particle is to the data. Resampling is used
   after each iteration or when some criteria is met to replace low weight
-  particles with high weight ones. At the end of the SMC algorithm our we
-  have set of particles with representing the sampled parameters, and
-  collection of weights that can be used to form an approximation to the
-  posterior.
+  particles with high weight ones. At the end of the SMC algorithm we have a
+  set of particles with representing the sampled parameters, and collection
+  of weights that can be used to form an approximation to the posterior.
 
   SMC is often used to sample from distributions with an obvious sequential
   structure. The classic example the is posterior distribution of the hidden
@@ -176,8 +185,8 @@
   inference in Bayesian mixture models, phylogenetics and probabilistic
   graphical models.
 
-  There are a few considerations when designing an efficient MCMC sampler.
-  The first is to identify a sequential decomposition of the problem. In some
+  There are a few considerations when designing an efficient SMC sampler. The
+  first is to identify a sequential decomposition of the problem. In some
   cases like HMMs this is obvious, while others require more thought. The
   next consideration is the sequence of target distributions
   <math|<around*|{|\<gamma\><rsub|t>|}><rsub|t=1><rsup|T>>. This is related
@@ -233,7 +242,7 @@
 
   <\remark>
     The most challenging aspect of implementing the PG algorithm is typically
-    doing the book keeping.
+    doing the book keeping for the conditional path.
   </remark>
 
   <subsubsection|Parallel tempering>
@@ -285,11 +294,11 @@
   <math|\<theta\>>. We are able to simulate data given <math|\<theta\>>, but
   cannot easily evaluate the likelihood <math|p<around*|(|X\|\<theta\>|)>>.
   In ABC we simply propose value of <math|<wide|\<theta\>|~>> from the prior
-  simulate data <math|<wide|X|~>> and then compute a measure of distance
-  between the simulated data <math|<wide|X|~>> and observed data <math|X>. If
-  the distance is less than a threshold, <math|\<varepsilon\>>, we add the
-  <math|<wide|\<theta\>|~>> to our collection of samples used to approximate
-  the posterior.
+  distribution, then simulate data <math|<wide|X|~>> and then compute a
+  measure of distance between the simulated data <math|<wide|X|~>> and
+  observed data <math|X>. If the distance is less than a threshold,
+  <math|\<varepsilon\>>, we add the <math|<wide|\<theta\>|~>> to our
+  collection of samples used to approximate the posterior.
 
   The accuracy of the posterior approximation depends on the value
   <math|\<varepsilon\>>. If <math|\<varepsilon\>> is large we will accept
@@ -311,6 +320,21 @@
   will be required before a sufficient number of samples can be collected.
   Thus, while it could in principle be used to fit any model where other MCMC
   approaches apply, it will be far to computationally demanding.
+
+  <\bibliography|bib|tm-plain|references>
+    <\bib-list|2>
+      <bibitem*|1><label|bib-beal2003variational>Matthew<nbsp>James Beal
+      et<nbsp>al. <newblock><with|font-shape|italic|Variational algorithms
+      for approximate Bayesian inference>. <newblock>University of London
+      London, 2003.<newblock>
+
+      <bibitem*|2><label|bib-blei2017variational>David<nbsp>M Blei, Alp
+      Kucukelbir<localize|, and >Jon<nbsp>D McAuliffe. <newblock>Variational
+      inference: a review for statisticians.
+      <newblock><with|font-shape|italic|Journal of the American Statistical
+      Association>, 112(518):859\U877, 2017.<newblock>
+    </bib-list>
+  </bibliography>
 </body>
 
 <\initial>
@@ -323,27 +347,68 @@
 
 <\references>
   <\collection>
-    <associate|auto-1|<tuple|1|?|../../../.TeXmacs/texts/scratch/no_name_12.tm>>
-    <associate|auto-2|<tuple|1.1|?|../../../.TeXmacs/texts/scratch/no_name_12.tm>>
-    <associate|auto-3|<tuple|1.2|?|../../../.TeXmacs/texts/scratch/no_name_12.tm>>
-    <associate|auto-4|<tuple|1.2.1|?|../../../.TeXmacs/texts/scratch/no_name_12.tm>>
-    <associate|auto-5|<tuple|1.2.2|?|../../../.TeXmacs/texts/scratch/no_name_12.tm>>
-    <associate|auto-6|<tuple|1.2.3|?|../../../.TeXmacs/texts/scratch/no_name_12.tm>>
-    <associate|auto-7|<tuple|1.2.4|?|../../../.TeXmacs/texts/scratch/no_name_12.tm>>
-    <associate|auto-8|<tuple|1.2.5|?|../../../.TeXmacs/texts/scratch/no_name_12.tm>>
-    <associate|auto-9|<tuple|1.2.6|?|../../../.TeXmacs/texts/scratch/no_name_12.tm>>
+    <associate|auto-1|<tuple|1|?>>
+    <associate|auto-10|<tuple|1.2.6|?>>
+    <associate|auto-2|<tuple|1.1|?>>
+    <associate|auto-3|<tuple|1.2|?>>
+    <associate|auto-4|<tuple|1.2.1|?>>
+    <associate|auto-5|<tuple|1.2.2|?>>
+    <associate|auto-6|<tuple|1.2.3|?>>
+    <associate|auto-7|<tuple|1.2.4|?>>
+    <associate|auto-8|<tuple|1.2.5|?>>
+    <associate|auto-9|<tuple|1.2.6|?>>
+    <associate|bib-beal2003variational|<tuple|1|?>>
+    <associate|bib-blei2017variational|<tuple|2|?>>
   </collection>
 </references>
 
 <\auxiliary>
   <\collection>
+    <\associate|bib>
+      blei2017variational
+
+      beal2003variational
+    </associate>
     <\associate|toc>
-      1.<space|2spc> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      1.<space|2spc>Advanced Inference Techniques
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-1>
 
       <with|par-left|<quote|1tab>|1.1.<space|2spc>Variational inference
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-2>>
+
+      <with|par-left|<quote|1tab>|1.2.<space|2spc>Advanced MCMC methods
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-3>>
+
+      <with|par-left|<quote|2tab>|1.2.1.<space|2spc>Simulated annealing
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-4>>
+
+      <with|par-left|<quote|2tab>|1.2.2.<space|2spc>Hamiltonian Monte Carlo
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-5>>
+
+      <with|par-left|<quote|2tab>|1.2.3.<space|2spc>Sequential Monte Carlo
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-6>>
+
+      <with|par-left|<quote|2tab>|1.2.4.<space|2spc>Particle Gibbs
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-7>>
+
+      <with|par-left|<quote|2tab>|1.2.5.<space|2spc>Parallel tempering
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-8>>
+
+      <with|par-left|<quote|2tab>|1.2.6.<space|2spc>Approximate Bayesian
+      computation <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-9>>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|font-shape|<quote|small-caps>|Bibliography>
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <pageref|auto-10><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
