@@ -1,0 +1,2285 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass beamer
+\begin_preamble
+\usetheme{metropolis} 
+
+\newcommand{\genoPrio}{\boldsymbol{\psi}}
+\end_preamble
+\options aspectratio=169
+\use_default_options true
+\maintain_unincluded_children false
+\language british
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "times" "default"
+\font_sans "helvet" "default"
+\font_typewriter "courier" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style british
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Module 2: Inferring clonal population structure from SNV data
+\end_layout
+
+\begin_layout Section
+Motivation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Clonal population structure
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_2/aml_cropped.pdf
+	width 95text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size tiny
+Ding et al.
+ Nature 2012
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Main idea
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Columns
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+0.5
+\backslash
+textwidth
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Tumours are a mixture of clonal populations
+\end_layout
+
+\begin_layout Itemize
+The number of reads with a mutation is proportional to how common the mutation
+ is
+\end_layout
+
+\begin_layout Itemize
+Mutations in the most common clones should have the most reads with variants
+\end_layout
+
+\begin_layout Column
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+0.5
+\backslash
+textwidth
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_2/bulk_sequencing_v2.pdf
+	width 95text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Notation and terminology
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Columns
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+0.5
+\backslash
+textwidth
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $a$
+\end_inset
+
+ number of reads with reference allele
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $b$
+\end_inset
+
+ number of reads with variant allele
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $d$
+\end_inset
+
+ total number of reads
+\end_layout
+
+\begin_layout Itemize
+Variant allele frequency (VAF) - proportion of reads with mutation 
+\begin_inset Formula $\frac{b}{d}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Cellular prevalence (cancer cell fraction) - proportion of cancer cells
+ with a mutation
+\end_layout
+
+\begin_layout Column
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+0.5
+\backslash
+textwidth
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_2/bulk_sequencing_v2.pdf
+	width 95text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+High level questions
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Given high throughput bulk sequencing can we estimate how common a mutation
+ is?
+\end_layout
+
+\begin_layout Itemize
+If so can we infer what mutations occur together within a clonal population?
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Simple solution
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_2/ding_evo_vaf.jpg
+	lyxscale 20
+	width 95text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size tiny
+Ding et al.
+ Nature 2012
+\end_layout
+
+\begin_layout Itemize
+Cluster VAF to infer groups of mutations are similar prevalence
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Should we use the VAF
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+We measure two values 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+ from HTS
+\end_layout
+
+\begin_layout Itemize
+The VAF summarises these two value into one 
+\begin_inset Formula $f=\frac{b}{a+b}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Questions
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Is it better to use VAF or allele counts as input for a model?
+\end_layout
+
+\begin_layout Itemize
+What distributions would be appropriate to model each type of data?
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Cellular prevalence vs VAF
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_2/allelic_vs_cellular_frequency.v2.pdf
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Problems with VAF clustering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Columns
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+0.5
+\backslash
+textwidth
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_2/lung_vaf_cluster_cropped.jpg
+	lyxscale 10
+	height 80theight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size tiny
+Govidan et al.
+ Cell 2012
+\end_layout
+
+\begin_layout Column
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+0.5
+\backslash
+textwidth
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Questions
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Is it reasonable to interpret the the two cluster example as bi-clonal?
+\end_layout
+
+\begin_layout Itemize
+What are some other explanations for the observed data?
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Mutational genotype
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_2/genotype.pdf
+	lyxscale 10
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Mutational genotype model
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Objective
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align block
+The goal of this section will be to define a model which relates the observed
+ allelic count data 
+\begin_inset Formula $b,d$
+\end_inset
+
+ to the latent (hidden) cellular prevalence of a mutation 
+\begin_inset Formula $\phi$
+\end_inset
+
+.
+ To do so we will construct a simple model of how the data is generated.
+ We follow a common pattern in probabilistic modelling of relating a latent
+ parameter of interest.
+ We will think about a few key factors in this process.
+\end_layout
+
+\begin_layout Itemize
+How does the data relate to latent parameter?
+\end_layout
+
+\begin_layout Itemize
+What is the model that generates the data given the cellular prevalence?
+\end_layout
+
+\begin_layout Itemize
+What assumptions do we need to be able to evaluate the probability defined
+ by this model?
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Populations structure
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_2/population_structure.svg
+	lyxscale 10
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+We need to simplify
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The mutational genotypes of the cancer cells is a nuisance parameter we
+ need to know to evaluate the likelihood.
+\end_layout
+
+\begin_layout Itemize
+In the model suggested thus far, every cancer cell can have a different
+ mutational genotype.
+\end_layout
+
+\begin_layout Itemize
+This introduces a potentially large number of parameters, and would quickly
+ lead to an unidentifiable model.
+\end_layout
+
+\begin_layout Itemize
+We need to make a simplifying assumption to get to a tractable model.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Simple population structure
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_2/population_structure_simple.svg
+	lyxscale 10
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Modelling the data
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+We know pose the following question: What is the probability of sampling
+ a read with the mutation? To answer this question we will imagine the following.
+\end_layout
+
+\begin_layout Itemize
+Cells are lysed and DNA released into a pool.
+\end_layout
+
+\begin_layout Itemize
+There are an infinite number of fragments in the pool.
+\end_layout
+
+\begin_layout Itemize
+We select a fragment uniformly at random.
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Questions
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Why do we assume the pool of DNA fragments is infinite?
+\end_layout
+
+\begin_layout Itemize
+How do these assumptions help us compute the probability of sampling a read
+ with the mutation?
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Strategy
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+We will break the computation of the probability of sampling a read with
+ the mutation into two parts.
+\end_layout
+
+\begin_layout Enumerate
+We assign the fragment to a cell population.
+\end_layout
+
+\begin_layout Enumerate
+Given the fragment comes from a population we then ask what the probability
+ of sampling a mutant read is.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Notation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\boldsymbol{\psi}=(g_{N},g_{R},g_{V})$
+\end_inset
+
+ is the mutational genotypes of the normal, reference and variant population.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $c(g)$
+\end_inset
+
+ is the number of chromosomes for genotype 
+\begin_inset Formula $g$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\mu(g)$
+\end_inset
+
+ is the probability of sampling a mutant read given the genotype 
+\begin_inset Formula $g$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $t$
+\end_inset
+
+ is the proportion of cancer cells
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Probability of sampling from a population
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+We assume the probability of sampling a fragment from a population is proportion
+al to the prevalence of the population and the number of copies of the locus
+ that population has.
+\end_layout
+
+\begin_layout Itemize
+Normal - 
+\begin_inset Formula $(1-t)c(g_{N})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Reference - 
+\begin_inset Formula $t(1-\phi)c(g_{R})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Variant - 
+\begin_inset Formula $t\phi c(g_{V})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Question
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+Why is it important to include the copy number in these probabilities?
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Probability of sampling from a population
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+We can now define the probability of sampling from a population.
+ Let 
+\begin_inset Formula $E\in\{N,R,V\}$
+\end_inset
+
+ be the random variable indicating which population a fragment was sample
+ from.
+ Then
+\begin_inset Formula 
+\begin{eqnarray*}
+P(E=e) & = & \begin{cases}
+\frac{(1-t)c(g_{N})}{Z} & e=N\\
+\frac{t(1-\phi)c(g_{R})}{Z} & e=R\\
+\frac{t\phi c(g_{V})}{Z} & e=V
+\end{cases}\\
+Z & = & (1-t)c(g_{N})+t(1-\phi)c(g_{R})+t\phi c(g_{V})
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Probability of sampling a mutant read
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Now we will condition on the population and define the probability of sampling
+ a mutant read given the cell came from population 
+\begin_inset Formula $e$
+\end_inset
+
+.
+ The obvious way to do this is to assume we choose a chromosome at random
+ from the cell.
+ The probability of the chromosome having the mutation is then 
+\begin_inset Formula $\frac{\#\text{mutant chromosomes}}{\#\text{total chromosomes}}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $F$
+\end_inset
+
+ be a random variable indicating if the read has a mutation.
+\begin_inset Formula 
+\begin{eqnarray*}
+P(F=1|E=e) & = & \mu(g_{e})\\
+ & = & \begin{cases}
+\epsilon & b(g_{e})=0\\
+\frac{b(g_{e})}{c(g_{e})} & b(g_{e})\in\{1,\ldots,c(g_{e})\}\\
+1-\epsilon & b(g_{e})=c(g_{e})
+\end{cases}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Joint probability
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Putting everything together.
+ We can now compute compute the probability of observing a read with a mutation.
+\begin_inset Formula 
+\begin{eqnarray*}
+P(F=1|\boldsymbol{\psi},\phi,t) & = & \sum_{e\in\{N,R,V\}}P(F=1|E=e)P(E=e)\\
+ & = & \frac{(1-t)c(g_{N})}{Z}\mu(g_{N})+\frac{t(1-\phi)c(g_{R})}{Z}\mu(g_{R})+\frac{t\phi c(g_{V})}{Z}\mu(g_{V})\\
+ & := & \xi(\boldsymbol{\psi},\phi,t)
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note this assumes the mutational genotype is know 
+\begin_inset Formula $\boldsymbol{\psi}$
+\end_inset
+
+, cellular prevalence 
+\begin_inset Formula $\psi$
+\end_inset
+
+ and tumour content which we show in the probability.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Multiple reads
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+In practice we observe 
+\begin_inset Formula $d$
+\end_inset
+
+ reads.
+\end_layout
+
+\begin_layout Itemize
+The probability 
+\begin_inset Formula $b$
+\end_inset
+
+ of these are mutants is then
+\begin_inset Formula 
+\begin{eqnarray*}
+p(b|d,\boldsymbol{\psi},\phi,t) & = & \text{Binomial}(\cdot|d,\xi(\boldsymbol{\psi},\phi,t)
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Genotype prior
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Thus far we have treated the population genotypes as known
+\end_layout
+
+\begin_layout Itemize
+In practice we do not know the genotypes
+\end_layout
+
+\begin_layout Itemize
+The genotypes are latent variables in our model and we need to specify a
+ prior
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Question
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+What prior should we use for the genotypes?
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Copy number and mutation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_2/copy_number_with_mutation.png
+	lyxscale 10
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Eliciting genotype priors from CNV data
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_2/mutation_genotype_prior.png
+	lyxscale 10
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Putting it together
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+To finish off the model we need a prior for 
+\begin_inset Formula $\phi$
+\end_inset
+
+.
+ In the absence of any knowledge we use a continuous prior.
+\end_layout
+
+\begin_layout Itemize
+We assume 
+\begin_inset Formula $t$
+\end_inset
+
+ is know and fixed.
+ It could come from CNV analysis
+\end_layout
+
+\begin_layout Itemize
+We can now compute the joint distribution and posterior
+\begin_inset Formula 
+\begin{eqnarray*}
+p(b,d,\phi,\boldsymbol{\pi},t) & = & p(\phi)\sum_{\boldsymbol{\psi}}\pi_{\boldsymbol{\psi}}\text{Binomial}(b|d,\xi(\boldsymbol{\psi},\phi,t))\\
+p(\phi|b,d,\boldsymbol{\pi},t) & = & \frac{p(b,d,\phi,\boldsymbol{\pi},t)}{\int p(b,d,\phi,\boldsymbol{\pi},t){\rm d}\phi}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The normalisation constant (
+\begin_inset Formula $\int p(b,d,\phi,\boldsymbol{\pi},t){\rm d}\phi$
+\end_inset
+
+) does not have a closed form.
+ Since it is a 1-D integral we use numerical quadrature.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Posteriors
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_2/density.pdf
+	lyxscale 10
+	height 85theight%
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\size tiny
+Typo: top is CN=(2,0)
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Section
+Mutational clustering
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+What we have so far
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+We have a model to relate cellular prevalence to allele counts
+\end_layout
+
+\begin_layout Itemize
+So far each mutation is treated independently
+\end_layout
+
+\begin_layout Itemize
+The posteriors we obtain are multi-modal reflecting uncertainty in genotypes
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Question
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+Can anyone think of a way to deal with the mult-modality?
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Why does clustering make sense
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_2/phylogeny.pdf
+	lyxscale 10
+	width 95text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Mixture models
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Mixture models provide a probabilistic way to cluster data
+\end_layout
+
+\begin_layout Itemize
+The key idea is to associate to each data point 
+\begin_inset Formula $x_{n}$
+\end_inset
+
+ a cluster indicator variable 
+\begin_inset Formula $z_{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The cluster indicator serves to choose which parameter generated the data
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Generic mixture model
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+A generic mixture model with 
+\begin_inset Formula $K$
+\end_inset
+
+ components (clusters) is as follows
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\boldsymbol{\kappa} & \in & \mathbb{R}_{+}^{K}\\
+\boldsymbol{\rho|\boldsymbol{\kappa}} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\kappa})\\
+z_{n}|\boldsymbol{\rho} & \sim & \text{Categorical}(\cdot|\boldsymbol{\rho})\\
+\theta_{k} & \sim & G(\cdot)\\
+x_{n}|z_{n},\boldsymbol{\theta} & \sim & F(\cdot|\theta_{k})
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $G$
+\end_inset
+
+ and 
+\begin_inset Formula $F$
+\end_inset
+
+ are arbitrary distributions.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Improving the model
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The main idea is to share the cellular prevalences by making them the parameters
+ of the mixture distribution.
+ Each cluster then represents a set of mutations which share the same evolutiona
+ry history.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\boldsymbol{\rho|\boldsymbol{\kappa}} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\kappa})\\
+z_{n}|\boldsymbol{\rho} & \sim & \text{Categorical}(\cdot|\boldsymbol{\rho})\\
+\phi_{k} & \sim & \text{Uniform}(\cdot|[0,1])\\
+b_{n}|d_{n},\boldsymbol{\phi},\boldsymbol{\pi}_{n},t,z_{n} & \sim & \sum_{\boldsymbol{\psi}}\pi_{\boldsymbol{\psi}}\text{Binomial}(b|d,\xi(\boldsymbol{\psi},\phi_{z_{n}},t))
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+MCMC inference
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+We can no longer integrate all the variables to compute the posterior.
+ We could use EM to compute MAP estimates.
+ However, it is useful to quantify uncertainty in this problem so we will
+ do full MCMC inference.
+ To update the parameters we use the following strategy.
+\end_layout
+
+\begin_layout Itemize
+Update 
+\begin_inset Formula $\phi_{k}$
+\end_inset
+
+ with an MH move
+\end_layout
+
+\begin_layout Itemize
+Update 
+\begin_inset Formula $z_{n}$
+\end_inset
+
+ with a Gibbs sampler
+\end_layout
+
+\begin_layout Itemize
+Update 
+\begin_inset Formula $\boldsymbol{\rho}$
+\end_inset
+
+ with a Gibbs sampler
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Updating the 
+\begin_inset Formula $z_{n}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The most complicated update is for the cluster indicators.
+ To derive the Gibbs update we need to compute the conditional distribution
+ of 
+\begin_inset Formula $z_{n}$
+\end_inset
+
+ given all the other parameters.
+ This has the form
+\begin_inset Formula 
+\begin{eqnarray*}
+p(z_{n}=k|-) & = & \frac{\rho_{k}p(b_{n}|d_{n},\boldsymbol{\phi},\boldsymbol{\pi}_{n},t,z_{n}=k)}{\sum_{\ell}\rho_{\ell}p(b_{n}|d_{n},\boldsymbol{\phi},\boldsymbol{\pi}_{n},t,z_{n}=\ell)}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Question
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+How do we set the number of clusters?
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+A different view of mixture models
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Note that in a mixture model if 
+\begin_inset Formula $z_{i}=z_{j}$
+\end_inset
+
+, then we have 
+\begin_inset Formula $\theta_{z_{i}}=\theta_{z_{j}}$
+\end_inset
+
+ that is data point 
+\begin_inset Formula $i$
+\end_inset
+
+ and 
+\begin_inset Formula $j$
+\end_inset
+
+ share the same parameter.
+\end_layout
+
+\begin_layout Itemize
+Instead of explicitly tracking the indicators we could instead assign each
+ data point it own 
+\begin_inset Formula $\theta_{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+If 
+\begin_inset Formula $\theta_{i}=\theta_{j}$
+\end_inset
+
+ we say 
+\begin_inset Formula $i$
+\end_inset
+
+ and 
+\begin_inset Formula $j$
+\end_inset
+
+ are in the same cluster.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Now if 
+\begin_inset Formula $\theta_{i}\sim G$
+\end_inset
+
+ and 
+\begin_inset Formula $G$
+\end_inset
+
+ is a continuous distribution, there is zero probability of sharing parameters.
+\end_layout
+
+\begin_layout Itemize
+Implicitly a mixture model solves this by constructing a discrete 
+\begin_inset Formula $G(\cdot)=\sum_{k=1}^{K}\rho_{k}\delta_{\theta_{k}}(\cdot)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Dirichlet process
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The Dirichlet process (DP) is a non-parametric Bayesian prior.
+\end_layout
+
+\begin_layout Itemize
+Formally it is a distribution over distributions, or a stochastic process.
+\end_layout
+
+\begin_layout Itemize
+There are two parameters to a DP: 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ the concentration and 
+\begin_inset Formula $G_{0}$
+\end_inset
+
+ the base measure.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\alpha$
+\end_inset
+
+ roughly controls the number of clusters
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $G_{0}$
+\end_inset
+
+ controls where the cluster parameters are located.
+\end_layout
+
+\begin_layout Itemize
+If we have 
+\begin_inset Formula $G\sim\text{DP}(\cdot|\alpha,G_{0})$
+\end_inset
+
+ then 
+\begin_inset Formula $G$
+\end_inset
+
+ is almost surely discrete.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Dirichlet process mixture models
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The last two slides suggest a way to use the DP to estimate the number of
+ clusters.
+\end_layout
+
+\begin_layout Itemize
+In the finite case we set 
+\begin_inset Formula $G$
+\end_inset
+
+ to have 
+\begin_inset Formula $K$
+\end_inset
+
+ components, and update the mix-weights 
+\begin_inset Formula $\rho_{k}$
+\end_inset
+
+ and cluster parameters 
+\begin_inset Formula $\theta_{k}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+If we instead sample 
+\begin_inset Formula $G$
+\end_inset
+
+ from a DP then the number of components 
+\begin_inset Formula $K$
+\end_inset
+
+ will be random.
+\end_layout
+
+\begin_layout Itemize
+Thus we can learn the value of 
+\begin_inset Formula $K$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Non-parametric model
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+G_{0} & = & \text{Uniform}(\cdot|[0,1])\\
+G|\alpha,G_{0} & \sim & \text{DP}(\cdot|\alpha,G_{0})\\
+\phi_{n}|G & \sim & G\\
+b_{n}|d_{n},\phi_{n},\boldsymbol{\pi}_{n},t & \sim & \sum_{\boldsymbol{\psi}}\pi_{n\boldsymbol{\psi}}\text{Binomial}(b|d,\xi(\boldsymbol{\psi},\phi_{n},t))
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Summarising the posterior
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+MCMC sampling will produce a set of parameter samples called the trace
+\end_layout
+
+\begin_layout Itemize
+This gives us an approximate posterior over all possible clusterings
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Question
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+How should we report a single 
+\begin_inset Quotes eld
+\end_inset
+
+best
+\begin_inset Quotes erd
+\end_inset
+
+ clustering?
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Summarising the posterior
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+We compute a consensus clustering, 
+\begin_inset Formula $\hat{\mathbf{z}}=(\hat{z}_{1},\ldots,\hat{z}_{N}$
+\end_inset
+
+), using the MPEAR technique to approximately optimize the Adjusted Rand
+ Index loss function.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+This requires computing the posterior similarity matrix 
+\begin_inset Formula $S$
+\end_inset
+
+ where 
+\begin_inset Formula $S_{ij}$
+\end_inset
+
+ is the proportion of MCMC samples where mutation 
+\begin_inset Formula $i$
+\end_inset
+
+ and 
+\begin_inset Formula $j$
+\end_inset
+
+ appear in the same cluster.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $S$
+\end_inset
+
+ is invariant to the number of clusters and reordering the cluster labels.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+We can also compute the posterior cellular prevalence of a cluster as
+\begin_inset Formula 
+\begin{eqnarray*}
+p(\phi_{k}|X,\hat{\mathbf{z}}) & = & \frac{p(\phi_{k})\prod_{\{n:\hat{z}_{n}=k\}}p(x_{n}|\phi_{k})}{\int p(\phi_{k})\prod_{\{n:\hat{z}_{n}=k\}}p(x_{n}|\phi_{k}){\rm d}\phi_{k}}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Multiple samples
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The extension to multiple samples is straightforward.
+ The only real change is to change 
+\begin_inset Formula $\phi_{k}$
+\end_inset
+
+ to a vector 
+\begin_inset Formula $\boldsymbol{\phi}_{k}$
+\end_inset
+
+ and the prior from Uniform on the interval [0,1] to the Uniform on the
+ hyper-cube 
+\begin_inset Formula $[0,1]^{M}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $M$
+\end_inset
+
+ be the number of samples and 
+\begin_inset Formula $m$
+\end_inset
+
+ be the index for samples.
+ Then the multi-sample model is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+G_{0} & = & \text{Uniform}(\cdot|[0,1]^{M})\\
+G|\alpha,G_{0} & \sim & \text{DP}(\cdot|\alpha,G_{0})\\
+\boldsymbol{\phi}_{n}|G & \sim & G\\
+b_{nm}|d_{nm},\phi_{nm},\boldsymbol{\pi}_{nm},t & \sim & \sum_{\boldsymbol{\psi}}\pi_{nm\boldsymbol{\psi}}\text{Binomial}(b|d,\xi(\boldsymbol{\psi},\phi_{nm},t_{m}))
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Overdispersion
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+HTS allele counts can have more variance than a Binomial can account for
+\end_layout
+
+\begin_layout Itemize
+For high depth sequencing this problem becomes important
+\end_layout
+
+\begin_layout Itemize
+To overcome the issue we use an overdipsersed distribution, the Beta-Binomial
+\end_layout
+
+\begin_layout Itemize
+We set the mean to 
+\begin_inset Formula $\xi$
+\end_inset
+
+ and introduce a global variance parameter
+\end_layout
+
+\end_deeper
+\end_body
+\end_document

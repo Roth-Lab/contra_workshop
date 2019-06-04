@@ -187,6 +187,8 @@
     <item><math|\<tau\><around*|(|v|)>> denote the subtree rooted at node
     <math|v>
 
+    <item><math|\<rho\><around*|(|v|)>> denote the parent of node <math|v>
+
     <item><math|\<gamma\><around*|(|v|)>> denote the set of children of
     <math|v>
 
@@ -196,7 +198,7 @@
   Then we have\ 
 
   <\eqnarray>
-    <tformat|<table|<row|<cell|p<around*|(|\<b-x\>\|\<tau\>,P,\<b-y\>|)>>|<cell|=>|<cell|<big|prod><rsub|v\<in\>L<around*|(|v|)>>P<rsub|y<rsub|\<rho\><around*|(|v|)>>
+    <tformat|<table|<row|<cell|p<around*|(|\<b-x\>\|\<tau\>,P,\<b-y\>|)>>|<cell|=>|<cell|<big|prod><rsub|v\<in\>L<around*|(|\<tau\>|)>>P<rsub|y<rsub|\<rho\><around*|(|v|)>>
     x<rsub|v>> <big|prod><rsub|v\<in\>I<around*|(|\<tau\>|)>>P<rsub|y<rsub|\<rho\><around*|(|v|)>>
     y<rsub|v>>>>|<row|<cell|>|<cell|=>|<cell|<big|prod><rsub|v\<in\>\<gamma\><around*|(|r|)>>P<rsub|y<rsub|r>
     \ y<rsub|v>> p<around*|(|\<b-x\>\|\<tau\><around*|(|v|)>,P,\<b-y\>|)>>>>>
@@ -317,12 +319,12 @@
   <math|\<pi\><rsub|l>>. The main assumptions are
 
   <\enumerate-numeric>
-    <item>Mutations originate at most once on the tree
+    <item>Mutations originate at most once on the tree.
 
-    <item>Mutations can be lost after they are acquired
+    <item>Mutations can be lost after they are acquired.
 
     <item>Mutations evolve indepdently i.e. our tree probability decomposes
-    as the product of mutations
+    as the product of mutations.
   </enumerate-numeric>
 
   \;
@@ -438,11 +440,11 @@
   the sub-tree rooted at <math|i>. This can be compute recursively as follows
 
   <\eqnarray>
-    <tformat|<table|<row|<cell|Q<around*|(|j,\<tau\>|)>>|<cell|=>|<cell|<choice|<tformat|<table|<row|<cell|\<pi\><rsub|l>
-    p<around*|(|z<rsub|j>=0<mid|\|>\<cdot\>|)>+<around*|(|1-\<pi\><rsub|l>|)>
-    p<around*|(|z<rsub|j>=1<mid|\|>\<cdot\>|)>>|<cell|<text|if>>|<cell|j\<in\>L<around*|(|T|)>>>|<row|<cell|\<pi\><rsub|l>
-    <big|prod><rsub|i\<in\>L<around*|(|j|)>>p<around*|(|z<rsub|i>=0\|\<cdot\>|)>+<around*|(|1-\<pi\><rsub|l>|)>
-    <big|prod><rsub|i\<in\>C<around*|(|j|)>>Q<around*|(|i,\<tau\>|)>>|<cell|<text|if>>|<cell|j\<nin\>L<around*|(|T|)>>>>>>>>>>
+    <tformat|<table|<row|<cell|Q<around*|(|i,\<tau\>|)>>|<cell|=>|<cell|<choice|<tformat|<table|<row|<cell|\<pi\><rsub|l>
+    p<around*|(|z<rsub|i>=0<mid|\|>\<cdot\>|)>+<around*|(|1-\<pi\><rsub|l>|)>
+    p<around*|(|z<rsub|i>=1<mid|\|>\<cdot\>|)>>|<cell|<text|if>>|<cell|i\<in\>L<around*|(|\<tau\>|)>>>|<row|<cell|\<pi\><rsub|l>
+    <big|prod><rsub|j\<in\>L<around*|(|i|)>>p<around*|(|z<rsub|j>=0\|\<cdot\>|)>+<around*|(|1-\<pi\><rsub|l>|)>
+    <big|prod><rsub|j\<in\>C<around*|(|i|)>>Q<around*|(|j,\<tau\>|)>>|<cell|<text|if>>|<cell|i\<nin\>L<around*|(|\<tau\>|)>>>>>>>>>>
   </eqnarray>
 
   The first line is the initial condition for the leaf nodes. The term
@@ -461,7 +463,7 @@
   With <math|Q<around*|(|j,\<tau\>|)>> defined we then have
 
   <\eqnarray>
-    <tformat|<table|<row|<cell|p<around*|(|\<b-x\>\|\<tau\>,w|)>>|<cell|=>|<cell|Q<around*|(|j=w,\<tau\>|)>
+    <tformat|<table|<row|<cell|p<around*|(|\<b-x\>\|\<tau\>,w|)>>|<cell|=>|<cell|Q<around*|(|w,\<tau\>|)>
     <big|prod><rsub|i\<in\>L<around*|(|\<tau\>|)>\\L<around*|(|w|)>>p<around*|(|z<rsub|i>=0\|\<cdot\>|)>>>>>
   </eqnarray>
 
@@ -474,7 +476,7 @@
   have
 
   <\eqnarray>
-    <tformat|<table|<row|<cell|p<around*|(|\<b-x\>\|\<tau\>|)>>|<cell|=>|<cell|<big|sum><rsub|w\<in\>V<around*|(|T|)>>p<around*|(|\<b-x\>\|\<tau\>,w|)>
+    <tformat|<table|<row|<cell|p<around*|(|\<b-x\>\|\<tau\>|)>>|<cell|=>|<cell|<big|sum><rsub|w\<in\>V<around*|(|\<tau\>|)>>p<around*|(|\<b-x\>\|\<tau\>,w|)>
     p<around*|(|w|)>>>>>
   </eqnarray>
 

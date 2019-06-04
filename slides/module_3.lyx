@@ -1,0 +1,1358 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass beamer
+\begin_preamble
+\usetheme{metropolis}
+\end_preamble
+\options aspectratio=169
+\use_default_options true
+\maintain_unincluded_children false
+\language british
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "times" "default"
+\font_sans "helvet" "default"
+\font_typewriter "courier" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style british
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Module 3: Copy number variation
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Overview
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Copy number variants (CNVs) are another common genomic aberration in cancer.
+\end_layout
+
+\begin_layout Itemize
+Like SNVs they can act as driver mutations and they can be markers of clonal
+ populations.
+\end_layout
+
+\begin_layout Itemize
+The main difference between CNVs and SNVs is spatial correlation.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Data representation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+What data should we use to model CNVs?
+\end_layout
+
+\begin_layout Itemize
+We assume HTS data, either bulk or single cell.
+\end_layout
+
+\begin_layout Itemize
+We can summarise aligned reads in multiple ways for CNV analysis.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Allele counts
+\end_layout
+
+\begin_layout Itemize
+Binned read counts
+\end_layout
+
+\begin_layout Itemize
+Haplotype blocks
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Allelic counts
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Like SNVs we can consider allelic counts.
+\end_layout
+
+\begin_layout Itemize
+Most positions won't have a SNV or SNP so we mainly have information about
+ total depth.
+\end_layout
+
+\begin_layout Itemize
+If we restrict to heterozygous SNPs we can have read counts for the reference
+ 
+\begin_inset Formula $a$
+\end_inset
+
+ and alternate allele 
+\begin_inset Formula $b$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+This representation is good for allele specific copy number inference
+\end_layout
+
+\begin_layout Itemize
+It is not a useful for low coverage data like single WGS.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Binned read counts
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Instead of looking point wise at genomic positions, we divide the genome
+ into bins.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Typical bin lengths are of the order 
+\begin_inset Formula $10^{3}\text{bp}-10^{5}\text{bp}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Ideally bin length should be smaller than the typical CNV size.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+We can then count the number of reads in the bin.
+\end_layout
+
+\begin_layout Itemize
+Assuming read depth is proportional to copy number we can then model total
+ copy number.
+\end_layout
+
+\begin_layout Itemize
+This strategy is useful in low coverage data as we pool data across much
+ larger regions.
+\end_layout
+
+\begin_layout Itemize
+It is also computationally cheaper as we have 
+\begin_inset Formula $10^{4}-10^{6}$
+\end_inset
+
+ data points.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Haplotype blocks
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+A haplotype block is a region of the genome where we can phase heterozygous
+ SNPs.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+That is we can determine the parental sequence of SNPs on each chromosome.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+We can summarise the read data from these blocks in terms of three values.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Total number of reads.
+\end_layout
+
+\begin_layout Itemize
+Number of reads supporting haplotype 
+\begin_inset Formula $1$
+\end_inset
+
+ at het SNPs.
+\end_layout
+
+\begin_layout Itemize
+Number of reads supporting haplotype 2 at het SNPs.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+For bulk data this representation is typically an improvement over the allelic
+ counts.
+\end_layout
+
+\begin_layout Itemize
+It is less useful for low coverage data unless we can get reasonably long
+ haplotype blocks.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Modelling spatial correlation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The key point for CNVs is we want to model spatial correlation.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Two adjacent points in the chromosome are more likely to have the same copy
+ number.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+There are two major strategies employed:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Segment the data in advance and then fit the copy number.
+\end_layout
+
+\begin_layout Enumerate
+Jointly segment the data and fit copy number.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Strategy 1 is computationally efficient.
+ However, the segmentation is fixed and thus cannot make use of information
+ such as tumour content.
+\end_layout
+
+\begin_layout Itemize
+We will explore strategy 2 here.
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Question
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+Does anyone know of tools which use each strategy?
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Probabilistic modelling of spatial correlation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Hidden Markov models (HMMs) are the most popular approach for modelling
+ spatial correlation in computational cancer.
+\end_layout
+
+\begin_layout Itemize
+Other approaches such as Kalman filtering and general state space models
+ have not been widely used.
+\end_layout
+
+\begin_layout Itemize
+HMMs assume a data point only depends on the point immediately preceding
+ it.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Important for developing efficient inference algorithms.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Downside of HMMs is limited ability to model state duration.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+HMMs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Latent variable model, where the latent (or hidden) variables have a dependency
+ structure.
+\end_layout
+
+\begin_layout Itemize
+Latent variables take values in some discrete state space 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Dynamic mixture models, where mixture weights depend on previous data point.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+HMMs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\boldsymbol{\pi}$
+\end_inset
+
+ - The initial state vector.
+ This is a vector of length 
+\begin_inset Formula $|\mathcal{X}|$
+\end_inset
+
+ where 
+\begin_inset Formula $\pi_{i}$
+\end_inset
+
+ is the probability the first hidden variable in the sequence takes value
+ 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $A$
+\end_inset
+
+ - The transition matrix.
+ This is a 
+\begin_inset Formula $|\mathcal{X}|\times|\mathcal{X}|$
+\end_inset
+
+ matrix where 
+\begin_inset Formula $A_{ij}$
+\end_inset
+
+ is the probability that the current hidden value takes on state 
+\begin_inset Formula $j$
+\end_inset
+
+ given the previous one was in state 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F$
+\end_inset
+
+ - The emission distribution.
+ This is the distribution for the observed data which depends on the associated
+ hidden state.
+ The hidden state is like the cluster indicator in mixture models, selecting
+ which parameter is used for 
+\begin_inset Formula $F$
+\end_inset
+
+ to generate the data point.
+\end_layout
+
+\begin_layout Itemize
+Here we assume that 
+\begin_inset Formula $K=|\mathcal{X}|$
+\end_inset
+
+ is known and fixed.
+ This assumption can be relaxed using non-parametric Bayesian priors.
+ Computationally demanding.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Bayesian HMMs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\boldsymbol{\pi}|\boldsymbol{\kappa} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\kappa})\\
+A_{k\cdot}|\boldsymbol{\gamma} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\gamma})\\
+z_{1}|\boldsymbol{\pi} & \sim & \text{Categorical}(\cdot|\boldsymbol{\pi})\\
+z_{n}|z_{n-1},A & \sim & \text{Categorical}(\cdot|A_{z_{t-1}\cdot})\\
+\theta_{k} & \sim & G\\
+x_{n}|z_{n},\boldsymbol{\theta} & \sim & F(\cdot|\theta_{z_{n}})
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+HMM inference
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+We can efficiently compute the conditional distribution of the hidden states.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Done using the forward-backward (FB) algorithm
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+FB can be used for both MAP (via EM) and MCMC estimation.
+\end_layout
+
+\begin_layout Itemize
+Replacing summation with maximisation in FB leads to Viterbi algorithm.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Compute the most probable sequence of states.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+We discuss using EM to perform MAP.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Common approach in the field due to computational complexity of MCMC.
+\end_layout
+
+\begin_layout Itemize
+We use EM to find the MAP values of 
+\begin_inset Formula $\boldsymbol{\pi}$
+\end_inset
+
+ and 
+\begin_inset Formula $A$
+\end_inset
+
+ then Viterbi to find the hidden states.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Forward-Backward recursion
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\alpha(z_{n}=k) & = & p(x_{n}|z_{n}=k)\sum_{l=1}^{K}\alpha(z_{n-1}=l)A_{lk}\\
+\beta(z_{n}=k) & = & \sum_{l=1}^{K}\beta(z_{n+1}=l)p(x_{n+1}|z_{n+1}=l)A_{lk}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+E-step
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+p(\mathbf{x}) & = & \sum_{k=1}^{K}\alpha(Z_{n}=K)\\
+\mathbb{E}_{\mathbf{z}}[\mathbb{I}(z_{n}=k)] & = & \frac{\alpha(z_{n}=k)\beta(z_{n}=k)}{p(\mathbf{x})}\\
+\mathbb{E}_{\mathbf{z}}[\mathbb{I}(z_{n-1}=k,z_{n}=l)] & = & \frac{\alpha(z_{n}=k)p(x_{n-1}|z_{n-1}=k)p(x_{n}|z_{n}=l)\beta(z_{n}=l)}{p(\mathbf{x})}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+M-step
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\hat{\pi}_{k} & \propto & \kappa_{k}+\mathbb{E}_{\mathbf{z}}[\mathbb{I}(z_{n}=k)]\\
+\hat{A}_{kl} & \propto & \gamma_{kl}+\mathbb{E}_{\mathbf{z}}[\mathbb{I}(z_{n-1}=k,z_{n}=l)]\\
+\frac{\partial}{\partial\theta_{k}}p(\mathbf{x},\boldsymbol{\pi},A,\boldsymbol{\theta}) & = & \sum_{n=1}^{N}\mathbb{E}_{\mathbf{z}}[\mathbb{I}(z_{n}=k)]\frac{\partial}{\partial\theta_{k}}\log f(x_{n}|\theta_{k})+\frac{\partial}{\partial\theta_{k}}\log p(\theta_{k})
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+CNV modelling
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Homogeneous sample model
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+We consider the problem of inferring copy number profiles from a sample
+ that has:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+No clonal population structure.
+\end_layout
+
+\begin_layout Itemize
+No normal contamination.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Data is binned total read counts.
+\end_layout
+
+\begin_layout Itemize
+We want to infer total copy number.
+\end_layout
+
+\begin_layout Itemize
+While a bit uninteresting for bulk, it could be useful for single cell.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Notation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $m$
+\end_inset
+
+ - chromosome index
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $M$
+\end_inset
+
+ - number of chromosomes
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $n$
+\end_inset
+
+ - bin index
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $N_{m}$
+\end_inset
+
+ - number of bins for chromosome 
+\begin_inset Formula $m$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x_{n}^{m}$
+\end_inset
+
+ - number of reads in the 
+\begin_inset Formula $n^{th}$
+\end_inset
+
+ bin on chromosome 
+\begin_inset Formula $m$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $z_{n}^{m}$
+\end_inset
+
+ - hidden state for the 
+\begin_inset Formula $n^{th}$
+\end_inset
+
+ bin on chromosome 
+\begin_inset Formula $m$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Model
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\boldsymbol{\pi}|\boldsymbol{\kappa} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\kappa})\\
+A_{k\cdot}|\boldsymbol{\gamma} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\gamma})\\
+z_{1}^{m}|\boldsymbol{\pi} & \sim & \text{Categorical}(\cdot|\boldsymbol{\pi})\\
+z_{n}^{m}|z_{n-1}^{m},A & \sim & \text{Categorical}(\cdot|A_{z_{t-1}^{m}\cdot})\\
+r & \sim & \text{Gamma}(\cdot|a,b)\\
+\theta_{c}|r & = & rc\\
+x_{n}^{m}|z_{n}^{m},\boldsymbol{\theta} & \sim & \text{Poisson}(\cdot|\theta_{z_{n}^{m}})
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $r$
+\end_inset
+
+ - haploid read depth
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\theta_{c}$
+\end_inset
+
+ - deterministic function of copy number and read depth
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+GC content correction
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Simple model assumes read depth is a linear function of copy number and
+ haploid coverage.
+\end_layout
+
+\begin_layout Itemize
+In practice the GC content of a bin has a substantial impact on read coverage.
+\end_layout
+
+\begin_layout Itemize
+One strategy is to normalise for this a pre-processing.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Data is no longer integer and Poisson cannot be used.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Alternative is to introduce GC covariate 
+\begin_inset Formula $g_{n}^{m}$
+\end_inset
+
+ and model its effect
+\begin_inset Formula 
+\begin{eqnarray*}
+h_{n}^{m} & \sim & H(\cdot|g_{n}^{m})\\
+x_{n}^{m}|h_{n}^{m},z_{n}^{m},\boldsymbol{\theta} & \sim & \text{Poisson}(\cdot|h_{n}^{m}\theta_{z_{n}^{m}})
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Overdispersion
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Like the SNV case data can have more variance then our assumed distribution.
+\end_layout
+
+\begin_layout Itemize
+We can follow the same strategy as before and replace the Poisson with a
+ Negative-Binomial with the same mean.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+We now have an additional variance parameter which could be global or state
+ specific.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Unlike SNV data, overdispersion will appear in WGS data.
+ This is because binning leads to much higher read depth so the effect become
+ apparent.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Normal contamination
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\boldsymbol{\pi}|\boldsymbol{\kappa} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\kappa})\\
+A_{k\cdot}|\boldsymbol{\gamma} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\gamma})\\
+z_{1}^{m}|\boldsymbol{\pi} & \sim & \text{Categorical}(\cdot|\boldsymbol{\pi})\\
+z_{n}^{m}|z_{n-1}^{m},A & \sim & \text{Categorical}(\cdot|A_{z_{t-1}^{m}\cdot})\\
+r & \sim & \text{Gamma}(\cdot|a,b)\\
+t & \sim & \text{Uniform}(\cdot|[0,1])\\
+\theta_{c}|r,t & = & r(2(1-t)+ct)\\
+x_{n}^{m}|z_{n}^{m},\boldsymbol{\theta} & \sim & \text{Poisson}(\cdot|\theta_{z_{n}^{m}})
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Ploidy
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Model is unidentifiable because of 
+\begin_inset Formula $θ_{c}=rc$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Doubling 
+\begin_inset Formula $c$
+\end_inset
+
+ and halving 
+\begin_inset Formula $r$
+\end_inset
+
+ leads to solution with same likelihood
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Ploidy is loosely used to refer to the average copy number of a sample (cell).
+\end_layout
+
+\begin_layout Itemize
+We can alter the ploidy and change 
+\begin_inset Formula $r$
+\end_inset
+
+ to come up with multiple equally likely solutions.
+\end_layout
+
+\begin_layout Itemize
+Problem for all CNV software, bulk or single cell.
+\end_layout
+
+\begin_layout Itemize
+No automated solution - manual curation required
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Ploidy example (ASCAT)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_3/sunset.jpeg
+	lyxscale 10
+	height 85theight%
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\size tiny
+Vandamme et al.
+ Journal of Molecular Endocrinology 2015
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Allele specific copy number
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+If we want to infer major and minor copy number we need to incorporate het
+ SNP information.
+\end_layout
+
+\begin_layout Itemize
+Using haplotype block data is better than allele specific counts.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Pooling strength across blocks allows for better estimates of allele frequencies.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Formula $x_{n}^{a}$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{n}^{b}$
+\end_inset
+
+ be the number of reads supporting haplotype 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\series bold
+
+\begin_inset Formula $b$
+\end_inset
+
+ 
+\series default
+in the block.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x_{n}^{t}$
+\end_inset
+
+ is the total number of reads in the block.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x_{n}^{l}$
+\end_inset
+
+ is the length of the block
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $z_{n}\in\{(c_{a},c_{b}):c_{a},c_{b}\le C\}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Allele specific copy number
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\boldsymbol{\pi}|\boldsymbol{\kappa} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\kappa})\\
+A_{k\cdot}|\boldsymbol{\gamma} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\gamma})\\
+z_{1}|\boldsymbol{\pi} & \sim & \text{Categorical}(\cdot|\boldsymbol{\pi})\\
+z_{n}|z_{n-1},A & \sim & \text{Categorical}(\cdot|A_{z_{t-1}\cdot})\\
+r & \sim & \text{Gamma}(\cdot|a,b)\\
+\theta_{c}|r,z_{n}=(c_{a},c_{b}),x_{n}^{l} & = & r(c_{a}+c_{b})x_{n}^{l}\\
+x_{n}^{t}|z_{n}^{m},\boldsymbol{\theta} & \sim & \text{Poisson}(\cdot|\theta_{z_{n}})\\
+x_{n}^{b}|x_{n}^{a},z_{n}=(c_{a},c_{b}) & \sim & \text{Binomial}(\cdot|x_{n}^{a}+x_{n}^{d},\frac{c_{b}}{c_{a}+c_{b}})
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_body
+\end_document

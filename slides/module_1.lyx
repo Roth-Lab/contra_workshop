@@ -1,0 +1,1669 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass beamer
+\begin_preamble
+\usetheme{metropolis}
+\end_preamble
+\options aspectratio=169
+\use_default_options true
+\maintain_unincluded_children false
+\language british
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "times" "default"
+\font_sans "helvet" "default"
+\font_typewriter "courier" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style british
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Module 1: Introduction to probabilistic modelling
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+My research
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_1/research.png
+	lyxscale 10
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Overview of probabilistic modelling
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+What do we mean by probabilistic modelling
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+In general any model that treats the data as a random quantity.
+\end_layout
+
+\begin_layout Itemize
+More specifically a hierarchical model where parameters are also random.
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Questions
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Can anyone give examples of probabilistic models?
+\end_layout
+
+\begin_layout Itemize
+Can anyone give examples of non-probabilistic models?
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Why do we need probabilistic models
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Data is always 
+\begin_inset Quotes eld
+\end_inset
+
+noisy
+\begin_inset Quotes erd
+\end_inset
+
+ in some way.
+\end_layout
+
+\begin_layout Itemize
+In computational cancer the noise can come from
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Technical error due to the measurement technology (random variation).
+\end_layout
+
+\begin_layout Itemize
+Biological variation (systematic).
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Probabilistic models naturally capture random variation through the assumption
+ the data is a random variable.
+\end_layout
+
+\begin_layout Itemize
+Systematic variation can be handled by adding layers of hidden or latent
+ variables to the model.
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Question
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+Consider the problem of calling SNVs from bulk sequencing.
+ What are some sources of technical and biological variation that could
+ affect the data?
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Building probabilistic models
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+In this workshop we will look at how to build probabilistic models
+\end_layout
+
+\begin_layout Itemize
+Some key questions we address
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+How do we construct an appropriate model for the data?
+\end_layout
+
+\begin_layout Enumerate
+How can estimate the model parameters?
+\end_layout
+
+\begin_layout Enumerate
+How do report these model parameters i.e.
+ how certain are we?
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+When working through later modules, the most important point is to understand
+ the process not the model.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+The steps to building a probabilistic model
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Identify a well defined problem.
+\end_layout
+
+\begin_layout Enumerate
+Explore the data and qualitatively understand its properties.
+\end_layout
+
+\begin_layout Enumerate
+Decompose the main problem into smaller pieces which can be iteratively
+ extended.
+\end_layout
+
+\begin_layout Enumerate
+Identify and implement a means to estimate model parameters.
+\end_layout
+
+\begin_layout Enumerate
+Validate the model and inference approach.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+What is the problem
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Identifying a well defined problem is the most important step.
+\end_layout
+
+\begin_layout Itemize
+Some key considerations:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+What is the quantity we wish to measure?
+\end_layout
+
+\begin_layout Itemize
+What type of data will we have available?
+\end_layout
+
+\begin_layout Itemize
+What are the current approaches to address the problem?
+\end_layout
+
+\end_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Remark
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+It is easy to skip the step of looking at existing approaches.
+ Even if no formal method has been published, there are often simple approaches
+ which can be applied.
+ One useful exercise is to look at how biologists and bioinformaticians
+ are currently analysing the data.
+ It may be something simple like a t-test.
+ Having baseline approaches to compare to is critical to ensure any new
+ method actually provides an improvement.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Explore the data
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Looking at real data through some form of qualitative analysis is critical.
+\end_layout
+
+\begin_layout Itemize
+Often the feasibility of the problem hinges critically on features that
+ may not be obvious.
+\end_layout
+
+\begin_layout Itemize
+Exploratory analysis can also reveal unexpected noise.
+\end_layout
+
+\begin_layout Itemize
+Some examples:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+How practical is it to call variants from 5' single cell RNA-Seq?
+\end_layout
+
+\begin_layout Itemize
+What about single cell DNA sequencing?
+\end_layout
+
+\begin_layout Itemize
+How does read count data look from a diploid cell line?
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Building a model
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Once you have a well defined problem and understand the data, then you can
+ begin building a model.
+\end_layout
+
+\begin_layout Itemize
+Often attempting to build a very complex model initially will be challenging.
+\end_layout
+
+\begin_layout Itemize
+A useful strategy is to identify smaller problems which are easier to model.
+\end_layout
+
+\begin_layout Itemize
+Using the framework of Bayesian hierarchical modelling it easy to extend
+ simple models.
+\end_layout
+
+\begin_layout Itemize
+A common idea is to share 
+\shape italic
+statistical strength
+\shape default
+ across data points.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+This typically manifest as sharing parameters between data points, samples,
+ cells etc.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Fitting the model
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Probabilistic models will typically have many parameters.
+\end_layout
+
+\begin_layout Itemize
+A core question is how to estimate these parameters given the data.
+\end_layout
+
+\begin_layout Itemize
+As we will see, Bayesian inference provides a prescription for this problem.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+However, there is still a lot of flexibility.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+A core question is how to report estimates of model parameters.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Do we want a point estimate.
+\end_layout
+
+\begin_layout Itemize
+Do we want to quantify uncertainty.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Note there is an interplay between inference and model building.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+If we cannot fit the model it is not very useful.
+\end_layout
+
+\begin_layout Itemize
+If we have better tools for model fitting we can confidently build more
+ complex models.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Validation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The final step in the process is to validate the model.
+\end_layout
+
+\begin_layout Itemize
+There are two questions:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Does the inference algorithm work well?
+\end_layout
+
+\begin_layout Enumerate
+Does the model fit real data and capture the biological quantities of interest
+ accurately?
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+The first question can be answered by simulating data from the model and
+ assessing the accuracy of inferred parameters.
+\end_layout
+
+\begin_layout Itemize
+The latter question can only be answered with 
+\shape italic
+ground truth
+\shape default
+ real world data.
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Bayesian inference
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Basic probability
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Let 
+\begin_inset Formula $A,B,\{C_{i}\}$
+\end_inset
+
+ be random events.
+\end_layout
+
+\begin_layout Itemize
+Then there are three basic equations that are at the centre of Bayesian
+ probabilistic modelling.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+p(A,B) & = & p(A|B)p(B)\\
+p(A|B) & = & \frac{p(B|A)p(A)}{p(B)}\\
+p(A) & = & \sum_{i}p(A|C_{i})p(C_{i})
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Background
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The Bayesian paradigm is one framework for probabilistic modelling.
+\end_layout
+
+\begin_layout Itemize
+In the Bayesian setting model parameters are considered random like the
+ data.
+\end_layout
+
+\begin_layout Itemize
+The core quantity we need to compute in the Bayesian setting is the posterior
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+p(\theta|X) & = & \frac{p(X|\theta)p(\theta)}{p(X)}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Here 
+\begin_inset Formula $X$
+\end_inset
+
+ is the data, 
+\begin_inset Formula $\theta$
+\end_inset
+
+ are the parameters, 
+\begin_inset Formula $p(X|\theta)$
+\end_inset
+
+ is the likelihood and 
+\begin_inset Formula $p(\theta)$
+\end_inset
+
+ the prior.
+\end_layout
+
+\begin_layout Itemize
+The normalisation constant (model evidence) 
+\begin_inset Formula $p(X)=\int p(X|\theta)p(\theta){\rm d}\theta$
+\end_inset
+
+ is typically hard to compute.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Background
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The Bayesian approach to model fitting states that all the information about
+ the parameters is encapsulated in the data.
+\end_layout
+
+\begin_layout Itemize
+We begin with prior belief about 
+\begin_inset Formula $\theta$
+\end_inset
+
+ encoded in the prior 
+\begin_inset Formula $p(\theta)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Our updated belief about 
+\begin_inset Formula $\theta$
+\end_inset
+
+ after seeing the data is given by the posterior 
+\begin_inset Formula $p(\theta|X)$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Summarising the posterior
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+In principle the posterior tells us everything we could want to know about
+ 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+In practice it can be hard to interpret high dimensional posteriors so we
+ turn to point estimates.
+\end_layout
+
+\begin_layout Itemize
+Simple solutions include reporting summary statistics such as the mean and
+ variance.
+\end_layout
+
+\begin_layout Itemize
+Uncertainty can be quantified by reporting regions which contain 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ of the mass.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Loss functions
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Loss functions provide a very general framework for summarising posteriors.
+\end_layout
+
+\begin_layout Itemize
+A loss function 
+\begin_inset Formula $L(x,y)$
+\end_inset
+
+ is a positive valued function which encodes our loss if we predict 
+\begin_inset Formula $x$
+\end_inset
+
+ when the true value is 
+\begin_inset Formula $y$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The Bayesian approach to point estimation is then to report the value with
+ the minimum expected loss
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+\hat{\theta} & = & \text{argmin}_{\theta}\int L(\theta,\theta')p(\theta'|X){\rm d}\theta'
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Hierarchical models
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Bayesian modelling is modular because parameters are random variables.
+\end_layout
+
+\begin_layout Itemize
+We can thus make the hyper-parameters that govern the distribution of these
+ variables random as well.
+\end_layout
+
+\begin_layout Itemize
+This allows us to construct hierarchical models.
+\end_layout
+
+\begin_layout Itemize
+We can use this to:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Embed simpler models in more complex ones.
+\end_layout
+
+\begin_layout Itemize
+Reduce the impact of the prior.
+\end_layout
+
+\begin_layout Itemize
+Share parameters to share statistical strength.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Section
+Posterior inference
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Why Bayesian inference is challenging
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Bayesian inference is conceptually simple - we apply Bayes rule and compute
+ the posterior.
+\end_layout
+
+\begin_layout Itemize
+In practice this means computing the normalisation constant 
+\begin_inset Formula $p(X)=\int p(X|\theta)p(\theta){\rm d}\theta$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+If 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is high dimensional this is typically intractable
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Bayesian inference becomes hard because we need to either:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Avoid explicitly computing 
+\begin_inset Formula $p(X)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Use advanced methods to estimate 
+\begin_inset Formula $p(X$
+\end_inset
+
+)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+As a result we almost always rely on some method to compute an approximation
+ to the posterior.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+MAP estimation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The simplest approximation one can make to the posterior is to use a distributio
+n that places all the mass on one point.
+\end_layout
+
+\begin_layout Itemize
+This point is typically the maximum of 
+\begin_inset Formula $p(\theta|X)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+We call this value, 
+\begin_inset Formula $\hat{\theta}$
+\end_inset
+
+, the maximum a posteriori (MAP) estimate.
+\end_layout
+
+\begin_layout Itemize
+This is tractable because
+\begin_inset Formula 
+\begin{eqnarray*}
+\hat{\theta} & = & \text{argmax}_{\theta}p(\theta|X)\\
+ & = & \text{argmax}_{\theta}p(\theta,X)
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+because 
+\begin_inset Formula $p(X)$
+\end_inset
+
+ does not depend on 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+MAP estimation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+It is often reasonably efficient to compute the MAP estimate
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+This is especially true if the parameters are continuous and we can use
+ gradient descent.
+\end_layout
+
+\begin_layout Itemize
+It is trickier when the parameters are discrete and have a large state space.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+The MAP estimate is a bad estimate of the posterior distribution typically.
+\end_layout
+
+\begin_layout Itemize
+There are two issues:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+We approximate a distribution with a single point.
+\end_layout
+
+\begin_layout Itemize
+The mode of the distribution may be a typical of the distribution as a whole.
+\end_layout
+
+\end_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Question
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+Can anyone think of a case when the MAP estimator is hard to compute?
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Monte Carlo methods
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+In the Bayesian setting we typically want to compute expected values.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+For example loss functions.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Monte Carlo method make the following simple observation
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\mathbb{E}_{p}[h] & = & \int h(x)p(x){\rm d}x\\
+ & \thickapprox & \sum_{s=1}^{S}h(x^{(s)})
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where 
+\begin_inset Formula $x^{(s)}$
+\end_inset
+
+ are random draws from 
+\begin_inset Formula $p$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The accuracy of this estimator increases as the number of samples 
+\begin_inset Formula $S$
+\end_inset
+
+ increases.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+MCMC methods
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Sampling from the posterior directly is typically as hard as computing the
+ posterior.
+\end_layout
+
+\begin_layout Itemize
+The basic idea of Markov Chain Monte Carlo methods is to construct a Markov
+ chain that admits 
+\begin_inset Formula $p(\theta|X)$
+\end_inset
+
+ as its invariant distribution.
+\end_layout
+
+\begin_layout Itemize
+We can then sequentially draw samples from the Markov chain to obtain samples
+ from 
+\begin_inset Formula $p(\theta|X)$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+MCMC burnin
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+MCMC methods are only guaranteed to draw samples from 
+\begin_inset Formula $p(\theta|X)$
+\end_inset
+
+ in the limit as we take an infinite number of iteration.
+\end_layout
+
+\begin_layout Itemize
+In practice the Markov chain often gets very close to sampling from 
+\begin_inset Formula $p(\theta|X)$
+\end_inset
+
+ in a finite number of iterations.
+\end_layout
+
+\begin_layout Itemize
+However, early samples from the chain may be from a distribution far from
+ 
+\begin_inset Formula $p(\theta|X)$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Thus we discard some initial number of samples as 
+\shape italic
+burnin
+\shape default
+.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+MCMC thinning
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Successive samples will not be independent draws from 
+\begin_inset Formula $p(\theta|X)$
+\end_inset
+
+ they will be correlated.
+\end_layout
+
+\begin_layout Itemize
+This does not affect the asymptotic result.
+\end_layout
+
+\begin_layout Itemize
+This does mean we need more samples than if we could sample from 
+\begin_inset Formula $p(\theta|X)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Often people only retain every 
+\begin_inset Formula $n^{th}$
+\end_inset
+
+, a procedure called 
+\shape italic
+thinning
+\shape default
+.
+\end_layout
+
+\begin_layout Itemize
+Thinning reduces the storage cost.
+\end_layout
+
+\begin_layout Itemize
+However, thinning does not improve accuracy for a given computational budget.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Metropolis-Hastings algorithm
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The MH algorithm is the simplest MCMC method to implement.
+\end_layout
+
+\begin_layout Itemize
+We proceed as follows:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Propose a new value 
+\begin_inset Formula $\theta'$
+\end_inset
+
+ from a distribution 
+\begin_inset Formula $q(\theta'|\theta)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Keep the proposed value with probability 
+\begin_inset Formula $\alpha(\theta,\theta')=\text{min}\left\{ 1,\frac{p(\theta'|X)q(\theta|\theta')}{p(\theta|X)q(\theta'|\theta)}\right\} =\text{min}\left\{ 1,\frac{p(\theta',X)q(\theta|\theta')}{p(\theta,X)q(\theta'|\theta)}\right\} $
+\end_inset
+
+ otherwise keep the old value.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+The trick of the MH algorithm is that the intractable normalisation cancels
+ in 
+\begin_inset Formula $\alpha(\theta,\theta')$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The key to obtaining efficient MH algorithms is to use a good proposal 
+\begin_inset Formula $q$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Gibbs sampling
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Assume 
+\begin_inset Formula $\theta=(\theta_{1},\theta_{2})$
+\end_inset
+
+ and we can sample from the conditional distributions 
+\begin_inset Formula $p(\theta_{1}|\theta_{2},X)$
+\end_inset
+
+ and 
+\begin_inset Formula $p(\theta_{2}|\theta_{1},X)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The Gibbs sampler works by alternatively sampling from 
+\begin_inset Formula $p(\theta_{1}|\theta_{2},X)$
+\end_inset
+
+ and then 
+\begin_inset Formula $p(\theta_{2}|\theta_{1},X)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+We use the previous values from each step to compute the conditional in
+ the next.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Metropolised-Gibbs algorithm
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+If 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is high dimensional, then it is very hard to find a good proposal 
+\begin_inset Formula $q$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+This is the curse of dimensionality which will force us to make only small
+ changes to any dimension.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+A useful strategy in this case is to break 
+\begin_inset Formula $\theta=(\theta_{1},\ldots,\theta_{B})$
+\end_inset
+
+ into 
+\begin_inset Formula $B$
+\end_inset
+
+ blocks of low dimension.
+\end_layout
+
+\begin_layout Itemize
+We can then use an MH algorithm targeting 
+\begin_inset Formula $p(\theta_{i}|\{\theta_{j}\}_{j\ne i},X)$
+\end_inset
+
+ with acceptance ratio
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\alpha(\theta_{i},\theta'_{i}) & = & \text{min}\left\{ 1,\frac{p(\theta'_{i}|\{\theta_{j}\}_{j\ne i},X)q(\theta_{i}|\theta_{i}')}{p(\theta_{i}|\{\theta_{j}\}_{j\ne i},X)q(\theta_{i}'|\theta_{i})}\right\} \\
+ & = & \text{min}\left\{ 1,\frac{p(\theta',X)q(\theta|\theta')}{p(\theta,X)q(\theta'|\theta)}\right\} 
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Metropolised-Gibbs algorithm
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+This blocked algorithm is often called Metropolised-Gibbs algorithm.
+\end_layout
+
+\begin_layout Itemize
+In practice it is often the only way to get MH to work in high dimensional
+ problems.
+\end_layout
+
+\begin_layout Itemize
+Note also that the normalisation 
+\begin_inset Formula $p(\{\theta_{j}\}_{j\ne i},X)$
+\end_inset
+
+ cancels so we get the same acceptance ratio as the normal MH algorithm.
+\end_layout
+
+\begin_layout Itemize
+If 
+\begin_inset Formula $q(\theta_{i}'|\theta_{i})=p(\theta'_{i}|\{\theta_{j}\}_{j\ne i},X)$
+\end_inset
+
+ the acceptance ratio becomes 1.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+This is the Gibbs sampler
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\end_body
+\end_document

@@ -538,7 +538,7 @@
   given by the following formula.
 
   <\eqnarray>
-    <tformat|<table|<row|<cell|\<bbb-E\><rsub|q><around*|[|h|]>>|<cell|=>|<cell|<big|int>h<around*|(|x|)>
+    <tformat|<table|<row|<cell|\<bbb-E\><rsub|p><around*|[|h|]>>|<cell|=>|<cell|<big|int>h<around*|(|x|)>
     p<around*|(|x|)> \<mathd\>x>>>>
   </eqnarray>
 
@@ -687,7 +687,7 @@
 
   <subsubsection|Gibbs sampling>
 
-  The Gibbs sampler is another widly used MCMC algorithm. If it is possible
+  The Gibbs sampler is another widely used MCMC algorithm. If it is possible
   to implement it often works better than MH, and requires no tuning. The
   Gibbs sampler works by iteratively updating a subset of the model
   parameters at each iteration. After we have updated all the subsets, we
@@ -825,9 +825,33 @@
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-8>>
 
-      <with|par-left|<quote|1tab>|1.4.<space|2spc>Model building workflow
+      <with|par-left|<quote|1tab>|1.4.<space|2spc>Posterior inference
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-9>>
+
+      <with|par-left|<quote|2tab>|1.4.1.<space|2spc>MAP estimation
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-10>>
+
+      <with|par-left|<quote|2tab>|1.4.2.<space|2spc>Monte Carlo simulation
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-11>>
+
+      <with|par-left|<quote|2tab>|1.4.3.<space|2spc>Metropolis-Hastings
+      algorithm <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-12>>
+
+      <with|par-left|<quote|2tab>|1.4.4.<space|2spc>Gibbs sampling
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-13>>
+
+      <with|par-left|<quote|2tab>|1.4.5.<space|2spc>Metropolised-Gibbs
+      algorithm <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-14>>
+
+      <with|par-left|<quote|1tab>|1.5.<space|2spc>Model building workflow
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-15>>
     </associate>
   </collection>
 </auxiliary>

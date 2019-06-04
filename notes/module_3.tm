@@ -190,7 +190,7 @@
   The main use of these recursions is to compute the following quantities
 
   <\eqnarray>
-    <tformat|<table|<row|<cell|p<around*|(|\<b-x\>|)>>|<cell|=>|<cell|<big|sum><rsub|k=1><rsup|K>\<alpha\><around*|(|z<rsub|n>=k|)>\<beta\><around*|(|z<rsub|n>=k|)>>>|<row|<cell|\<bbb-E\><rsub|\<b-z\>><around*|[|\<bbb-I\><around*|(|z<rsub|n>=k|)>|]>>|<cell|=>|<cell|<frac|p<around*|(|z<rsub|n>=k\|\<b-x\>|)>|p<around*|(|\<b-x\>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<alpha\><around*|(|z<rsub|n>=k|)>\<beta\><around*|(|z<rsub|n>=k|)>|p<around*|(|\<b-x\>|)>>>>|<row|<cell|\<bbb-E\><rsub|\<b-z\>><around*|[|\<bbb-I\><around*|(|z<rsub|n-1>=k,z<rsub|n>=\<ell\>|)>|]>>|<cell|=>|<cell|p<around*|(|z<rsub|n-1>=k,z<rsub|n>=\<ell\>\|\<b-x\>|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<alpha\><around*|(|z<rsub|n-1>-k|)>p<around*|(|x<rsub|n-1>\|z<rsub|n-1>=k|)>p<around*|(|x<rsub|n>\|z<rsub|n>=\<ell\>|)>\<beta\><around*|(|z<rsub|n>=\<ell\>|)>|p<around*|(|\<b-x\>|)>>>>>>
+    <tformat|<table|<row|<cell|p<around*|(|\<b-x\>|)>>|<cell|=>|<cell|<big|sum><rsub|k=1><rsup|K>\<alpha\><around*|(|z<rsub|N>=k|)>>>|<row|<cell|\<bbb-E\><rsub|\<b-z\>><around*|[|\<bbb-I\><around*|(|z<rsub|n>=k|)>|]>>|<cell|=>|<cell|<frac|p<around*|(|z<rsub|n>=k\|\<b-x\>|)>|p<around*|(|\<b-x\>|)>>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<alpha\><around*|(|z<rsub|n>=k|)>\<beta\><around*|(|z<rsub|n>=k|)>|p<around*|(|\<b-x\>|)>>>>|<row|<cell|\<bbb-E\><rsub|\<b-z\>><around*|[|\<bbb-I\><around*|(|z<rsub|n-1>=k,z<rsub|n>=\<ell\>|)>|]>>|<cell|=>|<cell|p<around*|(|z<rsub|n-1>=k,z<rsub|n>=\<ell\>\|\<b-x\>|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|\<alpha\><around*|(|z<rsub|n-1>-k|)>p<around*|(|x<rsub|n-1>\|z<rsub|n-1>=k|)>p<around*|(|x<rsub|n>\|z<rsub|n>=\<ell\>|)>\<beta\><around*|(|z<rsub|n>=\<ell\>|)>|p<around*|(|\<b-x\>|)>>>>>>
   </eqnarray>
 
   These become useful in the EM algorithm during the maximisation step when
@@ -210,8 +210,8 @@
   This optimisation takes a closed form for <math|A> and <math|\<b-pi\>>
 
   <\eqnarray>
-    <tformat|<table|<row|<cell|<wide|\<pi\>|^><rsub|k>>|<cell|=>|<cell|\<kappa\><rsub|k>+\<bbb-E\><rsub|\<b-z\>><around*|[|\<bbb-I\><around*|(|z<rsub|1>=k|)>|]>>>|<row|<cell|<wide|A|^><rsub|k
-    \<ell\>>>|<cell|=>|<cell|\<gamma\><rsub|k
+    <tformat|<table|<row|<cell|<wide|\<pi\>|^><rsub|k>>|<cell|\<propto\>>|<cell|\<kappa\><rsub|k>+\<bbb-E\><rsub|\<b-z\>><around*|[|\<bbb-I\><around*|(|z<rsub|1>=k|)>|]>>>|<row|<cell|<wide|A|^><rsub|k
+    \<ell\>>>|<cell|\<propto\>>|<cell|\<gamma\><rsub|k
     \<ell\>>+<big|sum><rsub|k=1><rsup|K><big|sum><rsub|\<ell\>=1><rsup|K>\<bbb-E\><rsub|\<b-z\>><around*|[|\<bbb-I\><around*|(|z<rsub|n-1>=k,z<rsub|n>=\<ell\>|)>|]>>>>>
   </eqnarray>
 
@@ -221,7 +221,7 @@
 
   <\eqnarray>
     <tformat|<table|<row|<cell|<frac|\<partial\>|\<partial\>
-    \<theta\><rsub|k>>log p<around*|(|\<b-x\>,\<b-pi\>,A,\<b-theta\>|)>>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N><big|sum><rsub|k=1><rsup|K>\<bbb-E\><rsub|\<b-z\>><around*|[|\<bbb-I\><around*|(|z<rsub|n>=k|)>|]><frac|\<partial\>|\<partial\>\<theta\><rsub|k>>log
+    \<theta\><rsub|k>>log p<around*|(|\<b-x\>,\<b-pi\>,A,\<b-theta\>|)>>|<cell|=>|<cell|<big|sum><rsub|n=1><rsup|N>\<bbb-E\><rsub|\<b-z\>><around*|[|\<bbb-I\><around*|(|z<rsub|n>=k|)>|]><frac|\<partial\>|\<partial\>\<theta\><rsub|k>>log
     f<around*|(|x<rsub|n>\|\<theta\><rsub|k>|)>+<frac|\<partial\>|\<partial\>\<theta\><rsub|k>>log
     p<around*|(|\<theta\><rsub|k>|)>>>>>
   </eqnarray>
@@ -252,10 +252,10 @@
     <item><math|N<rsub|m>> be the number of bins for chromosome <math|m>
 
     <item><math|x<rsup|m><rsub|n>> denote the number of reads in the
-    <math|n<rsup|th>> bin on chromosome <math|m>.
+    <math|n<rsup|th>> bin on chromosome <math|m>
 
     <item><math|z<rsub|n><rsup|m>> denote the hidden state for the
-    <math|n<rsup|th>> bin on chromosome <math|m>.
+    <math|n<rsup|th>> bin on chromosome <math|m>
   </itemize-dot>
 
   <subsubsection|Model description>
@@ -299,7 +299,7 @@
   neighbour. The full model is then
 
   <\eqnarray>
-    <tformat|<table|<row|<cell|\<b-pi\>\|\<b-kappa\>>|<cell|\<sim\>>|<cell|<text|Dirichlet><around*|(|\<cdot\>\|\<b-kappa\>|)>>>|<row|<cell|A<rsub|k\<cdot\>>\|\<b-gamma\><rsub|k>>|<cell|\<sim\>>|<cell|<text|Dirichlet><around*|(|\<cdot\>\|\<b-gamma\><rsub|k>|)>>>|<row|<cell|z<rsub|1><rsup|m>\|\<b-pi\>>|<cell|\<sim\>>|<cell|<text|Categorical><around*|(|\<cdot\>\|\<b-pi\>|)>>>|<row|<cell|z<rsub|n><rsup|m>\|z<rsub|n-1><rsup|m>,A>|<cell|\<sim\>>|<cell|<text|Categorical><around*|(|\<cdot\>\|A<rsub|z<rsub|n-1><rsup|m>\<cdot\>>|)>>>|<row|<cell|r>|<cell|\<sim\>>|<cell|<text|Gamma><around*|(|\<cdot\>\|a,b|)>>>|<row|<cell|\<theta\><rsub|c>>|<cell|=>|<cell|r
+    <tformat|<table|<row|<cell|\<b-pi\>\|\<b-kappa\>>|<cell|\<sim\>>|<cell|<text|Dirichlet><around*|(|\<cdot\>\|\<b-kappa\>|)>>>|<row|<cell|A<rsub|k\<cdot\>>\|\<b-gamma\><rsub|k>>|<cell|\<sim\>>|<cell|<text|Dirichlet><around*|(|\<cdot\>\|\<b-gamma\><rsub|k>|)>>>|<row|<cell|z<rsub|1><rsup|m>\|\<b-pi\>>|<cell|\<sim\>>|<cell|<text|Categorical><around*|(|\<cdot\>\|\<b-pi\>|)>>>|<row|<cell|z<rsub|n><rsup|m>\|z<rsub|n-1><rsup|m>,A>|<cell|\<sim\>>|<cell|<text|Categorical><around*|(|\<cdot\>\|A<rsub|z<rsub|n-1><rsup|m>\<cdot\>>|)>>>|<row|<cell|r>|<cell|\<sim\>>|<cell|<text|Gamma><around*|(|\<cdot\>\|a,b|)>>>|<row|<cell|\<theta\><rsub|c>\|r>|<cell|=>|<cell|r
     c>>|<row|<cell|x<rsub|n><rsup|m>\|z<rsub|n><rsup|m>,\<b-theta\>>|<cell|\<sim\>>|<cell|Poisson<around*|(|\<cdot\>\|\<theta\><rsub|z<rsub|n><rsup|m>>|)>>>>>
   </eqnarray>
 
@@ -339,7 +339,7 @@
   model as follows
 
   <\eqnarray>
-    <tformat|<table|<row|<cell|h<rsub|n><rsup|m>>|<cell|\<sim\>>|<cell|H<around*|(|\<cdot\>\|g<rsub|n><rsup|m>|)>>>|<row|<cell|x<rsub|n><rsup|m>\|g<rsub|n><rsup|m>,z<rsub|n><rsup|m>,\<b-theta\>>|<cell|\<sim\>>|<cell|Poisson<around*|(|\<cdot\>\|h<rsub|n><rsup|m>
+    <tformat|<table|<row|<cell|h<rsub|n><rsup|m>>|<cell|\<sim\>>|<cell|H<around*|(|\<cdot\>\|g<rsub|n><rsup|m>|)>>>|<row|<cell|x<rsub|n><rsup|m>\|h<rsub|n><rsup|m>,z<rsub|n><rsup|m>,\<b-theta\>>|<cell|\<sim\>>|<cell|Poisson<around*|(|\<cdot\>\|h<rsub|n><rsup|m>
     \<theta\><rsub|z<rsub|n><rsup|m>>|)>>>>>
   </eqnarray>
 
@@ -382,7 +382,7 @@
   The updated model is then as follows.
 
   <\eqnarray>
-    <tformat|<table|<row|<cell|\<b-pi\>\|\<b-kappa\>>|<cell|\<sim\>>|<cell|<text|Dirichlet><around*|(|\<cdot\>\|\<b-kappa\>|)>>>|<row|<cell|A<rsub|k\<cdot\>>\|\<b-gamma\><rsub|k>>|<cell|\<sim\>>|<cell|<text|Dirichlet><around*|(|\<cdot\>\|\<b-gamma\><rsub|k>|)>>>|<row|<cell|z<rsub|1><rsup|m>\|\<b-pi\>>|<cell|\<sim\>>|<cell|<text|Categorical><around*|(|\<cdot\>\|\<b-pi\>|)>>>|<row|<cell|z<rsub|n><rsup|m>\|z<rsub|n-1><rsup|m>,A>|<cell|\<sim\>>|<cell|<text|Categorical><around*|(|\<cdot\>\|A<rsub|z<rsub|n-1><rsup|m>\<cdot\>>|)>>>|<row|<cell|r>|<cell|\<sim\>>|<cell|<text|Gamma><around*|(|\<cdot\>\|a,b|)>>>|<row|<cell|t>|<cell|\<sim\>>|<cell|<text|Uniform><around*|(|\<cdot\>\|<around*|[|0,1|]>|)>>>|<row|<cell|\<theta\><rsub|c>>|<cell|=>|<cell|r<around*|(|2
+    <tformat|<table|<row|<cell|\<b-pi\>\|\<b-kappa\>>|<cell|\<sim\>>|<cell|<text|Dirichlet><around*|(|\<cdot\>\|\<b-kappa\>|)>>>|<row|<cell|A<rsub|k\<cdot\>>\|\<b-gamma\><rsub|k>>|<cell|\<sim\>>|<cell|<text|Dirichlet><around*|(|\<cdot\>\|\<b-gamma\><rsub|k>|)>>>|<row|<cell|z<rsub|1><rsup|m>\|\<b-pi\>>|<cell|\<sim\>>|<cell|<text|Categorical><around*|(|\<cdot\>\|\<b-pi\>|)>>>|<row|<cell|z<rsub|n><rsup|m>\|z<rsub|n-1><rsup|m>,A>|<cell|\<sim\>>|<cell|<text|Categorical><around*|(|\<cdot\>\|A<rsub|z<rsub|n-1><rsup|m>\<cdot\>>|)>>>|<row|<cell|r>|<cell|\<sim\>>|<cell|<text|Gamma><around*|(|\<cdot\>\|a,b|)>>>|<row|<cell|t>|<cell|\<sim\>>|<cell|<text|Uniform><around*|(|\<cdot\>\|<around*|[|0,1|]>|)>>>|<row|<cell|\<theta\><rsub|c>\|r,t>|<cell|=>|<cell|r<around*|(|2
     <around*|(|1-t|)>+t \ c|)>>>|<row|<cell|x<rsub|n><rsup|m>\|z<rsub|n><rsup|m>,\<b-theta\>>|<cell|\<sim\>>|<cell|Poisson<around*|(|\<cdot\>\|\<theta\><rsub|z<rsub|n><rsup|m>>|)>>>>>
   </eqnarray>
 
@@ -491,7 +491,7 @@
 
   <\eqnarray>
     <tformat|<table|<row|<cell|\<b-pi\>\|\<b-kappa\>>|<cell|\<sim\>>|<cell|<text|Dirichlet><around*|(|\<cdot\>\|\<b-kappa\>|)>>>|<row|<cell|A<rsub|k\<cdot\>>\|\<b-gamma\><rsub|k>>|<cell|\<sim\>>|<cell|<text|Dirichlet><around*|(|\<cdot\>\|\<b-gamma\><rsub|k>|)>>>|<row|<cell|z<rsub|1>\|\<b-pi\>>|<cell|\<sim\>>|<cell|<text|Categorical><around*|(|\<cdot\>\|\<b-pi\>|)>>>|<row|<cell|z<rsub|n>\|z<rsub|n-1>,A>|<cell|\<sim\>>|<cell|<text|Categorical><around*|(|\<cdot\>\|A<rsub|z<rsub|n-1>\<cdot\>>|)>>>|<row|<cell|r>|<cell|\<sim\>>|<cell|<text|Gamma><around*|(|\<cdot\>\|a,b|)>>>|<row|<cell|\<theta\><rsub|n>\|z<rsub|n>=<around*|(|c<rsub|a>,c<rsub|b>|)>,x<rsub|n><rsup|l>>|<cell|=>|<cell|r
-    <around*|(|c<rsub|a>+c<rsub|b>|)> x<rsub|n><rsup|l>>>|<row|<cell|x<rsub|n><rsup|t>\|z<rsub|n>,\<b-theta\>>|<cell|\<sim\>>|<cell|Poisson<around*|(|\<cdot\>\|\<theta\><rsub|n>|)>>>|<row|<cell|x<rsub|n><rsup|a>,x<rsub|n><rsup|b>\|z<rsub|n>=<around*|(|c<rsub|a>,c<rsub|b>|)>>|<cell|\<sim\>>|<cell|<text|Binomial><around*|(|\<cdot\>\|x<rsub|n><rsup|a>+x<rsub|n><rsup|b>,<frac|c<rsub|b>|c<rsub|a>+c<rsub|b>>|)>>>>>
+    <around*|(|c<rsub|a>+c<rsub|b>|)> x<rsub|n><rsup|l>>>|<row|<cell|x<rsub|n><rsup|t>\|z<rsub|n>,\<b-theta\>>|<cell|\<sim\>>|<cell|Poisson<around*|(|\<cdot\>\|\<theta\><rsub|n>|)>>>|<row|<cell|x<rsub|n><rsup|b>\|x<rsub|n><rsup|a>,z<rsub|n>=<around*|(|c<rsub|a>,c<rsub|b>|)>>|<cell|\<sim\>>|<cell|<text|Binomial><around*|(|\<cdot\>\|x<rsub|n><rsup|a>+x<rsub|n><rsup|b>,<frac|c<rsub|b>|c<rsub|a>+c<rsub|b>>|)>>>>>
   </eqnarray>
 
   Fitting this model is no harder than the original model, as we have not

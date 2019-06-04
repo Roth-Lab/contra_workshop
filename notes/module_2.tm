@@ -528,7 +528,7 @@
   model is as follows.
 
   <\eqnarray>
-    <tformat|<table|<row|<cell|\<b-kappa\>>|<cell|\<in\>>|<cell|\<bbb-R\><rsub|+><rsup|K>>>|<row|<cell|\<b-rho\>\|\<b-kappa\>>|<cell|\<sim\>>|<cell|<text|Dirichlet><around*|(|\<cdot\>\|\<b-kappa\>|)>>>|<row|<cell|z<rsub|n>\|\<b-rho\>>|<cell|\<sim\>>|<cell|<text|Categorical><around*|(|\<cdot\>\|\<b-rho\>|)>>>|<row|<cell|\<theta\><rsub|k>>|<cell|\<sim\>>|<cell|H<around*|(|\<cdot\>|)>>>|<row|<cell|x<rsub|n>\|\<b-theta\>,z<rsub|n>>|<cell|\<sim\>>|<cell|F<around*|(|\<cdot\>\|\<theta\><rsub|z<rsub|n>>|)>>>>>
+    <tformat|<table|<row|<cell|\<b-kappa\>>|<cell|\<in\>>|<cell|\<bbb-R\><rsub|+><rsup|K>>>|<row|<cell|\<b-rho\>\|\<b-kappa\>>|<cell|\<sim\>>|<cell|<text|Dirichlet><around*|(|\<cdot\>\|\<b-kappa\>|)>>>|<row|<cell|z<rsub|n>\|\<b-rho\>>|<cell|\<sim\>>|<cell|<text|Categorical><around*|(|\<cdot\>\|\<b-rho\>|)>>>|<row|<cell|\<theta\><rsub|k>>|<cell|\<sim\>>|<cell|G<around*|(|\<cdot\>|)>>>|<row|<cell|x<rsub|n>\|\<b-theta\>,z<rsub|n>>|<cell|\<sim\>>|<cell|F<around*|(|\<cdot\>\|\<theta\><rsub|z<rsub|n>>|)>>>>>
   </eqnarray>
 
   This model associates a latent variable, <math|z<rsub|n>>, with each data
@@ -536,7 +536,7 @@
   <math|<around*|{|1,\<ldots\>,K|}>>, and acts as an indicator for which
   cluster a data point originates from. Each cluster has an associated
   parameter <math|\<theta\><rsub|k>> sampled independently from a
-  distribution <math|H>. The observed data <math|X<rsub|n>> is then generated
+  distribution <math|G>. The observed data <math|X<rsub|n>> is then generated
   from a distribution <math|F> with parameter
   <math|\<theta\><rsub|z<rsub|n>>>. Thus whenever
   <math|z<rsub|i>=z<rsub|j>=k> for data points <math|i> and <math|j> they are

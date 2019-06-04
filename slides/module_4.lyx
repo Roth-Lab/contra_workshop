@@ -1,0 +1,1278 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass beamer
+\begin_preamble
+\usetheme{metropolis}
+\end_preamble
+\options aspectratio=169
+\use_default_options true
+\maintain_unincluded_children false
+\language british
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "times" "default"
+\font_sans "helvet" "default"
+\font_typewriter "courier" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style british
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Module 4: Phylogenetics
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Bulk data
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+A common approach is to treat the presence absence of mutations in samples
+ as characters and apply standard phylogenetic methods.
+\end_layout
+
+\begin_layout Itemize
+An alternative approach is to perform deconvolution of samples and reconstruct
+ trees based on clones.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+One way is to do deconvolution first.
+\end_layout
+
+\begin_layout Itemize
+Alternative is to jointly build the tree and do deconvolution.
+\end_layout
+
+\end_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Questions
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+What issues does performing classical phylogenetics pose?
+\end_layout
+
+\begin_layout Itemize
+What are the benefits of each deconvolution approach?
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Single cell data
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Single cell data maps well onto phylogenetic problems.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Cells are species or individuals in a population.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+scWGS data is sparse in coverage (0.01x-1x)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Low probability of having reads covering SNVs
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+CNVs are easy to detect but hard to model the evolution.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Main issue is convergence and overlapping events.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Change-points associated with CNVs are a possible character.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Provided bins are small enough change-points should be distinct.
+\end_layout
+
+\end_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Discussion
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+What are the challenges of using change-points?
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Probabilistic phylogenetic methods
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Problem setup
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Observation matrix 
+\begin_inset Formula $X$
+\end_inset
+
+ with 
+\begin_inset Formula $M$
+\end_inset
+
+ rows corresponding to species and 
+\begin_inset Formula $N$
+\end_inset
+
+ columns corresponding to features (characters).
+\end_layout
+
+\begin_layout Itemize
+We want to infer the evolutionary tree relating the species 
+\begin_inset Formula $\tau=(E,V)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+We may also have branch lengths 
+\begin_inset Formula $\Lambda$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Trees can be rooted or unrooted.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+In cancer we typically have rooted trees as the normal cell of origin is
+ the root.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Transition probabilities
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+To define a probabilistic phylogenetic model we need to define the probability
+ of moving from character 
+\begin_inset Formula $i$
+\end_inset
+
+ to 
+\begin_inset Formula $j$
+\end_inset
+
+ along the tree.
+\end_layout
+
+\begin_layout Itemize
+The traditional approach is to define a a rate matrix 
+\begin_inset Formula $Q$
+\end_inset
+
+ where 
+\begin_inset Formula $Q_{ij}$
+\end_inset
+
+ is the instantaneous rate of transition from state 
+\begin_inset Formula $i$
+\end_inset
+
+ to 
+\begin_inset Formula $j$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The transition matrix is then 
+\begin_inset Formula $P=\exp(Qt)$
+\end_inset
+
+ where 
+\begin_inset Formula $t$
+\end_inset
+
+ is the branch length.
+\end_layout
+
+\begin_layout Itemize
+If there are no branch lengths we can define 
+\begin_inset Formula $P$
+\end_inset
+
+ directly.
+\end_layout
+
+\begin_layout Itemize
+Given the transition probabilities we would then like to compute the probability
+ of the data on the tree.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Notation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $x_{v}$
+\end_inset
+
+ - value of the character at leaf node v
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $y_{v}$
+\end_inset
+
+ - value of the character at internal node v
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $L(\tau)$
+\end_inset
+
+ - leaf nodes of 
+\begin_inset Formula $\tau$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $I(\tau)$
+\end_inset
+
+ - internal nodes excluding root
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\tau(v$
+\end_inset
+
+) - subtree rooted at node 
+\begin_inset Formula $v$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\rho(v)$
+\end_inset
+
+ - parent of node 
+\begin_inset Formula $v$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\gamma(v)$
+\end_inset
+
+ - set of children of v
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $r$
+\end_inset
+
+ - root node
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Tree probability
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+If we have all the internal node labels, 
+\begin_inset Formula $\mathbf{y},$
+\end_inset
+
+the likelihood is given by
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+p(\mathbf{x}|\tau,P,\mathbf{y}) & = & \prod_{v\in L(\tau)}P_{y_{\rho(v)}x_{v}}\prod_{v\in I(\tau)}P_{y_{\rho(v)}y_{v}}\\
+ & = & \prod_{v\in\gamma(r)}P_{y_{r}y_{v}}p(\mathbf{x}|\tau(v),P,\mathbf{y})
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+In general we do not known 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+ so we would like to marginalise
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+p(\mathbf{x}|\tau,P) & = & \sum_{\mathbf{y}}p(\mathbf{x}|\tau,P,\mathbf{y})
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Felsenstein pruning
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The marginalisation can be performed efficiently using a recursive algorithm
+ similar to the FB.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\alpha_{v}(s) & = & \prod_{u\in\gamma(v)}\sum_{y_{u}}P_{sy_{u}}\alpha_{u}(y_{u})\\
+\alpha_{v}(s) & = & \begin{cases}
+1 & s=x_{v}\\
+0 & s\ne x_{v}
+\end{cases}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The first line is the internal node recursion and the second line is the
+ initial condition at the leafs.
+\end_layout
+
+\begin_layout Itemize
+To apply this algorithm we start at the leafs at work backwards towards
+ the root.
+\end_layout
+
+\begin_layout Itemize
+The algorithm allows to evaluate the likelihood in 
+\begin_inset Formula $\mathcal{O}(|V||S|^{2})$
+\end_inset
+
+ as opposed to 
+\begin_inset Formula $\mathcal{O}(|V|^{|S|})$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Bayesian phylogenetic models
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Thus far we have a likelihood.
+\end_layout
+
+\begin_layout Itemize
+To specify a Bayesian models we will need priors.
+\end_layout
+
+\begin_layout Itemize
+These include 
+\begin_inset Formula $p(\tau)$
+\end_inset
+
+ tree prior, 
+\begin_inset Formula $p(\Lambda)$
+\end_inset
+
+ branch length prior (if applicable), 
+\begin_inset Formula $p(\theta)$
+\end_inset
+
+ transition matrix parameter prior.
+\end_layout
+
+\begin_layout Itemize
+Inference is generally hard for phylogenetic methods.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+There are 
+\begin_inset Formula $\mathcal{O}(n!)$
+\end_inset
+
+ trees for 
+\begin_inset Formula $n$
+\end_inset
+
+ species.
+\end_layout
+
+\begin_layout Itemize
+This is discrete state space so we cannot use gradient descent.
+\end_layout
+
+\begin_layout Itemize
+Brute force enumeration often the only approach.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+MCMC is not much harder than MAP!
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Probabilistic model for mutation loss
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Problem
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+We consider the problem of building phylogenies from bulk sequence data.
+\end_layout
+
+\begin_layout Itemize
+We will assume we have 
+\begin_inset Formula $M$
+\end_inset
+
+ samples from a patient with 
+\begin_inset Formula $N$
+\end_inset
+
+ SNVs.
+\end_layout
+
+\begin_layout Itemize
+We will treat the samples as species and consider the presence/absence of
+ SNVs as characters.
+\end_layout
+
+\begin_layout Itemize
+We face two challenges:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Samples are mixtures of clones
+\end_layout
+
+\begin_layout Itemize
+Mutations may be loss due to CNVs
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Model assumptions
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+We make the following assumptions
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Mutations originate at most once on the tree.
+\end_layout
+
+\begin_layout Enumerate
+Mutations can be lost after they are acquired.
+\end_layout
+
+\begin_layout Enumerate
+Mutations evolve independently i.e.
+ our tree probability decomposes as the product of mutations.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+We will assume that we cannot perfectly observe the presence/absence of
+ mutations.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Our input data will then be probabilities.
+ Exactly the probability an SNV is clonally present in a sample.
+\end_layout
+
+\begin_layout Itemize
+We need this because of sequence coverage and clonal mixtures.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Pre-processing
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Before constructing the tree we will need to compute the probability a mutation
+ is clonally present.
+\end_layout
+
+\begin_layout Itemize
+Let 
+\begin_inset Formula $c_{b}$
+\end_inset
+
+ denote the number of mutated copies, 
+\begin_inset Formula $c_{t}$
+\end_inset
+
+ total number of copies, 
+\begin_inset Formula $t$
+\end_inset
+
+ the tumour content and 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ the sequencing error.
+\end_layout
+
+\begin_layout Itemize
+The probability of observing a read with the mutation is
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+r & = & \begin{cases}
+\frac{c_{b}t}{2(1-t)+c_{t}t} & c_{b}>0\\
+\epsilon & c_{b}=0
+\end{cases}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Our allelic count data is modelled as Binomial and we obtain the probability
+ of presence by summing all 
+\begin_inset Formula $c_{b}>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+We use CNV data as in module 2 to inform the copy number.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Tree probability
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+We use a modified version of the pruning algorithm.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+We need the modification because the assumption of single origin creates
+ dependencies in the tree.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Let 
+\begin_inset Formula $\pi_{l}$
+\end_inset
+
+ be the probability a mutation is lost along a branch, 
+\begin_inset Formula $p(z_{i}=0|\cdot)$
+\end_inset
+
+ the probability a mutation is absent at node 
+\begin_inset Formula $i$
+\end_inset
+
+ and 
+\begin_inset Formula $p(z_{j}=0|\cdot)$
+\end_inset
+
+ the probability it is present.
+\end_layout
+
+\begin_layout Itemize
+We will compute 
+\begin_inset Formula $Q(i,\tau)$
+\end_inset
+
+, the probability the mutation is present at node i given all possible combinati
+ons of losses on the sub-tree rooted at i.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+Q(i,\tau) & = & \begin{cases}
+\pi_{l}p(z_{i}=0|\cdot)+(1-\pi_{l})p(z_{i}=1|\cdot) & i\in L(\tau)\\
+\pi_{l}\prod_{j\in L(i)}p(z_{j}=0|\cdot)+(1-\pi_{l})\prod_{j\in C(i)}Q(j,\tau) & i\notin L(\tau)
+\end{cases}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Tree probability
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Let 
+\begin_inset Formula $w$
+\end_inset
+
+ be the node where a mutation originates.
+\end_layout
+
+\begin_layout Itemize
+Then we have
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+p(\mathbf{x}|\tau,w) & = & Q(w,\tau)\prod_{i\in L(\tau)\backslash L(w)}p(z_{i}=0|\cdot)
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Now we do not know 
+\begin_inset Formula $w$
+\end_inset
+
+, so we place a Uniform prior, 
+\begin_inset Formula $p(w)$
+\end_inset
+
+, and marginalise.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+p(\mathbf{x}|\tau) & = & \sum_{w\in V(\tau)}p(\mathbf{x}|\tau,w)p(w)
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Thus far we have focused on a single mutation.
+ The probability for all mutations is 
+\begin_inset Formula 
+\begin{eqnarray*}
+p(X|\tau) & = & \prod_{n=1}^{N}p(\mathbf{x}_{n}|\tau)
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Inference
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+We assume the number of samples is small.
+ In this case we can enumerate all trees and evaluate their probabilities
+ to compute the MAP estimator.
+\end_layout
+
+\begin_layout Itemize
+We also optimise the probability of loss on each tree.
+\end_layout
+
+\begin_layout Itemize
+This leads to MAP estimators 
+\begin_inset Formula $\hat{\tau},\hat{\pi}_{l}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+For more than 10 samples this approach is not practical.
+ We would then need to turn to MCMC methods.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Inferring origin, presence and loss of mutations
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The pruning recursion can be modified by switching summation for maximisation
+ to find the most probable labelling of the internal node.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+This is the same as the relationship between FM and Viterbi for HMMs
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Using this approach we can label the presence absence of mutations at each
+ node in the tree (subject to single origin constraint).
+\end_layout
+
+\begin_layout Itemize
+Once we have the presence/absence labelling we can compute origin points
+ and loss events.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Model validation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_4/patient1_snv_loss_cnv.pdf
+	lyxscale 10
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Model failures
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_4/patient_9_snv_loss_cnv.pdf
+	lyxscale 10
+	width 90text%
+	height 85theight%
+	keepAspectRatio
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Why we fail
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_4/phylo1.pdf
+	lyxscale 10
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Why we fail
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_4/phylo3.pdf
+	lyxscale 10
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Why we fail
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_4/phylo2.pdf
+	lyxscale 10
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\end_body
+\end_document
