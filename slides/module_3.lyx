@@ -18,7 +18,7 @@
 \font_roman "times" "default"
 \font_sans "helvet" "default"
 \font_typewriter "courier" "default"
-\font_math "auto" "auto"
+\font_math "newtxmath" "auto"
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
@@ -201,11 +201,11 @@ If we restrict to heterozygous SNPs we can have read counts for the reference
 \begin_inset Formula $b$
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Itemize
-This representation is good for allele specific copy number inference
+This representation is good for allele specific copy number inference.
 \end_layout
 
 \begin_layout Itemize
@@ -589,9 +589,14 @@ Here we assume that
 
  is known and fixed.
  This assumption can be relaxed using non-parametric Bayesian priors.
- Computationally demanding.
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+Computationally demanding.
+\end_layout
+
+\end_deeper
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
@@ -620,7 +625,7 @@ Bayesian HMMs
 \boldsymbol{\pi}|\boldsymbol{\kappa} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\kappa})\\
 A_{k\cdot}|\boldsymbol{\gamma} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\gamma})\\
 z_{1}|\boldsymbol{\pi} & \sim & \text{Categorical}(\cdot|\boldsymbol{\pi})\\
-z_{n}|z_{n-1},A & \sim & \text{Categorical}(\cdot|A_{z_{t-1}\cdot})\\
+z_{n}|z_{n-1},A & \sim & \text{Categorical}(\cdot|A_{z_{n-1}\cdot})\\
 \theta_{k} & \sim & G\\
 x_{n}|z_{n},\boldsymbol{\theta} & \sim & F(\cdot|\theta_{z_{n}})
 \end{eqnarray*}
@@ -794,7 +799,7 @@ M-step
 \begin{eqnarray*}
 \hat{\pi}_{k} & \propto & \kappa_{k}+\mathbb{E}_{\mathbf{z}}[\mathbb{I}(z_{n}=k)]\\
 \hat{A}_{kl} & \propto & \gamma_{kl}+\mathbb{E}_{\mathbf{z}}[\mathbb{I}(z_{n-1}=k,z_{n}=l)]\\
-\frac{\partial}{\partial\theta_{k}}p(\mathbf{x},\boldsymbol{\pi},A,\boldsymbol{\theta}) & = & \sum_{n=1}^{N}\mathbb{E}_{\mathbf{z}}[\mathbb{I}(z_{n}=k)]\frac{\partial}{\partial\theta_{k}}\log f(x_{n}|\theta_{k})+\frac{\partial}{\partial\theta_{k}}\log p(\theta_{k})
+\frac{\partial}{\partial\theta_{k}}\log p(\mathbf{x},\boldsymbol{\pi},A,\boldsymbol{\theta}) & = & \sum_{n=1}^{N}\mathbb{E}_{\mathbf{z}}[\mathbb{I}(z_{n}=k)]\frac{\partial}{\partial\theta_{k}}\log f(x_{n}|\theta_{k})+\frac{\partial}{\partial\theta_{k}}\log p(\theta_{k})
 \end{eqnarray*}
 
 \end_inset
@@ -960,7 +965,7 @@ Model
 \boldsymbol{\pi}|\boldsymbol{\kappa} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\kappa})\\
 A_{k\cdot}|\boldsymbol{\gamma} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\gamma})\\
 z_{1}^{m}|\boldsymbol{\pi} & \sim & \text{Categorical}(\cdot|\boldsymbol{\pi})\\
-z_{n}^{m}|z_{n-1}^{m},A & \sim & \text{Categorical}(\cdot|A_{z_{t-1}^{m}\cdot})\\
+z_{n}^{m}|z_{n-1}^{m},A & \sim & \text{Categorical}(\cdot|A_{z_{n-1}^{m}\cdot})\\
 r & \sim & \text{Gamma}(\cdot|a,b)\\
 \theta_{c}|r & = & rc\\
 x_{n}^{m}|z_{n}^{m},\boldsymbol{\theta} & \sim & \text{Poisson}(\cdot|\theta_{z_{n}^{m}})
@@ -1066,7 +1071,7 @@ Overdispersion
 
 \begin_deeper
 \begin_layout Itemize
-Like the SNV case data can have more variance then our assumed distribution.
+Like the SNV case, data can have more variance then our assumed distribution.
 \end_layout
 
 \begin_layout Itemize
@@ -1115,7 +1120,7 @@ Normal contamination
 \boldsymbol{\pi}|\boldsymbol{\kappa} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\kappa})\\
 A_{k\cdot}|\boldsymbol{\gamma} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\gamma})\\
 z_{1}^{m}|\boldsymbol{\pi} & \sim & \text{Categorical}(\cdot|\boldsymbol{\pi})\\
-z_{n}^{m}|z_{n-1}^{m},A & \sim & \text{Categorical}(\cdot|A_{z_{t-1}^{m}\cdot})\\
+z_{n}^{m}|z_{n-1}^{m},A & \sim & \text{Categorical}(\cdot|A_{z_{n-1}^{m}\cdot})\\
 r & \sim & \text{Gamma}(\cdot|a,b)\\
 t & \sim & \text{Uniform}(\cdot|[0,1])\\
 \theta_{c}|r,t & = & r(2(1-t)+ct)\\
@@ -1341,7 +1346,7 @@ Allele specific copy number
 \boldsymbol{\pi}|\boldsymbol{\kappa} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\kappa})\\
 A_{k\cdot}|\boldsymbol{\gamma} & \sim & \text{Dirichlet}(\cdot|\boldsymbol{\gamma})\\
 z_{1}|\boldsymbol{\pi} & \sim & \text{Categorical}(\cdot|\boldsymbol{\pi})\\
-z_{n}|z_{n-1},A & \sim & \text{Categorical}(\cdot|A_{z_{t-1}\cdot})\\
+z_{n}|z_{n-1},A & \sim & \text{Categorical}(\cdot|A_{z_{n-1}\cdot})\\
 r & \sim & \text{Gamma}(\cdot|a,b)\\
 \theta_{c}|r,z_{n}=(c_{a},c_{b}),x_{n}^{l} & = & r(c_{a}+c_{b})x_{n}^{l}\\
 x_{n}^{t}|z_{n}^{m},\boldsymbol{\theta} & \sim & \text{Poisson}(\cdot|\theta_{z_{n}})\\

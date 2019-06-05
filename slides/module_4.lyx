@@ -18,7 +18,7 @@
 \font_roman "times" "default"
 \font_sans "helvet" "default"
 \font_typewriter "courier" "default"
-\font_math "auto" "auto"
+\font_math "newtxmath" "auto"
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
@@ -276,13 +276,23 @@ We may also have branch lengths
 Trees can be rooted or unrooted.
 \end_layout
 
-\begin_deeper
-\begin_layout Itemize
-In cancer we typically have rooted trees as the normal cell of origin is
- the root.
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Question
 \end_layout
 
-\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+Should we use rooted or unrooted trees for cancer phylogenetics?
+\end_layout
+
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
@@ -315,7 +325,7 @@ To define a probabilistic phylogenetic model we need to define the probability
 \begin_inset Formula $j$
 \end_inset
 
- along the tree.
+ along a branch.
 \end_layout
 
 \begin_layout Itemize
@@ -481,10 +491,6 @@ If we have all the internal node labels,
 \end_inset
 
 the likelihood is given by
-\begin_inset Newline newline
-\end_inset
-
-
 \begin_inset Formula 
 \begin{eqnarray*}
 p(\mathbf{x}|\tau,P,\mathbf{y}) & = & \prod_{v\in L(\tau)}P_{y_{\rho(v)}x_{v}}\prod_{v\in I(\tau)}P_{y_{\rho(v)}y_{v}}\\
@@ -502,10 +508,6 @@ In general we do not known
 \end_inset
 
  so we would like to marginalise
-\begin_inset Newline newline
-\end_inset
-
-
 \begin_inset Formula 
 \begin{eqnarray*}
 p(\mathbf{x}|\tau,P) & = & \sum_{\mathbf{y}}p(\mathbf{x}|\tau,P,\mathbf{y})
@@ -539,18 +541,16 @@ Felsenstein pruning
 
 \begin_deeper
 \begin_layout Itemize
+
+\size small
 The marginalisation can be performed efficiently using a recursive algorithm
  similar to the FB.
-\begin_inset Newline newline
-\end_inset
-
-
 \begin_inset Formula 
 \begin{eqnarray*}
-\alpha_{v}(s) & = & \prod_{u\in\gamma(v)}\sum_{y_{u}}P_{sy_{u}}\alpha_{u}(y_{u})\\
-\alpha_{v}(s) & = & \begin{cases}
-1 & s=x_{v}\\
-0 & s\ne x_{v}
+\alpha_{v}(i) & = & \prod_{u\in\gamma(v)}\sum_{y_{u}=j}P_{ij}\alpha_{u}(j)\\
+\alpha_{v}(i) & = & \begin{cases}
+1 & i=x_{v}\\
+0 & i\ne x_{v}
 \end{cases}
 \end{eqnarray*}
 
@@ -560,16 +560,22 @@ The marginalisation can be performed efficiently using a recursive algorithm
 \end_layout
 
 \begin_layout Itemize
+
+\size small
 The first line is the internal node recursion and the second line is the
  initial condition at the leafs.
 \end_layout
 
 \begin_layout Itemize
+
+\size small
 To apply this algorithm we start at the leafs at work backwards towards
  the root.
 \end_layout
 
 \begin_layout Itemize
+
+\size small
 The algorithm allows to evaluate the likelihood in 
 \begin_inset Formula $\mathcal{O}(|V||S|^{2})$
 \end_inset
@@ -703,14 +709,48 @@ We face two challenges:
 
 \begin_deeper
 \begin_layout Itemize
-Samples are mixtures of clones
+Samples are mixtures of clones.
 \end_layout
 
 \begin_layout Itemize
-Mutations may be loss due to CNVs
+Mutations may be loss due to CNVs.
 \end_layout
 
 \end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Mutation history
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_4/mutation_history.pdf
+	lyxscale 10
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
@@ -760,9 +800,14 @@ We will assume that we cannot perfectly observe the presence/absence of
 \begin_deeper
 \begin_layout Itemize
 Our input data will then be probabilities.
- Exactly the probability an SNV is clonally present in a sample.
 \end_layout
 
+\end_deeper
+\begin_layout Itemize
+More exactly the probability an SNV is clonally present in a sample.
+\end_layout
+
+\begin_deeper
 \begin_layout Itemize
 We need this because of sequence coverage and clonal mixtures.
 \end_layout
@@ -817,10 +862,6 @@ Let
 
 \begin_layout Itemize
 The probability of observing a read with the mutation is
-\begin_inset Newline newline
-\end_inset
-
-
 \begin_inset Formula 
 \begin{eqnarray*}
 r & = & \begin{cases}
@@ -888,15 +929,15 @@ Let
 \end_inset
 
  be the probability a mutation is lost along a branch, 
-\begin_inset Formula $p(z_{i}=0|\cdot)$
+\begin_inset Formula $p(z_{v}=0|\cdot)$
 \end_inset
 
  the probability a mutation is absent at node 
-\begin_inset Formula $i$
+\begin_inset Formula $v$
 \end_inset
 
  and 
-\begin_inset Formula $p(z_{j}=0|\cdot)$
+\begin_inset Formula $p(z_{v}=1|\cdot)$
 \end_inset
 
  the probability it is present.
@@ -904,20 +945,23 @@ Let
 
 \begin_layout Itemize
 We will compute 
-\begin_inset Formula $Q(i,\tau)$
+\begin_inset Formula $Q(v,\tau)$
 \end_inset
 
-, the probability the mutation is present at node i given all possible combinati
-ons of losses on the sub-tree rooted at i.
-\begin_inset Newline newline
+, the probability the mutation is present at node 
+\begin_inset Formula $v$
 \end_inset
 
+ given all possible combinations of losses on the sub-tree rooted at 
+\begin_inset Formula $v$
+\end_inset
 
+.
 \begin_inset Formula 
 \begin{eqnarray*}
-Q(i,\tau) & = & \begin{cases}
-\pi_{l}p(z_{i}=0|\cdot)+(1-\pi_{l})p(z_{i}=1|\cdot) & i\in L(\tau)\\
-\pi_{l}\prod_{j\in L(i)}p(z_{j}=0|\cdot)+(1-\pi_{l})\prod_{j\in C(i)}Q(j,\tau) & i\notin L(\tau)
+Q(v,\tau) & = & \begin{cases}
+\pi_{l}p(z_{v}=0|\cdot)+(1-\pi_{l})p(z_{v}=1|\cdot) & v\in L(\tau)\\
+\pi_{l}\prod_{u\in L(\tau(v))}p(z_{u}=0|\cdot)+(1-\pi_{l})\prod_{u\in\gamma(i)}Q(u,\tau) & v\notin L(\tau)
 \end{cases}
 \end{eqnarray*}
 
@@ -958,13 +1002,9 @@ Let
 
 \begin_layout Itemize
 Then we have
-\begin_inset Newline newline
-\end_inset
-
-
 \begin_inset Formula 
 \begin{eqnarray*}
-p(\mathbf{x}|\tau,w) & = & Q(w,\tau)\prod_{i\in L(\tau)\backslash L(w)}p(z_{i}=0|\cdot)
+p(\mathbf{x}|\tau,w) & = & Q(w,\tau)\prod_{v\in L(\tau)\backslash L(w)}p(z_{v}=0|\cdot)
 \end{eqnarray*}
 
 \end_inset
@@ -982,10 +1022,6 @@ Now we do not know
 \end_inset
 
 , and marginalise.
-\begin_inset Newline newline
-\end_inset
-
-
 \begin_inset Formula 
 \begin{eqnarray*}
 p(\mathbf{x}|\tau) & = & \sum_{w\in V(\tau)}p(\mathbf{x}|\tau,w)p(w)
@@ -1033,10 +1069,15 @@ Inference
 \begin_deeper
 \begin_layout Itemize
 We assume the number of samples is small.
- In this case we can enumerate all trees and evaluate their probabilities
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+In this case we can enumerate all trees and evaluate their probabilities
  to compute the MAP estimator.
 \end_layout
 
+\end_deeper
 \begin_layout Itemize
 We also optimise the probability of loss on each tree.
 \end_layout
@@ -1051,9 +1092,14 @@ This leads to MAP estimators
 
 \begin_layout Itemize
 For more than 10 samples this approach is not practical.
- We would then need to turn to MCMC methods.
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+We would then need to turn to MCMC methods.
+\end_layout
+
+\end_deeper
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain

@@ -162,18 +162,18 @@
 
   <subsubsection|Sequential Monte Carlo>
 
-  Sequential Monte Carlo (SMC) is very general algorithm for sampling from
+  Sequential Monte Carlo (SMC) is a very general algorithm for sampling from
   high dimensional distributions. The basic idea is to break the sampling
-  problem down into smaller and easier to sample problems. To achieve this we
-  keep a set of <with|font-shape|italic|particles> with a partial
-  representation of the variables we wish to sample. At each iteration of the
-  SMC algorithm we update the particles and compute a weight for them. The
-  weight, roughly speaking, is a measure of how good a fit the partial
-  solution represented by the particle is to the data. Resampling is used
-  after each iteration or when some criteria is met to replace low weight
-  particles with high weight ones. At the end of the SMC algorithm we have a
-  set of particles with representing the sampled parameters, and collection
-  of weights that can be used to form an approximation to the posterior.
+  problem down into smaller and easier to sample problems. To achieve this
+  The basic idea is to break the sampling problem down into smaller and
+  easier to sample problems. At each iteration of the SMC algorithm we update
+  the particles and compute a weight for them. The weight, roughly speaking,
+  is a measure of how good a fit the partial solution represented by the
+  particle is to the data. Resampling is used after each iteration or when
+  some criteria is met to replace low weight particles with high weight ones.
+  At the end of the SMC algorithm we have a set of particles with
+  representing the sampled parameters, and collection of weights that can be
+  used to form an approximation to the posterior.
 
   SMC is often used to sample from distributions with an obvious sequential
   structure. The classic example the is posterior distribution of the hidden

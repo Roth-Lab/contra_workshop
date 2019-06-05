@@ -90,6 +90,132 @@ Module 1: Introduction to probabilistic modelling
 status open
 
 \begin_layout Plain Layout
+Housekeeping
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Slides and notes will be up at 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://github.com/aroth85/contra_workshop
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Time permitting I will post some code in the form of Jupyter notebooks.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+I would like some feedback on what examples people would find helpful.
+\end_layout
+
+\begin_layout Itemize
+Is ther a colloborative forum we could use to communicate? Maybe Slack or
+ Google groups?
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Please ask questions while we go.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+This is not a meant to be a research talk.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+About me
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Assistant professor at UBC in the Departments of CS and Pathology
+\end_layout
+
+\begin_layout Itemize
+Scientist at the BC Cancer agency
+\end_layout
+
+\begin_layout Itemize
+Personal website 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://aroth85.github.io
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Email 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+aroth@bccrc.ca
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Currently hiring students and post-docs
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
 My research
 \end_layout
 
@@ -203,7 +329,7 @@ noisy
 \end_layout
 
 \begin_layout Itemize
-In computational cancer the noise can come from
+In computational cancer the noise can come from:
 \end_layout
 
 \begin_deeper
@@ -268,11 +394,11 @@ Building probabilistic models
 
 \begin_deeper
 \begin_layout Itemize
-In this workshop we will look at how to build probabilistic models
+In this workshop we will look at how to build probabilistic models.
 \end_layout
 
 \begin_layout Itemize
-Some key questions we address
+Some key questions we address:
 \end_layout
 
 \begin_deeper
@@ -291,10 +417,17 @@ How do report these model parameters i.e.
 
 \end_deeper
 \begin_layout Itemize
-When working through later modules, the most important point is to understand
- the process not the model.
+When working through later modules, the most focus should be on the modelling
+ process not the model we are building.
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+With that said the models we will construct can easily be turned into useful
+ tools for real data.
+\end_layout
+
+\end_deeper
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
@@ -370,7 +503,7 @@ Some key considerations:
 
 \begin_deeper
 \begin_layout Itemize
-What is the quantity we wish to measure?
+What are the quantities we wish to measure?
 \end_layout
 
 \begin_layout Itemize
@@ -396,6 +529,8 @@ Remark
 \end_layout
 
 \begin_layout Block
+
+\size footnotesize
 It is easy to skip the step of looking at existing approaches.
  Even if no formal method has been published, there are often simple approaches
  which can be applied.
@@ -433,8 +568,7 @@ Looking at real data through some form of qualitative analysis is critical.
 \end_layout
 
 \begin_layout Itemize
-Often the feasibility of the problem hinges critically on features that
- may not be obvious.
+Feasibility of problem may depend on features that may not be obvious.
 \end_layout
 
 \begin_layout Itemize
@@ -455,7 +589,7 @@ What about single cell DNA sequencing?
 \end_layout
 
 \begin_layout Itemize
-How does read count data look from a diploid cell line?
+What does binned read count data look from a diploid cell line?
 \end_layout
 
 \end_deeper
@@ -560,11 +694,11 @@ A core question is how to report estimates of model parameters.
 
 \begin_deeper
 \begin_layout Itemize
-Do we want a point estimate.
+What point estimate do we report?
 \end_layout
 
 \begin_layout Itemize
-Do we want to quantify uncertainty.
+What measure of uncertainty?
 \end_layout
 
 \end_deeper
@@ -574,7 +708,7 @@ Note there is an interplay between inference and model building.
 
 \begin_deeper
 \begin_layout Itemize
-If we cannot fit the model it is not very useful.
+If we cannot fit the model it is not very useful for analysing data.
 \end_layout
 
 \begin_layout Itemize
@@ -610,7 +744,7 @@ The final step in the process is to validate the model.
 \end_layout
 
 \begin_layout Itemize
-There are two questions:
+Some important questions:
 \end_layout
 
 \begin_deeper
@@ -672,9 +806,9 @@ Then there are three basic equations that are at the centre of Bayesian
 \begin_layout Standard
 \begin_inset Formula 
 \begin{eqnarray*}
-p(A,B) & = & p(A|B)p(B)\\
-p(A|B) & = & \frac{p(B|A)p(A)}{p(B)}\\
-p(A) & = & \sum_{i}p(A|C_{i})p(C_{i})
+\text{Joint distribution - }p(A,B) & = & p(A|B)p(B)\\
+\text{Bayes' rule - }p(A|B) & = & \frac{p(B|A)p(A)}{p(B)}\\
+\text{Law of total probability - }p(B) & = & \sum_{i}p(B|C_{i})p(C_{i})
 \end{eqnarray*}
 
 \end_inset
@@ -780,7 +914,7 @@ Background
 \begin_deeper
 \begin_layout Itemize
 The Bayesian approach to model fitting states that all the information about
- the parameters is encapsulated in the data.
+ the parameters is encapsulated in the posterior.
 \end_layout
 
 \begin_layout Itemize
@@ -805,6 +939,10 @@ Our updated belief about
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Itemize
+If we see new data then our posterior becomes our new prior.
 \end_layout
 
 \end_deeper
@@ -840,20 +978,17 @@ In principle the posterior tells us everything we could want to know about
 
 \begin_layout Itemize
 In practice it can be hard to interpret high dimensional posteriors so we
- turn to point estimates.
+ turn to point or region estimates.
 \end_layout
 
 \begin_layout Itemize
-Simple solutions include reporting summary statistics such as the mean and
- variance.
+Simple point estimates include reporting summary statistics such as the
+ mean and variance.
 \end_layout
 
 \begin_layout Itemize
-Uncertainty can be quantified by reporting regions which contain 
-\begin_inset Formula $\alpha$
-\end_inset
-
- of the mass.
+Region estimates can be used to quantify uncertainty i.e.
+ credible intervals.
 \end_layout
 
 \end_deeper
@@ -898,15 +1033,37 @@ A loss function
 .
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $L^{1}$
+\end_inset
+
+ loss 
+\begin_inset Formula $|x-y|$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $L^{2}$
+\end_inset
+
+ loss 
+\begin_inset Formula $||x-y||^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 The Bayesian approach to point estimation is then to report the value with
  the minimum expected loss
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \begin{eqnarray*}
-\hat{\theta} & = & \text{argmin}_{\theta}\int L(\theta,\theta')p(\theta'|X){\rm d}\theta'
+\hat{\theta} & = & \text{argmin}_{\theta'}\mathbb{E}_{p(\theta|X)}[L(\theta,\theta')]\\
+ & = & \text{argmin}_{\theta'}\int L(\theta',\theta)p(\theta|X){\rm d}\theta
 \end{eqnarray*}
 
 \end_inset
@@ -987,7 +1144,7 @@ Why Bayesian inference is challenging
 
 \begin_deeper
 \begin_layout Itemize
-Bayesian inference is conceptually simple - we apply Bayes rule and compute
+Bayesian inference is conceptually simple - we apply Bayes' rule and compute
  the posterior.
 \end_layout
 
@@ -1005,7 +1162,7 @@ If
 \begin_inset Formula $\theta$
 \end_inset
 
- is high dimensional this is typically intractable
+ is high dimensional this is typically intractable.
 \end_layout
 
 \end_deeper
@@ -1019,7 +1176,7 @@ Avoid explicitly computing
 \begin_inset Formula $p(X)$
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Itemize
@@ -1027,7 +1184,7 @@ Use advanced methods to estimate
 \begin_inset Formula $p(X$
 \end_inset
 
-)
+).
 \end_layout
 
 \end_deeper
@@ -1204,12 +1361,12 @@ In the Bayesian setting we typically want to compute expected values.
 
 \begin_deeper
 \begin_layout Itemize
-For example loss functions.
+For example mimising the expected loss functions.
 \end_layout
 
 \end_deeper
 \begin_layout Itemize
-Monte Carlo method make the following simple observation
+Monte Carlo methods make the following simple observation
 \begin_inset Newline newline
 \end_inset
 
@@ -1217,7 +1374,7 @@ Monte Carlo method make the following simple observation
 \begin_inset Formula 
 \begin{eqnarray*}
 \mathbb{E}_{p}[h] & = & \int h(x)p(x){\rm d}x\\
- & \thickapprox & \sum_{s=1}^{S}h(x^{(s)})
+ & \thickapprox & \frac{1}{S}\sum_{s=1}^{S}h(x^{(s)})
 \end{eqnarray*}
 
 \end_inset
@@ -1238,13 +1395,19 @@ where
 \end_layout
 
 \begin_layout Itemize
-The accuracy of this estimator increases as the number of samples 
+The accuracy of this estimator increases as the number of samples, 
 \begin_inset Formula $S$
 \end_inset
 
- increases.
+, increases.
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+This is the Law of Large Numbers in action.
+\end_layout
+
+\end_deeper
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
@@ -1273,8 +1436,8 @@ Sampling from the posterior directly is typically as hard as computing the
 \end_layout
 
 \begin_layout Itemize
-The basic idea of Markov Chain Monte Carlo methods is to construct a Markov
- chain that admits 
+The basic idea of Markov Chain Monte Carlo (MCMC) methods is to construct
+ a Markov chain that admits 
 \begin_inset Formula $p(\theta|X)$
 \end_inset
 
@@ -1317,7 +1480,7 @@ MCMC methods are only guaranteed to draw samples from
 \begin_inset Formula $p(\theta|X)$
 \end_inset
 
- in the limit as we take an infinite number of iteration.
+ in the limit as we take an infinite number of iterations.
 \end_layout
 
 \begin_layout Itemize
@@ -1329,8 +1492,8 @@ In practice the Markov chain often gets very close to sampling from
 \end_layout
 
 \begin_layout Itemize
-However, early samples from the chain may be from a distribution far from
- 
+However, early samples from the chain may come from a distribution which
+ is quite different from 
 \begin_inset Formula $p(\theta|X)$
 \end_inset
 
@@ -1386,7 +1549,7 @@ This does mean we need more samples than if we could sample from
 \begin_inset Formula $p(\theta|X)$
 \end_inset
 
-.
+ directly.
 \end_layout
 
 \begin_layout Itemize
@@ -1394,7 +1557,7 @@ Often people only retain every
 \begin_inset Formula $n^{th}$
 \end_inset
 
-, a procedure called 
+ sample, a procedure called 
 \shape italic
 thinning
 \shape default
@@ -1467,6 +1630,10 @@ The trick of the MH algorithm is that the intractable normalisation cancels
 \begin_inset Formula $\alpha(\theta,\theta')$
 \end_inset
 
+ so we only need to evaluate the joint distribution 
+\begin_inset Formula $p(\theta',X)$
+\end_inset
+
 .
 \end_layout
 
@@ -1533,6 +1700,33 @@ We use the previous values from each step to compute the conditional in
  the next.
 \end_layout
 
+\begin_layout Itemize
+Gibbs sampler are most useful when:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The model has conditional conjugacy so we have closed form distribution.
+\end_layout
+
+\begin_layout Itemize
+The parameters are discrete with a small state space.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Gibbs sampling can get stuck in modes fairly easily.
+ Often mixing MH moves that update 
+\begin_inset Formula $\theta_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\theta_{2}$
+\end_inset
+
+ jointly can help.
+\end_layout
+
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
@@ -1560,7 +1754,7 @@ If
 \begin_inset Formula $\theta$
 \end_inset
 
- is high dimensional, then it is very hard to find a good proposal 
+ is high dimensional, then it can be very hard to find a good proposal 
 \begin_inset Formula $q$
 \end_inset
 
@@ -1639,7 +1833,7 @@ In practice it is often the only way to get MH to work in high dimensional
 \end_layout
 
 \begin_layout Itemize
-Note also that the normalisation 
+Note that the normalisation 
 \begin_inset Formula $p(\{\theta_{j}\}_{j\ne i},X)$
 \end_inset
 

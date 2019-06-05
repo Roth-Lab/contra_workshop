@@ -18,7 +18,7 @@
 \font_roman "times" "default"
 \font_sans "helvet" "default"
 \font_typewriter "courier" "default"
-\font_math "auto" "auto"
+\font_math "newtxmath" "auto"
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
@@ -123,13 +123,13 @@ Variational inference (VI) is one such approach.
 
 \begin_deeper
 \begin_layout Itemize
-In practice VI typically not much more computationally expensive than MAP,
- but provides much better posterior approximations.
+In practice VI is typically not much more computationally expensive than
+ MAP, but provides much better posterior approximations.
 \end_layout
 
 \end_deeper
 \begin_layout Itemize
-There has been a renewed interest in VI overt the last five years.
+There has been a renewed interest in VI over the last five years.
 \end_layout
 
 \begin_deeper
@@ -189,10 +189,6 @@ The parameter
 \end_deeper
 \begin_layout Itemize
 The typical measure of similarity is the KL divergence.
-\begin_inset Newline newline
-\end_inset
-
-
 \begin_inset Formula 
 \begin{eqnarray*}
 KL(q,p) & = & \int\log\frac{p(\theta|X)}{q(\theta|\lambda)}q(\theta|\lambda){\rm d}\theta\\
@@ -463,10 +459,6 @@ p_{\beta}(\theta|X) & = & p(X|\theta)^{\beta}p(\theta)
 
 \end_inset
 
-
-\begin_inset Newline newline
-\end_inset
-
 with 
 \begin_inset Formula $0=\beta_{1}<\beta_{2}<\ldots<\beta_{T}=1$
 \end_inset
@@ -477,6 +469,27 @@ with
 \begin_layout Itemize
 The hope is we start with a distribution that is easy to sample from, and
  the slowly change the distribution until we arrive at the one of interest.
+\end_layout
+
+\begin_layout Itemize
+We start with 
+\begin_inset Formula $\beta_{1}$
+\end_inset
+
+ and use any MCMC update for the parameters.
+ After several iterations we then update to 
+\begin_inset Formula $\beta_{2}$
+\end_inset
+
+ and so on.
+\end_layout
+
+\begin_layout Itemize
+We collect samples when we reach 
+\begin_inset Formula $\beta_{T}$
+\end_inset
+
+.
 \end_layout
 
 \end_deeper
@@ -518,6 +531,46 @@ Traditionally tuning the algorithm parameters has been hard.
 \begin_layout Itemize
 The probabilistic programming language STAN uses HMC and automatic differentiati
 on to efficiently sample from a large class of user defined models.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+HMC in action
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_5/hmc.png
+	lyxscale 10
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\size tiny
+Lan et al.
+ Journal Journal of Computational and Graphical Statistics 2015
 \end_layout
 
 \end_deeper
@@ -581,6 +634,46 @@ Recent work has shown that it can be applied more generally for problems
 status open
 
 \begin_layout Plain Layout
+SMC for phylogenetics
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_5/smc_phylo.png
+	lyxscale 10
+	height 85theight%
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\size tiny
+https://arxiv.org/abs/1806.08813
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
 Particle Gibbs
 \end_layout
 
@@ -612,6 +705,47 @@ Like SMC, PG was originally applied to models with sequential structure.
 \begin_layout Itemize
 Recent work has show it is more general and can be applied to problems such
  as Bayesian mixture models.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Particle Gibbs for mixture models
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_5/pgsm_swarm.pdf
+	lyxscale 10
+	height 85theight%
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\size tiny
+Bouchard-Côté et al.
+ JMLR 2017
 \end_layout
 
 \end_deeper
@@ -673,6 +807,59 @@ This allows values from the easy to sample from chain move to the chain
 status open
 
 \begin_layout Plain Layout
+PT mode hopping
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_5/pt_1.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_5/pt_2.png
+	lyxscale 10
+	width 45text%
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\size tiny
+Earl et al.
+ Physical chemistry chemical physics 2005
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
 Approximate Bayesian computation
 \end_layout
 
@@ -688,8 +875,7 @@ tions.
 \end_layout
 
 \begin_layout Itemize
-Unlike the other approaches, ABC does require that we be able to evaluate
- the likelihood.
+Unlike the other approaches, ABC does require evaluation of the likelihood.
 \end_layout
 
 \begin_layout Itemize
@@ -702,6 +888,47 @@ The basic idea of ABC is to propose parameters from the prior, and then
  simulate data with these parameters.
  If the simulated data is close enough to the observed data then we add
  the parameters to the posterior approximation.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+ABC
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_5/abc.png
+	lyxscale 10
+	height 85theight%
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\size tiny
+Sunnåker et al.
+ PLOS Computational Biology 2013
 \end_layout
 
 \end_deeper
