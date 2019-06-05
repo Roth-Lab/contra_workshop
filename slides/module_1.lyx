@@ -18,7 +18,7 @@
 \font_roman "times" "default"
 \font_sans "helvet" "default"
 \font_typewriter "courier" "default"
-\font_math "auto" "auto"
+\font_math "newtxmath" "auto"
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
@@ -100,7 +100,7 @@ Housekeeping
 
 \begin_deeper
 \begin_layout Itemize
-Slides and notes will be up at 
+Slides and notes are at 
 \begin_inset Flex URL
 status open
 
