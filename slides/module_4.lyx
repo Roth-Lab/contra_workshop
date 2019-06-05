@@ -1156,6 +1156,40 @@ Once we have the presence/absence labelling we can compute origin points
 status open
 
 \begin_layout Plain Layout
+Model output
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/andrew/Documents/teaching/CONTRA/figures/module_4/patient_1_snv_tree.pdf
+	lyxscale 10
+	height 85theight%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
 Model validation
 \end_layout
 
