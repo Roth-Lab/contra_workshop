@@ -1,6 +1,6 @@
-<TeXmacs|1.99.8>
+<TeXmacs|1.99.13>
 
-<style|<tuple|tmbook|british>>
+<style|<tuple|tmbook|british|old-dots>>
 
 <\body>
   <section|Inferring clonal population structure from SNV data>
@@ -122,7 +122,7 @@
     all of the chromosomes have the reference or the variant allele.
   </enumerate-numeric>
 
-  <big-figure|<image|../figures/module_2/population_structure.eps|400pt|||>|<label|fig:pop_structure>Illustration
+  <big-figure|<image|../figures/module_2/population_structure.svg|400pt|||>|<label|fig:pop_structure>Illustration
   of the assumed population structure. Here all populations are defined with
   respect to a single mutation. The circular cells are non-malignant and the
   irregularly shaped ones are malignant.>
@@ -145,7 +145,7 @@
   do have mutations, just not the particular mutation we are thinking about
   at the moment.
 
-  <big-figure|<image|../figures/module_2/population_structure_simple.eps|400pt|||>|<label|fig:pop_structure_simple>Illustration
+  <big-figure|<image|../figures/module_2/population_structure_simple.svg|400pt|||>|<label|fig:pop_structure_simple>Illustration
   of the simplified population structure. In contrast to Figure
   <reference|fig:pop_structure_simple> the mutational genotypes of all cells
   within the reference and variant populations are the same. Note the
@@ -1043,32 +1043,32 @@
 <\auxiliary>
   <\collection>
     <\associate|figure>
-      <tuple|normal|<surround|<hidden|<tuple>>||Schematic of bulk sequencing
-      for a tumour experiment. At the top we have the input cell population,
-      where stars indicate mutations. In the middle we show the aligned reads
-      obtained from performing bulk sequencing. Positions in reads are colour
-      coded to match the mutations at the top. Note the proportion of reads
-      with a variant is roughly similar to the proportion of input cells with
-      the mutation. At the bottom we show the summarised read counts which we
-      will use for modelling.>|<pageref|auto-3>>
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1>||Schematic of bulk
+      sequencing for a tumour experiment. At the top we have the input cell
+      population, where stars indicate mutations. In the middle we show the
+      aligned reads obtained from performing bulk sequencing. Positions in
+      reads are colour coded to match the mutations at the top. Note the
+      proportion of reads with a variant is roughly similar to the proportion
+      of input cells with the mutation. At the bottom we show the summarised
+      read counts which we will use for modelling.>|<pageref|auto-3>>
 
-      <tuple|normal|<surround|<hidden|<tuple>>||Example of a heterozygous
-      diploid mutation showing why the variant allele frequency (VAF) is not
-      the same proportion of cells harbouring the mutation (cellular
-      prevalence). On the left we have the input population of cells which
-      all have the mutation. On the right we have the observed sequence data
-      where only half the reads (on average) have the
+      <tuple|normal|<surround|<hidden-binding|<tuple>|2>||Example of a
+      heterozygous diploid mutation showing why the variant allele frequency
+      (VAF) is not the same proportion of cells harbouring the mutation
+      (cellular prevalence). On the left we have the input population of
+      cells which all have the mutation. On the right we have the observed
+      sequence data where only half the reads (on average) have the
       mutation.>|<pageref|auto-6>>
 
-      <tuple|normal|<surround|<hidden|<tuple>>||Effect of mutational genotype
-      on observed VAF.>|<pageref|auto-7>>
+      <tuple|normal|<surround|<hidden-binding|<tuple>|3>||Effect of
+      mutational genotype on observed VAF.>|<pageref|auto-7>>
 
-      <tuple|normal|<surround|<hidden|<tuple>>||Illustration of the assumed
-      population structure. Here all populations are defined with respect to
-      a single mutation. The circular cells are non-malignant and the
-      irregularly shaped ones are malignant.>|<pageref|auto-9>>
+      <tuple|normal|<surround|<hidden-binding|<tuple>|4>||Illustration of the
+      assumed population structure. Here all populations are defined with
+      respect to a single mutation. The circular cells are non-malignant and
+      the irregularly shaped ones are malignant.>|<pageref|auto-9>>
 
-      <tuple|normal|<surround|<hidden|<tuple>>||Illustration of the
+      <tuple|normal|<surround|<hidden-binding|<tuple>|5>||Illustration of the
       simplified population structure. In contrast to Figure
       <reference|fig:pop_structure_simple> the mutational genotypes of all
       cells within the reference and variant populations are the same. Note
@@ -1076,16 +1076,16 @@
       since one population has the mutation and the other does
       not.>|<pageref|auto-10>>
 
-      <tuple|normal|<surround|<hidden|<tuple>>||Illustration of allele
-      specific copy number profile. The red line is the major copy number and
-      the blue line is the minor copy number. The star indicates the location
-      of an SNV. The major copy number of this SNV is 2 and the minor is
-      1.>|<pageref|auto-13>>
+      <tuple|normal|<surround|<hidden-binding|<tuple>|6>||Illustration of
+      allele specific copy number profile. The red line is the major copy
+      number and the blue line is the minor copy number. The star indicates
+      the location of an SNV. The major copy number of this SNV is 2 and the
+      minor is 1.>|<pageref|auto-13>>
 
-      <tuple|normal|<surround|<hidden|<tuple>>||Schematic of how to illicit
-      mutational genotype priors. We assume we have the information from
-      Figure <reference|fig:cn_snv> and know the major copy number is 2 and
-      the minor copy number is 1. The first two examples correspond to
+      <tuple|normal|<surround|<hidden-binding|<tuple>|7>||Schematic of how to
+      illicit mutational genotype priors. We assume we have the information
+      from Figure <reference|fig:cn_snv> and know the major copy number is 2
+      and the minor copy number is 1. The first two examples correspond to
       mutations which happen prior to the copy number change, hence the total
       copy number of the reference and variant population differ. The third
       example corresponds to the case where the mutation occurs after the
@@ -1093,14 +1093,14 @@
       population are the same. Furthermore, only a single copy can be mutated
       by the infinite sites assumption.>|<pageref|auto-14>>
 
-      <tuple|normal|<surround|<hidden|<tuple>>||Example posterior densities
-      for the cellular prevalence <with|mode|<quote|math>|\<phi\>> computed
-      from the model. The top row shows the case for a homozygous diploid
-      position (there is a s typo it should be CN=(2,0)). The second row
-      shows the posterior for the case illustrated in Figures
+      <tuple|normal|<surround|<hidden-binding|<tuple>|8>||Example posterior
+      densities for the cellular prevalence <with|mode|<quote|math>|\<phi\>>
+      computed from the model. The top row shows the case for a homozygous
+      diploid position (there is a s typo it should be CN=(2,0)). The second
+      row shows the posterior for the case illustrated in Figures
       <reference|fig:cn_snv> and <reference|fig:genotype_prior>.>|<pageref|auto-16>>
 
-      <tuple|normal|<surround|<hidden|<tuple>>||Illustration of the
+      <tuple|normal|<surround|<hidden-binding|<tuple>|9>||Illustration of the
       relationship between evolutionary history and cellular prevalence. On
       the left we have hypothetical evolutionary history, where stars
       indicate mutations and nodes clonal populations. On the write is a
