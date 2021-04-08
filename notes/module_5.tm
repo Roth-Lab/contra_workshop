@@ -1,13 +1,13 @@
-<TeXmacs|1.99.8>
+<TeXmacs|1.99.13>
 
-<style|<tuple|tmbook|british>>
+<style|<tuple|tmbook|british|old-dots>>
 
 <\body>
   <section|Advanced Inference Techniques>
 
   In this module we briefly review some more advanced techniques for fitting
   models. The main purpose is to highlight these approaches and their
-  benefitys, rather than provide a detailed description.
+  benefits, rather than provide a detailed description.
 
   <subsection|Variational inference>
 
@@ -21,7 +21,7 @@
 
   VI frames the problem of approximating the posterior distribution as an
   optimisation problem. The basic idea is to identify a family of
-  approximating distribution <math|q<around*|(|\<theta\>\|\<lambda\>|)>>
+  approximating distributions <math|q<around*|(|\<theta\>\|\<lambda\>|)>>
   which are in some sense simpler than the posterior
   <math|p<around*|(|\<theta\>\|X|)>>. The goal is then to find the settings
   of the variational parameters <math|\<lambda\>> that minimise the distance
@@ -96,8 +96,7 @@
   distributions sampling from them becomes harder, until we reach the
   distribution we are interested in.\ 
 
-  One way to construct this sequence is to anneal the likelihood is as
-  follows
+  One way to construct this sequence is to anneal the likelihood as follows
 
   <\eqnarray>
     <tformat|<table|<row|<cell|p<rsub|\<beta\>><around*|(|\<theta\>\|X|)>>|<cell|=>|<cell|p<around*|(|\<theta\>\|X|)><rsup|\<beta\>>
@@ -110,7 +109,7 @@
   <math|\<beta\><rsub|1>> and run some form of MCMC update like MH. After
   some number of iterations we then move to <math|\<beta\><rsub|2>> keeping
   the last value from our previous updates. We continue this until we reach
-  <math|\<beta\><rsub|T>> as which point we are sampling from the posterior.
+  <math|\<beta\><rsub|T>> at which point we are sampling from the posterior.
   We then collect samples from this last iteration as our posterior
   approximation.
 
@@ -121,9 +120,9 @@
   near the mode and sampling well from it. In principle SA can escape local
   optima from bad initialisation.\ 
 
-  Tuning the values of <math|\<beta\><rsub|i>> and slecting the correct
-  number is the main challenge fo SA. If the distance between
-  <math|\<beta\><rsub|i>> and <math|\<beta\><rsub|i+1>> are large, then the
+  Tuning the values of <math|\<beta\><rsub|i>> and selecting the correct
+  number is the main challenge for SA. If the distance between
+  <math|\<beta\><rsub|i>> and <math|\<beta\><rsub|i+1>> is large, then the
   associated distributions will be quite different. This in turn can lead the
   algorithm to get trapped in modes.
 
@@ -165,18 +164,18 @@
   Sequential Monte Carlo (SMC) is a very general algorithm for sampling from
   high dimensional distributions. The basic idea is to break the sampling
   problem down into smaller and easier to sample problems. To achieve this
-  The basic idea is to break the sampling problem down into smaller and
-  easier to sample problems. At each iteration of the SMC algorithm we update
-  the particles and compute a weight for them. The weight, roughly speaking,
-  is a measure of how good a fit the partial solution represented by the
-  particle is to the data. Resampling is used after each iteration or when
-  some criteria is met to replace low weight particles with high weight ones.
-  At the end of the SMC algorithm we have a set of particles with
-  representing the sampled parameters, and collection of weights that can be
-  used to form an approximation to the posterior.
+  SMC maintains a collection of <with|font-shape|italic|particles>
+  representing a partial state. At each iteration of the SMC algorithm we
+  update the particles and compute a weight for them. The weight, roughly
+  speaking, is a measure of how good a fit the partial solution represented
+  by the particle is to the data. Resampling is used after each iteration or
+  when some criteria is met to replace low weight particles with high weight
+  ones. At the end of the SMC algorithm we have a set of particles
+  representing the sampled parameters, and a collection of weights that can
+  be used to form an approximation to the posterior.
 
   SMC is often used to sample from distributions with an obvious sequential
-  structure. The classic example the is posterior distribution of the hidden
+  structure. The classic example is the posterior distribution of the hidden
   states of an HMM. In this case the <math|t<rsup|th>> iteration of the SMC
   algorithm proposes a new value for the hidden state <math|z<rsub|t>> of the
   chain. The weight function depends on the partial likelihood of the data up
@@ -199,7 +198,7 @@
   to indicate the sequence of parameters that have been sampled. The final
   design choice the set of proposal distributions
   <math|<around*|{|q<rsub|t>|}><rsub|t=1><rsup|T>> to use at each step. The
-  only real constraint for is that we must be able to propose every possible
+  only real constraint is that we must be able to propose every possible
   value of <math|\<theta\><rsub|t>> at each step.
 
   <subsubsection|Particle Gibbs>
@@ -223,8 +222,8 @@
   amounts to ensuring there is one particle which follows a path that leads
   to the current state. The modifications required to the standard SMC
   algorithm to achieve this are fairly minimal. Intuitively the conditional
-  particle keeps acts to keep the other particles in the SMC swarm near the
-  current value. This achieved through the resampling step, whereby the
+  particle acts to keep the other particles in the SMC swarm near the current
+  value. This is achieved through the resampling step, whereby the
   conditional particle can replace other particles.
 
   <\remark>
@@ -249,7 +248,7 @@
 
   Parallel tempering (PT) is a very general approach to address the issues of
   multi-modal or hard to sample from posteriors. Like SA we have sequence of
-  distribution <math|<around*|{|p<rsub|\<beta\><rsub|i>>|}><rsub|i=1><rsup|T>>.
+  distributions <math|<around*|{|p<rsub|\<beta\><rsub|i>>|}><rsub|i=1><rsup|T>>.
   The difference is we concurrently perform updates for all these
   distributions using an MCMC algorithm. Periodically we propose to swap the
   parameters between two chains. The posterior approximation is generated by
@@ -293,7 +292,7 @@
   surprisingly simple. Assume we have a model with parameters
   <math|\<theta\>>. We are able to simulate data given <math|\<theta\>>, but
   cannot easily evaluate the likelihood <math|p<around*|(|X\|\<theta\>|)>>.
-  In ABC we simply propose value of <math|<wide|\<theta\>|~>> from the prior
+  In ABC we simply propose values of <math|<wide|\<theta\>|~>> from the prior
   distribution, then simulate data <math|<wide|X|~>> and then compute a
   measure of distance between the simulated data <math|<wide|X|~>> and
   observed data <math|X>. If the distance is less than a threshold,
@@ -303,8 +302,8 @@
   The accuracy of the posterior approximation depends on the value
   <math|\<varepsilon\>>. If <math|\<varepsilon\>> is large we will accept
   many samples, but have a less accurate posterior approximation. In contrast
-  if we use small value of <math|\<varepsilon\>> we will often reject samples
-  and need to run more trials, but the approximation will be better.\ 
+  if we use a small value of <math|\<varepsilon\>> we will often reject
+  samples and need to run more trials, but the approximation will be better.\ 
 
   One key design choice is the distance metric used to compare the observed
   data to the simulated data. If we have high dimensional data, then a metric
@@ -319,7 +318,7 @@
   ABC is computationally demanding. Typically many millions of simulations
   will be required before a sufficient number of samples can be collected.
   Thus, while it could in principle be used to fit any model where other MCMC
-  approaches apply, it will be far to computationally demanding.
+  approaches apply, it will be far too computationally demanding.
 
   <\bibliography|bib|tm-plain|references>
     <\bib-list|2>
@@ -347,18 +346,18 @@
 
 <\references>
   <\collection>
-    <associate|auto-1|<tuple|1|?>>
-    <associate|auto-10|<tuple|1.2.6|?>>
-    <associate|auto-2|<tuple|1.1|?>>
-    <associate|auto-3|<tuple|1.2|?>>
-    <associate|auto-4|<tuple|1.2.1|?>>
-    <associate|auto-5|<tuple|1.2.2|?>>
-    <associate|auto-6|<tuple|1.2.3|?>>
-    <associate|auto-7|<tuple|1.2.4|?>>
-    <associate|auto-8|<tuple|1.2.5|?>>
-    <associate|auto-9|<tuple|1.2.6|?>>
-    <associate|bib-beal2003variational|<tuple|1|?>>
-    <associate|bib-blei2017variational|<tuple|2|?>>
+    <associate|auto-1|<tuple|1|1>>
+    <associate|auto-10|<tuple|1.2.6|5>>
+    <associate|auto-2|<tuple|1.1|1>>
+    <associate|auto-3|<tuple|1.2|1>>
+    <associate|auto-4|<tuple|1.2.1|2>>
+    <associate|auto-5|<tuple|1.2.2|2>>
+    <associate|auto-6|<tuple|1.2.3|2>>
+    <associate|auto-7|<tuple|1.2.4|3>>
+    <associate|auto-8|<tuple|1.2.5|3>>
+    <associate|auto-9|<tuple|1.2.6|4>>
+    <associate|bib-beal2003variational|<tuple|1|5>>
+    <associate|bib-blei2017variational|<tuple|2|5>>
   </collection>
 </references>
 

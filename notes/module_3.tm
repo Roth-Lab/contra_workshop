@@ -1,6 +1,6 @@
-<TeXmacs|1.99.8>
+<TeXmacs|1.99.13>
 
-<style|<tuple|tmbook|british>>
+<style|<tuple|tmbook|british|old-dots>>
 
 <\body>
   <section|Copy number variation>
@@ -120,7 +120,8 @@
     <item><math|F> - The emission distribution. This is the distribution for
     the observed data which depends on the associated hidden state. The
     hidden state is thus like the cluster indicator in mixture models,
-    selecting which paramter is used for <math|F> to generate the data point.
+    selecting which parameter is used for <math|F> to generate the data
+    point.
   </enumerate-numeric>
 
   Here we assume that <math|K=<around*|\||\<cal-X\>|\|>> is known and fixed.

@@ -1,15 +1,15 @@
-<TeXmacs|1.99.8>
+<TeXmacs|1.99.13>
 
-<style|<tuple|tmbook|british>>
+<style|<tuple|tmbook|british|old-dots>>
 
 <\body>
   <section|Introduction>
 
   <verbatim|>The development of high throughput assays such as short read
   sequencing are driving cancer biology to become a data rich scientific
-  field. Analysing this data and extracting biologically meaning is becoming
+  field. Analysing this data and extracting biological meaning is becoming
   increasingly challenging as large data sets filled with biological and
-  technical noise are created. There are a many approaches computational
+  technical noise are created. There are many approaches computational
   biologists can use to meet this challenge. In these notes we will consider
   how probabilistic modelling can be useful. We will see that probabilistic
   modelling provides a coherent framework to analyse noisy data and extract
@@ -27,21 +27,21 @@
   sequencing there is a constant tension between throughput and accuracy. For
   example, when we sequence single cells we often have a choice. Do we
   sequence more cells with low coverage or fewer cells with high coverage.
-  Lower coverage data will have more technical noise, but allow us to survey
-  a broader population and account for biological variability. How can we
-  make use of such data in the presence of this noise?
+  Lower coverage data will have more technical noise but allow us to survey a
+  broader population and account for biological variability. How can we make
+  use of such data in the presence of this noise?
 
   In the simplest sense probabilistic modelling is about looking at the world
   when there is noise. More accurately it is about constructing models which
   account for some form of randomness. A common example across many
   scientific fields is to assume the observed values are affected by
-  \Qrandom\Q noise. This assumption stems from issues such as measurement
+  \Prandom\Q noise. This assumption stems from issues such as measurement
   error. While we believe there is some true value we wish to measure, the
   instruments available to make measurements intrinsically perturb this
   value. We can't learn a great deal from a single measurement, but if we
   make a lot measurements then we can average them to get a more accurate
-  estimate. Of course the confidence we have in this measurement will be
-  dependent on the variation we observe in the data. Classically we report
+  estimate. Of course, the confidence we have in this measurement will be
+  dependent on the variation we observe in the data. Classically, we report
   such uncertainty with quantities like confidence intervals. If we adopt
   such a process we are actually constructing a simple probabilistic model.
   We are assuming the data is sampled from a Normal distribution with a mean
@@ -60,9 +60,9 @@
   <\enumerate-numeric>
     <item>How do we construct an appropriate model for the data?
 
-    <item>How can estimate the model parameters?
+    <item>How can we estimate the model parameters?
 
-    <item>How do report these model parameters i.e. how certain are we?
+    <item>How do we report these model parameters i.e. how certain are we?
   </enumerate-numeric>
 
   In many ways, the first point is the most challenging. Constructing useful
@@ -75,7 +75,7 @@
   biologically realistic assumptions? What is the data and what are the types
   of noise it exhibits? Building models which encapsulate this information is
   as much an art as science. Models that are too simple risk fitting the data
-  poorly, whereas models that are to complex risk becoming impossible to
+  poorly, whereas models that are too complex risk becoming impossible to
   interpret. In the next section we will discuss some basic ingredients to
   building models.
 
@@ -85,7 +85,7 @@
   estimate model parameters. <em|Everything you want to know is encapsulated
   in the posterior distribution>. The hard part then is not how to estimate
   the model parameters or report uncertainty, but how to compute the
-  posterior. For reason to be discussed later this is computationally
+  posterior. For reasons to be discussed later this is computationally
   challenging.
 
   One factor that is often overlooked is the interplay between model
@@ -97,7 +97,7 @@
   <subsection|Probability distributions>
 
   The basic ingredient of probabilistic modelling is probability theory. As
-  we will see later we will make assumptions about the distributions that
+  we will see later, we will make assumptions about the distributions that
   govern the data and model parameters. To be able to do this we need to have
   a reasonable knowledge of the distributions out there. In this section we
   will review a few common distributions, though this is by no means an
@@ -129,7 +129,7 @@
   relationship. Perhaps the most famous pair is the Normal and Student-t
   (over-dispersed) distributions.\ 
 
-  There are other factors such distribution skew i.e. is the distribution
+  There are other factors such as distribution skew i.e. is the distribution
   symmetric and tail behaviour i.e. do we have more outliers than we expect.
   Knowing which distribution to use is often an empirical question, and
   rigorously should be performed as part of model selection. In practice it
@@ -158,14 +158,14 @@
     of powerful hierarchies of variables that can be exploited to <em|share
     statistical> strength.
 
-    <item>Coherent inference - As we will see fitting model parameters in the
-    Bayesian paradigm amounts to computing the posterior distribution.
+    <item>Coherent inference - As we will see, fitting model parameters in
+    the Bayesian paradigm amounts to computing the posterior distribution.
   </itemize-dot>
 
   <subsubsection|The posterior distribution>
 
-  Abstractly we assume that we have observed data <math|X> and a model with a
-  collection of parameters <math|\<theta\>>. The observed data <math|X> is
+  Abstractly, we assume that we have observed data <math|X> and a model with
+  a collection of parameters <math|\<theta\>>. The observed data <math|X> is
   modelled by a distribution which depends on <math|\<theta\>>, often called
   the <em|likelihood>. We denote the density of this distribution
   <math|p<around*|(|X\|\<theta\>|)>>. In the Bayesian paradigm we also have a
@@ -259,11 +259,11 @@
     </eqnarray>
 
     Now the challenge is to evaluate the integral in the denominator. We note
-    a trick here which that the term <math|\<rho\><rsup|x+a-1>
-    <around*|(|1-\<rho\>|)><rsup|n-x+b-1>> is exactly the term that appears
-    in a <math|<text|Beta><around*|(|x+a,n-x+b|)>> distribution neglecting
-    the normalisation constant. So it follows the integral equals the
-    normalisation constant <math|\<cal-B\><around*|(|x+a,n-x+b|)>>. So we
+    a trick here, the term <math|\<rho\><rsup|x+a-1>
+    <around*|(|1-\<rho\>|)><rsup|n-x+b-1>> is exactly the same term that
+    appears in a <math|<text|Beta><around*|(|x+a,n-x+b|)>> distribution
+    neglecting the normalisation constant. So it follows the integral equals
+    the normalisation constant <math|\<cal-B\><around*|(|x+a,n-x+b|)>>. So we
     have\ 
 
     <\eqnarray>
@@ -280,15 +280,16 @@
 
   In the previous example we could explicitly compute the normalisation
   constant. This is possible because the Beta and Binomial distributions are
-  a <with|font-shape|italic|conjugate> pair. Conjugacy plays an important in
-  many Bayesian models, making exact computation of the posterior possible.
-  However, there are many models which are non-conjugate and for which the
-  normalisation cannot be compute explicitly. In the previous example this is
-  still not a major problem since we could simply numerically compute the one
-  dimensional integral over <math|\<rho\>>. This can be easily done with
-  functions in your favourite scientific computing package. However, if the
-  dimensionality of the integral is even moderately high this becomes
-  computationally prohibitive and alternative approaches will be required.
+  a <with|font-shape|italic|conjugate> pair. Conjugacy plays an important
+  role in many Bayesian models, making exact computation of the posterior
+  possible. However, there are many models which are non-conjugate and for
+  which the normalisation cannot be compute explicitly. In the previous
+  example this is still not a major problem since we could simply numerically
+  compute the one dimensional integral over <math|\<rho\>>. This can be
+  easily done with functions in your favourite scientific computing package.
+  However, if the dimensionality of the integral is even moderately high this
+  becomes computationally prohibitive and alternative approaches will be
+  required.
 
   <subsubsection|Summarising posteriors>
 
@@ -301,17 +302,17 @@
   posterior mean and variance. These are often reasonable values, but care
   must be taken if the posterior is multi-modal. In that case the mean may
   not be a typical value for the distribution. An alternative approach is to
-  report an <math|\<alpha\>> credible regions. This is an region which
-  contains <math|\<alpha\>> of the mass of the posterior. There are many ways
-  to construct such intervals, one sensible way is to find the smallest
-  region <math|R> where <math|<big|int><rsub|R>p<around*|(|\<theta\>\|X|)>\<mathd\>\<theta\>=\<alpha\>>.
+  report an <math|\<alpha\>> credible region. This is a region which contains
+  <math|\<alpha\>> of the mass of the posterior. There are many ways to
+  construct such intervals, one sensible way is to find the smallest region
+  <math|R> where <math|<big|int><rsub|R>p<around*|(|\<theta\>\|X|)>\<mathd\>\<theta\>=\<alpha\>>.
   This is referred to as the high probability density (HPD) region, since by
   definition it captures the region of highest density.
 
   <\example>
     \;
 
-    We return to the coin flipping example. From the previous section we now
+    We return to the coin flipping example. From the previous section we know
     the posterior distribution is\ 
 
     <\eqnarray>
@@ -326,9 +327,9 @@
 
   A more general theory of Bayesian point estimation exists and makes use of
   the concept of a loss function. A loss function, <math|L<around*|(|x,y|)>>,
-  is bi-variate function which takes on positive real value. The
-  interpretation is that the functions represents our perceived loss if we
-  were to estimate <math|x> but the true value is <math|y>. In a Bayesian
+  is bi-variate function which takes on positive real values. The
+  interpretation is that the loss function represents our perceived loss if
+  we were to estimate <math|x> but the true value is <math|y>. In a Bayesian
   setting we seek to minimise the expected loss under the posterior as our
   best estimate.\ 
 
@@ -355,8 +356,8 @@
   The theory of Bayesian inference is coherent and elegantly contained in a
   few basic principles. However, the real utility of the paradigm is the
   ability to construct complex hierarchical models. This is possible because
-  we view model parameters are random variables, in the same way we view
-  data. There are several useful notational constructs for describing
+  we view the model parameters as random variables, in the same way we view
+  the data. There are several useful notational constructs for describing
   hierarchical models. The most explicit is to list out the distributional
   assumptions. For example, we have many statements of the form
   <math|a\|b\<sim\><text|G><around*|(|\<cdot\>\|b|)>>. This reads as follows:
@@ -377,15 +378,15 @@
     for <math|N> data points. Here <math|\<b-x\><rsub|n>\<in\>\<bbb-R\><rsup|D>>
     and <math|y<rsub|n>\<in\><around*|{|0,1|}>>. Informally we observe some
     real valued covariates for a data point <math|\<b-x\><rsub|n>>, and we
-    believe these influence the outcome variables <math|y<rsub|n>> which
-    takes the values <math|<around*|{|0,1|}>>. We will also assume there is
-    regression coefficient vector <math|\<b-beta\>=<around*|(|\<beta\><rsub|1>,\<ldots\>,\<beta\><rsub|d>|)>\<in\>\<bbb-R\><rsup|D>>
+    believe these influence the outcome variables
+    <math|y<rsub|n>\<in\><around*|{|0,1|}>>. We will also assume there is
+    regression coefficient vector <math|\<b-beta\>=<around*|(|\<beta\><rsub|1>,\<ldots\>,\<beta\><rsub|D>|)>\<in\>\<bbb-R\><rsup|D>>
     that controls the influence of the covariates on the outcome. A common
     use for this model is to learn predictors to separate data into two
     classes, such as patients that will respond to treatment
     (<math|y<rsub|n>=1>) and patients that will not (<math|y<rsub|n>=0>).\ 
 
-    Since the variables <math|y<rsub|n>> are 0/1 valued a natural
+    Since the variables <math|y<rsub|n>> are 0/1 valued, a natural
     distribution to model them is the Bernoulli. We will assume the
     regression covariates are independent and model <math|\<beta\><rsub|d>>
     as Normally distributed. To link these two items together we need make
@@ -401,7 +402,7 @@
       x<rsub|n d>|)>|)>>>>>
     </eqnarray>
 
-    where <math|\<mu\>> and <math|\<sigma\><rsup|2>> are hype-parameters we
+    where <math|\<mu\>> and <math|\<sigma\><rsup|2>> are hyper-parameters we
     assume known.
   </example>
 
@@ -466,7 +467,7 @@
   approximate it accurately. There are many strategies for approximating the
   posterior distribution. We will use two in these notes. The first is to
   simply report the parameter values that maximise the posterior, often
-  referred to a maximum a posteriori (MAP) inference. This is equivalent to
+  referred to as maximum a posteriori (MAP) inference. This is equivalent to
   using a delta function (spike) centred at the MAP parameters as our
   approximating distribution. The second approach is to use Markov Chain
   Monte Carlo methods. Here we approximate the posterior distribution using a
@@ -476,7 +477,7 @@
 
   MAP estimation is the simplest way to approximate a posterior distribution.
   It can be viewed as point estimation of parameters. However, a better way
-  to view it is as approximating the posterior with distribution that is a
+  to view it is as approximating the posterior with a distribution that is a
   single spike at the MAP value. This value has probability one while all
   other values have probability zero. Formally the MAP estimate is defined as
   follows.
@@ -493,8 +494,8 @@
   is that <math|p<around*|(|\<theta\>\|X|)>=<frac|p<around*|(|\<theta\>,X|)>|p<around*|(|X|)>>>
   and that <math|p<around*|(|X|)>> does not depend on <math|\<theta\>>. Thus
   maximising <math|p<around*|(|\<theta\>\|X|)>> is equivalent to maximising
-  the joint distribution <math|p<around*|(|\<theta\>,X|)>>. In man cases we
-  can evaluate the join since we have that
+  the joint distribution <math|p<around*|(|\<theta\>,X|)>>. In many cases we
+  can evaluate the joint since we have that
   <math|p<around*|(|\<theta\>,X|)>=p<around*|(|X\|\<theta\>|)>
   p<around*|(|\<theta\>|)>>, that is the joint is the product of the prior
   and likelihood. So in practice we have that\ 
@@ -504,7 +505,7 @@
     p<around*|(|\<theta\>,X|)>>>>>
   </eqnarray>
 
-  Once we have our map estimate, the posterior distribution is given by
+  Once we have our MAP estimate, the posterior distribution is given by
 
   <\eqnarray>
     <tformat|<table|<row|<cell|q<around*|(|\<theta\>|)>>|<cell|=>|<cell|\<delta\><rsub|<wide|\<theta\>|^>><around*|(|\<cdot\>|)>>>>>
@@ -519,7 +520,7 @@
   Computing the map estimate is typically straightforward if the model
   parameters are continuous. In this case we can compute the gradient of the
   joint distribution and use methods such as gradient descent. If you use
-  tools like Tenserflow which provide automatic differentition this requires
+  tools like Tenserflow which provide automatic differentiation this requires
   no additional code to be written. If the model parameters are discrete and
   the state space large then computing the MAP estimate is hard. Unless the
   problem has a special structure, the only solution is to enumerate all
@@ -547,7 +548,7 @@
   If we can sample from the distribution <math|p> then we can use Monte Carlo
   (MC) methods to approximate this expectation. Assume we have drawn <math|S>
   samples from <math|p> denoted <math|<around*|{|x<rsup|<around*|(|s|)>>|}><rsub|s=1><rsup|S>>.
-  Then can make the following approximation.
+  Then we can make the following approximation.
 
   <\eqnarray>
     <tformat|<table|<row|<cell|\<bbb-E\><rsub|q><around*|[|h|]>>|<cell|\<approx\>>|<cell|<frac|1|S><big|sum><rsub|s=1><rsup|S>h<around*|(|x<rsup|<around*|(|s|)>>|)>>>>>
@@ -560,10 +561,10 @@
   posterior, we can use these values to compute any expectation we want. In
   practice sampling directly from the posterior is usually as hard as
   evaluating its density. To solve this issue we typically have to use MCMC
-  methods. The basic idea of MCMC methods is construct a Markov chain which
-  has the target (posterior) distribution as its invariant distribution. The
-  samples we obtain from this chain can then be used as our draws from the
-  target distribution.
+  methods. The basic idea of MCMC methods is to construct a Markov chain
+  which has the target (posterior) distribution as its invariant
+  distribution. The samples we obtain from this chain can then be used as our
+  draws from the target distribution.
 
   Because the target distribution of the Markov chain is the invariant
   distribution we will not typically be sampling from this distribution
@@ -575,20 +576,20 @@
   Another issue that MCMC methods face is that the samples will not be
   independent. Thus drawing <math|S> samples from an MCMC method is not
   equivalent to drawing <math|S> samples independently from the target. This
-  in turn means we need more samples from an MCMC method than we would if
+  in turn means we need more samples from an MCMC method than we would if we
   could make independent draws from the target distribution to achieve the
   same level of accuracy. A common way to measure the efficiency of an MCMC
-  algorithm is to look at the autocorellation between samples. If this decays
-  rapdily then we way the sampler is <with|font-shape|italic|mixing> well and
+  algorithm is to look at the autocorrelation between samples. If this decays
+  rapidly then we say the sampler is <with|font-shape|italic|mixing> well and
   we are close to the ideal situation where we can sample directly from the
   target. If the decay of the autocorrelation is slow then the chain is
   mixing poorly and we will need many samples to get an accurate
-  approximation. A common proceedure to reduce autocorrelation is to only
+  approximation. A common procedure to reduce autocorrelation is to only
   collect samples after multiple steps of the Markov chain. This is referred
   to as <with|font-shape|italic|thinning>. There is a misconception this
   leads to better estimates of the expectations. This is incorrect, it would
-  be as least as efficient to use all samples from the chain. The only reason
-  to perform thinning is to reduce the storage cost of samples.
+  be more efficient to use all samples from the chain. The only reason to
+  perform thinning is to reduce the storage cost of samples.
 
   <subsubsection|Metropolis-Hastings algorithm>
 
@@ -601,7 +602,7 @@
     <\indent>
       <math|\<theta\><rprime|'>\<sim\>q<around*|(|\<cdot\>\|\<theta\><rsup|<around*|(|t-1|)>>|)>>
 
-      <math|u\<sim\><text|Uninform><around*|(|\<cdot\>\|<around*|[|0,1|]>|)>>
+      <math|u\<sim\><text|Uniform><around*|(|\<cdot\>\|<around*|[|0,1|]>|)>>
 
       if <math|u\<less\>\<alpha\><around*|(|\<theta\><rprime|'>,\<theta\><rsup|<around*|(|t-1|)>>|)>>
       do:
@@ -634,7 +635,7 @@
   from <math|q> and evaluate its density. A common proposal is the random
   walk (RW) which proposes a new value <math|\<theta\><rprime|'>=\<theta\>+\<varepsilon\>>
   where <math|\<varepsilon\>\<sim\>\<cal-N\><around*|(|0,\<sigma\><rsup|2>|)>>.
-  That is the RW proposals adds a normally distributed perturbation to the
+  That is the RW proposal adds a normally distributed perturbation to the
   current value. The variance of the normal distribution can be tuned to
   improved the efficiency of the algorithm.
 
@@ -666,7 +667,7 @@
   The trick of the algorithm is that the normalisation constant of the
   posterior cancels in the acceptance ratio. Thus we never need to explicitly
   calculate it. Algorithm <reference|alg:mh> provides pseudo-code for the MH
-  proceedure.
+  procedure.
 
   The only parameter that needs to be tuned in the MH algorithm is the
   proposal distribution. If we use the RW proposal, then we can tune
@@ -698,8 +699,8 @@
   be multi-dimensional. The key constraint is that we need to be able to
   sample from the conditional distribution
   <math|p<around*|(|\<theta\><rsub|b>\|<around*|{|\<theta\><rsub|i>|}><rsub|i\<neq\>b>,X|)>>.
-  The is the distribution of <math|\<theta\><rsub|b>> conditoned on all the
-  other model paramters and the data. In some models this can be much easier
+  That is the distribution of <math|\<theta\><rsub|b>> conditioned on all the
+  other model parameters and the data. In some models this can be much easier
   than sampling from the full posterior. The two common cases are when the
   model has <with|font-shape|italic|conditionally conjugate> distributions
   and when the parameter <math|\<theta\><rsub|b>> is discrete. In the first
@@ -712,14 +713,15 @@
 
   While the MH algorithm is fairly straightforward to implement, it does not
   usually work well if the parameter <math|\<theta\>> is high dimensional. A
-  simple solution to update the parameters in blocks. Assume we have a high
-  dimensional parameter vector <math|\<theta\>=<around*|(|\<theta\><rsub|1>,\<ldots\>,\<theta\><rsub|B>|)>>
+  simple solution is to update the parameters in blocks. Assume we have a
+  high dimensional parameter vector <math|\<theta\>=<around*|(|\<theta\><rsub|1>,\<ldots\>,\<theta\><rsub|B>|)>>
   where <math|B> is the number of blocks. The blocks could be each dimension
   of the parameter or more generally some set of dimensions that is sensible
-  to update together. The key point is want to keep the dimensionality of the
-  paramters in each block, <math|\<theta\><rsub|b>>, relatively low. Then we
-  can update each parameter <math|\<theta\><rsub|b>> using an MH update
-  targeting the conditional distribution <math|p<around*|(|\<theta\><rsub|b>\|<around*|{|\<theta\><rsub|i>|}><rsub|i\<neq\>b>,X|)>>.
+  to update together. The key point is we want to keep the dimensionality of
+  the parameters in each block, <math|\<theta\><rsub|b>>, relatively low.
+  Then we can update each parameter <math|\<theta\><rsub|b>> using an MH
+  update targeting the conditional distribution
+  <math|p<around*|(|\<theta\><rsub|b>\|<around*|{|\<theta\><rsub|i>|}><rsub|i\<neq\>b>,X|)>>.
   This looks like the Gibbs sampler, but we can no longer directly sample
   from <math|p<around*|(|\<theta\><rsub|b>\|<around*|{|\<theta\><rsub|i>|}><rsub|i\<neq\>b>,X|)>>,
   so we use an MH step. The acceptance probability is then
@@ -742,16 +744,6 @@
   This Metropolised-Gibbs sampler can be used in conjunction with the
   standard Gibbs sampler. This is particularly useful when we can only Gibbs
   sample a subset of the parameter blocks <math|\<theta\><rsub|b>>.
-
-  <subsection|Model building workflow>
-
-  <\enumerate-numeric>
-    <item>Identify the question to be answered?
-
-    <item>Background research
-
-    <item>
-  </enumerate-numeric>
 
   \;
 

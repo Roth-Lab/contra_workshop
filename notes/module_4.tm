@@ -1,6 +1,6 @@
-<TeXmacs|1.99.8>
+<TeXmacs|1.99.13>
 
-<style|<tuple|tmbook|british>>
+<style|<tuple|tmbook|british|old-dots>>
 
 <\body>
   <section|Phylogenetic analysis>
@@ -12,8 +12,8 @@
   clones. First we will review the types of data we have available to address
   this problem. Next we do a brief review of probabilistic models in
   phylogenetics. Finally, we develop a probabilistic model to infer
-  phylogenies from bulk. This model has a few unique twists that are tailored
-  to cancer genomics data.
+  phylogenies from bulk sequence data. This model has a few unique twists
+  that are tailored to cancer genomics data.
 
   <subsection|Data types>
 
@@ -45,13 +45,13 @@
   standard phylogenetic problems we observe a set of species with an
   associated matrix of observations. The values in this matrix can either be
   binary, for example the presence or absence of a morphological feature.
-  Alternatively they can be nucleotide or amino acids if we have aligned
+  Alternatively they can be nucleotides or amino acids if we have aligned
   sequence data. In the context of cancer it is common to use the
   presence/absence of a mutation within a sample as the feature matrix. Here
   species correspond to samples. The obvious problem with this approach is
   that bulk samples represent mixtures of clonal populations. Thus there is
-  no guarantee that the presence of a pair of mutations in sample implies
-  they exist within the same cell. Because of this one need to be careful
+  no guarantee that the presence of a pair of mutations in a sample implies
+  they exist within the same cell. Because of this, one need to be careful
   when interpreting <with|font-shape|italic|sample trees>. Naively
   constructed trees based on the approach outlined above simply represent
   similarities between samples, not an evolutionary relationship. Later in
@@ -113,9 +113,9 @@
   <subsection|Probabilistic phylogenetic models>
 
   Here we provide a brief review of probabilistic models for phylogenetics.
-  First, we introduce the basic problem setup. Next we look at how define a
-  probabilistic model and compute the probability of the data efficiently. We
-  finish with a brief discussion of Bayesian models and the computational
+  First, we introduce the basic problem setup. Next we look at how to define
+  a probabilistic model and compute the probability of the data efficiently.
+  We finish with a brief discussion of Bayesian models and the computational
   challenges.
 
   <subsubsection|Tree topology>
@@ -153,11 +153,11 @@
 
   <\remark>
     Identifiability crops up again here. If we rescale the matrix <math|Q> by
-    a constant and divide the branche length by the same value <math|P>
-    remains unchaged. Biologically rescaling <math|Q> corresponds to altering
-    the mutation rate. Informally this means we would expect to see the same
-    number of mutations if the rate is high and time interval short as we
-    would if the rate was low and time interval long.
+    a constant and divide the branch length by the same value, <math|P>
+    remains unchanged. Biologically rescaling <math|Q> corresponds to
+    altering the mutation rate. Informally this means we would expect to see
+    the same number of mutations if the rate is high and time interval short
+    as we would if the rate was low and time interval long.
   </remark>
 
   <subsubsection|Tree probability>
@@ -172,7 +172,7 @@
   of the tree. Let
 
   <\itemize>
-    <item><math|x<rsub|v>> denotye the value of the characet at leaf node
+    <item><math|x<rsub|v>> denote the value of the character at leaf node
     <math|v>
 
     <item><math|y<rsub|v>> denote the value of the character at internal node
@@ -181,7 +181,7 @@
     <item><math|L<around*|(|\<tau\>|)>> denote the leaf nodes of
     <math|\<tau\>>
 
-    <item><math|I<around*|(|\<tau\>|)>=V\\L<around*|(|v|)><big|cup><around*|{|r|}>>
+    <item><math|I<around*|(|\<tau\>|)>=V\\L<around*|(|\<tau\>|)><big|cup><around*|{|r|}>>
     denote the set of internal nodes that are not the root
 
     <item><math|\<tau\><around*|(|v|)>> denote the subtree rooted at node
@@ -270,10 +270,10 @@
   search impossible for all but small <math|n>. This is one case where full
   Bayesian inference via MCMC is not much slower than other approaches. The
   typical way to perform inference is to use MH moves for <math|\<tau\>>.
-  Proposing a new random tree rarely works well, so local moves such pruning
-  a subtree and regrafting to another part of the tree are used in practice.
-  The other parameters are typically easier to sample, and an array of MCMC
-  \ methods such as MH or Hamiltoniain Monte Carlo can be applied.
+  Proposing a new random tree rarely works well, so local moves such as
+  pruning a subtree and regrafting to another part of the tree are used in
+  practice. The other parameters are typically easier to sample, and an array
+  of MCMC \ methods such as MH or Hamiltoniain Monte Carlo can be applied.
 
   <\remark>
     Implementing MCMC for phylogenetics is a bit painful due to the book
@@ -295,7 +295,7 @@
   We consider the problem of building phylogenetic trees from bulk sequence
   data. We will assume we have multiple tissue samples collected from the
   same patient. We will also assume CNV analysis has been performed and
-  estimates of tumour content are available. Our input data will allelic
+  estimates of tumour content are available. Our input data will be allelic
   counts from SNVs. We will use this data to compute an observation matrix
   where the entries are the probability a mutation is
   <with|font-shape|italic|clonally present>.
@@ -311,7 +311,7 @@
   We would like to infer a rooted bifuricating tree relating a set of
   <math|M> samples where we observe <math|N> mutations. We assume that
   mutations originate only once on the tree at node <math|w>, which we cannot
-  observe. Once a mutation has originated it is propogated to its children
+  observe. Once a mutation has originated it is propagated to its children
   with probability <math|<around*|(|1-\<pi\><rsub|l>|)>> or lost with
   probability <math|\<pi\><rsub|l>>. Once the mutation is lost it remains
   lost in all descendants. There are no branch lengths in the model so the
@@ -323,7 +323,7 @@
 
     <item>Mutations can be lost after they are acquired.
 
-    <item>Mutations evolve indepdently i.e. our tree probability decomposes
+    <item>Mutations evolve independently i.e. our tree probability decomposes
     as the product of mutations.
   </enumerate-numeric>
 
@@ -345,7 +345,7 @@
   present. We will see when we compute the likelihood a mutation is present
   we explicitly correct for tumour content. The second reason is to address
   the problem of samples representing mixtures of cells. As discussed earlier
-  this raises issues when intepreting sample trees. A solution to this
+  this raises issues when interpreting sample trees. A solution to this
   problem would be to only build trees with mutations that are clonal in the
   sample. This would guarantee that the mutations co-occur within the same
   cell. We do not have this information in practice, but using the same
@@ -354,7 +354,7 @@
   <subsubsection|Probability of clonal presence>
 
   To generate our data matrix, <math|X>, for phylogenetic reconstruction we
-  need to compute the pobability a mutation is clonally present. We define
+  need to compute the probability a mutation is clonally present. We define
   this to be the probability a mutation has cellular prevalence 1.0 in the
   sample. To compute this probability we adopt an approach similar to module
   <math|2>. Let <math|c<rsub|b>> denote the number of mutated copies of a
@@ -394,9 +394,9 @@
     <item><math|L<around*|(|i|)>> denote the leaves descendant from node
     <math|i>
 
-    <item><math|C<around*|(|i|)>> denote the childrend of node <math|i>
+    <item><math|C<around*|(|i|)>> denote the children of node <math|i>
 
-    <item><math|\<rho\><around*|(|i|)>> denote the parento fo node <math|i>
+    <item><math|\<rho\><around*|(|i|)>> denote the parent of node <math|i>
 
     <item><math|A<around*|(|i|)>> denote the ancestors of node <math|i> i.e.
     all nodes on the path from <math|i> to the root
@@ -415,18 +415,18 @@
   <subsubsection|Tree probability>
 
   We will develop a slightly non-standard recursion for computing tree
-  probabilites. The reason for this is that the single origin constraint adds
-  dependencies between branches in the tree. If a mutation originated in one
-  branch it cannot originate again in another branch. Conditioned on the
+  probabilities. The reason for this is that the single origin constraint
+  adds dependencies between branches in the tree. If a mutation originated in
+  one branch it cannot originate again in another branch. Conditioned on the
   originating branch, <math|(\<rho\>(w), w)>, the losses are Markovian on the
   sub-tree <math|D(w)>. Informally this means once we know where a mutation
-  orginiates evolution is independent among the nodes. Note that once a
+  originates evolution is independent among the nodes. Note that once a
   mutation is lost it will be lost in all descendants as well due to the
   single origin assumption.
 
   Mutations can originate at any point along the branch of the tree. To
   simplify the discussion we say a mutation originates at a node if it occurs
-  at any point along the branch between the node at its parent. We use the
+  at any point along the branch between the node and its parent. We use the
   same convention for lost mutations. As we will see later we can then infer
   at which node (clone) a mutation originated, and which clones subsequently
   lost the mutation.
@@ -437,7 +437,8 @@
   the tree <math|\<tau\>> and origin node <math|w>. To do this we introduce
   the function <math|Q<around*|(|i,\<tau\>|)>>, the probability the mutation
   is present at node <math|i> given all possible combinations of losses on
-  the sub-tree rooted at <math|i>. This can be compute recursively as follows
+  the sub-tree rooted at <math|i>. This can be computed recursively as
+  follows
 
   <\eqnarray>
     <tformat|<table|<row|<cell|Q<around*|(|i,\<tau\>|)>>|<cell|=>|<cell|<choice|<tformat|<table|<row|<cell|\<pi\><rsub|l>
@@ -471,9 +472,9 @@
   and term for all other nodes. Ultimately we want to compute
   <math|p<around*|(|\<b-x\>\|\<tau\>|)>> which can be obtained by
   marginalizing <math|w> over all nodes in the tree. In the absence of
-  additionall information we assume a uniform prior for <math|w> i.e.
-  <math|p<around*|(|w|)>=<frac|1|<around*|\||V<around*|(|T|)>|\|>>>. Thus we
-  have
+  additional information we assume a uniform prior for <math|w> i.e.
+  <math|p<around*|(|w|)>=<frac|1|<around*|\||V<around*|(|\<tau\>|)>|\|>>>.
+  Thus we have
 
   <\eqnarray>
     <tformat|<table|<row|<cell|p<around*|(|\<b-x\>\|\<tau\>|)>>|<cell|=>|<cell|<big|sum><rsub|w\<in\>V<around*|(|\<tau\>|)>>p<around*|(|\<b-x\>\|\<tau\>,w|)>
@@ -516,16 +517,16 @@
 
   Given the MAP estimates for the tree <math|<wide|\<tau\>|^>> and the
   probability of loss <math|<wide|\<pi\>|^><rsub|l>> we can compute the most
-  likely node where a mutation originated. We can also identify which at
-  which nodes the mutation is present and at which the mutation was lost. The
+  likely node where a mutation originated. We can also identify at which
+  nodes the mutation is present and at which the mutation was lost. The
   strategy is to maximize the following quantity
 
   <\eqnarray>
     <tformat|<table|<row|<cell|p<around*|(|w,z\|x,<wide|\<tau\>|^>,<wide|\<pi\>|^><rsub|l>|)>>|<cell|=>|<cell|p<around*|(|x\|w,z,<wide|\<tau\>|^>,<wide|\<pi\>|^><rsub|l>|)>p<around*|(|z\|w|)>p<around*|(|w|)>>>>>
   </eqnarray>
 
-  To achieve this we modify the previous recusion for
-  <math|Q<around*|(|i,\<tau\>|)>> a follows
+  To achieve this we modify the previous recursion for
+  <math|Q<around*|(|i,\<tau\>|)>> as follows
 
   <\eqnarray>
     <tformat|<table|<row|<cell|<wide|Q|^><around*|(|j,\<tau\>|)>>|<cell|=>|<cell|<choice|<tformat|<table|<row|<cell|max<around*|{|\<pi\><rsub|l>
@@ -537,7 +538,7 @@
 
   In other words we replace summation with maximisation in the recursion.
   This is exactly the same as the relationship between the forward-backward
-  and Virterbi algorithm. Note that in addition to
+  and Viterbi algorithm. Note that in addition to
   <math|<wide|Q|^><around*|(|j,\<tau\>|)>> we also keep track of the choice
   we made to get the maximum value at each node. This allows us to label the
   presence of the mutation in each node, and hence identify the origin and
@@ -576,11 +577,11 @@
   shown on the bottom.>
 
   No model is perfect, and the model described so far has one critical
-  weakness. If any sample is balanced mixture of two clones then it will fail
-  badly. To understand the issue we need to consider a hidden assumption we
-  are making. Namely, the probability of clonal presence is accurate. If we
-  assign a high probability of presence to sub-clonal mutations from clones
-  from different parts of the tree we have a problem.\ 
+  weakness. If any sample is a balanced mixture of two clones then it will
+  fail badly. To understand the issue we need to consider a hidden assumption
+  we are making. Namely, the probability of clonal presence is accurate. If
+  we assign a high probability of presence to sub-clonal mutations from
+  clones from different parts of the tree we have a problem.\ 
 
   To understand this issue first consider Figure <reference|fig:phylo1> which
   illustrates an ideal case of building sample trees. There is no mutation
@@ -589,7 +590,7 @@
   presence/absence data and easily determine samples S1 and S2 are more
   similar to each other than S3. Now consider Figure <reference|fig:phylo2>
   where sample S2 is a mixture of clones from different parts of the tree.
-  The presence/absence data is now ambigous since S2 shares an equal number
+  The presence/absence data is now ambiguous since S2 shares an equal number
   of mutations with S1 and S3. Finally consider Figure <reference|fig:phylo3>
   where we have mutation loss in sample S2. Now sample S1 shares the same
   number of mutations with S2 as S3. The model we constructed accounts for
@@ -598,8 +599,8 @@
   model is forced to use mutation loss to explain the mutations which do not
   fit the tree. This can lead to major failures for the method as illustrated
   in Figure <reference|fig:loss_error>. In this example we see a large number
-  mutations predicted to be lost. Morevover, they are uniformly spread across
-  the genome with no corroborating copy number changes is most cases. The
+  mutations predicted to be lost. Moreover, they are uniformly spread across
+  the genome with no corroborating copy number changes in most cases. The
   problem is that the second sample, LOv2, is actually a mixture of clones
   from LOv1 and the other samples. <big-figure|<image|../figures/module_4/patient_9_snv_loss_cnv.pdf|400pt|||>|<label|fig:loss_error>Example
   of erroneous model predictions.>
@@ -614,7 +615,7 @@
 
   <subsection|Discussion>
 
-  In this module we discussed proabilistic phylogenetic models. We looked at
+  In this module we discussed probabilistic phylogenetic models. We looked at
   the data types that are available and discussed the challenges associated
   with them. We then reviewed the basics of probabilistic phylogenetic
   models. Finally we developed a novel model for inferring phylogenies from
@@ -672,30 +673,30 @@
 <\auxiliary>
   <\collection>
     <\associate|figure>
-      <tuple|normal|<surround|<hidden|<tuple>>||Results of the mutation loss
-      model. The panels show copy number profiles from six samples from a
-      patient with high grade serous ovarian cancer. Mutations predicted to
-      be lost somewhere in the tree are plotted as sticks at the bottom of
-      each panel. Highlighted in yellow is an example of a deletion event
-      overlapping predicted losses.>|<pageref|auto-21>>
+      <tuple|normal|<surround|<hidden-binding|<tuple>|1>||Results of the
+      mutation loss model. The panels show copy number profiles from six
+      samples from a patient with high grade serous ovarian cancer. Mutations
+      predicted to be lost somewhere in the tree are plotted as sticks at the
+      bottom of each panel. Highlighted in yellow is an example of a deletion
+      event overlapping predicted losses.>|<pageref|auto-21>>
 
-      <tuple|normal|<surround|<hidden|<tuple>>||Simplified example of sample
-      tree construction. On the top we show the phylogeny and evolutionary
-      history of mutations. The observed presence/absence data is shown on
-      the bottom.>|<pageref|auto-22>>
+      <tuple|normal|<surround|<hidden-binding|<tuple>|2>||Simplified example
+      of sample tree construction. On the top we show the phylogeny and
+      evolutionary history of mutations. The observed presence/absence data
+      is shown on the bottom.>|<pageref|auto-22>>
 
-      <tuple|normal|<surround|<hidden|<tuple>>||Simplified example of sample
-      tree construction. On the top we show the phylogeny and evolutionary
-      history of mutations. The observed presence/absence data is shown on
-      the bottom.>|<pageref|auto-23>>
+      <tuple|normal|<surround|<hidden-binding|<tuple>|3>||Simplified example
+      of sample tree construction. On the top we show the phylogeny and
+      evolutionary history of mutations. The observed presence/absence data
+      is shown on the bottom.>|<pageref|auto-23>>
 
-      <tuple|normal|<surround|<hidden|<tuple>>||Simplified example of sample
-      tree construction. On the top we show the phylogeny and evolutionary
-      history of mutations. The observed presence/absence data is shown on
-      the bottom.>|<pageref|auto-24>>
+      <tuple|normal|<surround|<hidden-binding|<tuple>|4>||Simplified example
+      of sample tree construction. On the top we show the phylogeny and
+      evolutionary history of mutations. The observed presence/absence data
+      is shown on the bottom.>|<pageref|auto-24>>
 
-      <tuple|normal|<surround|<hidden|<tuple>>||Example of erroneous model
-      predictions.>|<pageref|auto-25>>
+      <tuple|normal|<surround|<hidden-binding|<tuple>|5>||Example of
+      erroneous model predictions.>|<pageref|auto-25>>
     </associate>
     <\associate|toc>
       1.<space|2spc>Phylogenetic analysis
